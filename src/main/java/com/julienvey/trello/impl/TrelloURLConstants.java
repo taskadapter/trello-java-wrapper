@@ -1,0 +1,8 @@
+package com.julienvey.trello.impl;
+
+public interface TrelloURLConstants {
+
+    public static final String API_URL = "https://api.trello.com/1";
+    public static final String API_KEY_TOKEN_PARAM  = "?key={applicationKey}&token={userToken}";
+    public static final String GET_BOARD_BY_ID = API_URL + "/boards/{boardId}" + API_KEY_TOKEN_PARAM;
+}
