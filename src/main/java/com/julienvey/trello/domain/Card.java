@@ -2,6 +2,9 @@ package com.julienvey.trello.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.util.Date;
+import java.util.List;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Card extends TrelloEntity {
 
@@ -9,8 +12,11 @@ public class Card extends TrelloEntity {
     private String name;
     private String idList;
     private String desc;
+    private Date due;
+    private List<String> idMembers;
+    private List<Label> labels;
 
-    public void addLabels(String... labels){
+    public void addLabels(String... labels) {
         trelloService.addLabelsToCard(id, labels);
     }
 
@@ -44,5 +50,29 @@ public class Card extends TrelloEntity {
 
     public void setDesc(String desc) {
         this.desc = desc;
+    }
+
+    public Date getDue() {
+        return due;
+    }
+
+    public void setDue(Date due) {
+        this.due = due;
+    }
+
+    public List<String> getIdMembers() {
+        return idMembers;
+    }
+
+    public void setIdMembers(List<String> idMembers) {
+        this.idMembers = idMembers;
+    }
+
+    public List<Label> getLabels() {
+        return labels;
+    }
+
+    public void setLabels(List<Label> labels) {
+        this.labels = labels;
     }
 }
