@@ -5,9 +5,9 @@ import com.julienvey.trello.domain.Board;
 import com.julienvey.trello.domain.Card;
 import com.julienvey.trello.domain.Member;
 import com.julienvey.trello.domain.TList;
+import com.julienvey.trello.impl.domaininternal.Label;
 import org.springframework.web.client.RestTemplate;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -42,9 +42,11 @@ public class TrelloImpl implements Trello {
     }
 
     @Override
-    public void createCard(String listId, Card card) {
+    public Card createCard(String listId, Card card) {
         card.setIdList(listId);
-        post(TrelloURLConstants.CREATE_CARD, card);
+        Card createdCard = postForObject(TrelloURLConstants.CREATE_CARD, card, Card.class);
+        createdCard.setInternalTrello(this);
+        return createdCard;
     }
 
     @Override
@@ -54,12 +56,18 @@ public class TrelloImpl implements Trello {
         return member;
     }
 
-    private <T> URI post(String url, T object) {
-        return post(url, object, new String[]{});
+    public void addLabelsToCard(String idCard, String[] labels) {
+        for(String label : labels){
+            postForLocation(ADD_LABEL_TO_CARD, new Label(label), idCard);
+        }
     }
 
-    private <T> URI post(String url, T object, String... params) {
-        return restTemplate.postForLocation(url, object, enrichParams(params));
+    private <T> T postForObject(String url, T object, Class<T> objectClass, String... params) {
+        return restTemplate.postForObject(url, object, objectClass, enrichParams(params));
+    }
+
+    private void postForLocation(String url, Object object, String... params) {
+        restTemplate.postForLocation(url, object, enrichParams(params));
     }
 
     private <T> T get(String url, Class<T> objectClass, String... params) {

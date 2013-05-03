@@ -13,7 +13,9 @@ public interface Trello {
 
     List<TList> getLists(String boardId);
 
-    void createCard(String listId, Card card);
-
     Member getBasicMemberInformation(String username);
+
+    Card createCard(String listId, Card card);
+
+    void addLabelsToCard(String idCard, String[] labels);
 }
