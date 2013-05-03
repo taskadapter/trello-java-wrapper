@@ -5,4 +5,5 @@ public interface TrelloURLConstants {
     public static final String API_URL = "https://api.trello.com/1";
     public static final String API_KEY_TOKEN_PARAM  = "?key={applicationKey}&token={userToken}";
     public static final String GET_BOARD_BY_ID = API_URL + "/boards/{boardId}" + API_KEY_TOKEN_PARAM;
+    public static final String GET_LISTS_BY_BOARD_ID = API_URL + "/boards/{boardId}/lists" + API_KEY_TOKEN_PARAM;
 }

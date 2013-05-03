@@ -1,27 +1,35 @@
 package com.julienvey.trello.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.julienvey.trello.Trello;
+
 import java.util.List;
 import java.util.Map;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Board {
 
     private String id;
-
     private String name;
-
     private String desc;
-
     private boolean closed;
-
     private String idOrganization;
-
     private boolean pinned;
-
     private String url;
-
     private Map<String, Object> prefs;
-
     private Map<String, Object> labelNames;
+
+    @JsonIgnore
+    private Trello trelloService;
+
+    public void setInternalTrello(Trello trelloService) {
+        this.trelloService = trelloService;
+    }
+
+    public List<TList> getLists() {
+        return trelloService.getLists(id);
+    }
 
     public String getId() {
         return id;
