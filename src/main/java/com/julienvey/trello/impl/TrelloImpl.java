@@ -2,9 +2,11 @@ package com.julienvey.trello.impl;
 
 import com.julienvey.trello.Trello;
 import com.julienvey.trello.domain.Board;
+import com.julienvey.trello.domain.Card;
 import com.julienvey.trello.domain.TList;
 import org.springframework.web.client.RestTemplate;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -32,13 +34,35 @@ public class TrelloImpl implements Trello {
 
     @Override
     public List<TList> getLists(String boardId) {
-        return Arrays.asList(get(GET_LISTS_BY_BOARD_ID, TList[].class, boardId));
+        List<TList> tLists = Arrays.asList(get(GET_LISTS_BY_BOARD_ID, TList[].class, boardId));
+        for(TList list : tLists){
+            list.setInternalTrello(this);
+        }
+        return tLists;
+    }
+
+    @Override
+    public void createCard(String listId, Card card) {
+        card.setIdList(listId);
+        post(TrelloURLConstants.CREATE_CARD, card);
+    }
+
+    private <T> URI post(String url, T object) {
+        return post(url, object, new String[]{});
+    }
+
+    private <T> URI post(String url, T object, String... params) {
+        return restTemplate.postForLocation(url, object, enrichParams(params));
     }
 
     private <T> T get(String url, Class<T> objectClass, String... params) {
-        List<String> paramList = new ArrayList<String>(Arrays.asList(params));
+        return restTemplate.getForObject(url, objectClass, enrichParams(params));
+    }
+
+    private Object[] enrichParams(String[] params) {
+        List<String> paramList = new ArrayList<>(Arrays.asList(params));
         paramList.add(applicationKey);
         paramList.add(accessToken);
-        return restTemplate.getForObject(url, objectClass, paramList.toArray());
+        return paramList.toArray();
     }
 }
