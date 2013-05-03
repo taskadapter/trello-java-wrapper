@@ -18,4 +18,6 @@ public interface Trello {
     Card createCard(String listId, Card card);
 
     void addLabelsToCard(String idCard, String[] labels);
+
+    List<Member> getMembers(String boardId);
 }

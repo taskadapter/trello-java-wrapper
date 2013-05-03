@@ -62,6 +62,11 @@ public class TrelloImpl implements Trello {
         }
     }
 
+    @Override
+    public List<Member> getMembers(String boardId) {
+        return Arrays.asList(get(GET_BOARD_MEMBERS, Member[].class, boardId));
+    }
+
     private <T> T postForObject(String url, T object, Class<T> objectClass, String... params) {
         return restTemplate.postForObject(url, object, objectClass, enrichParams(params));
     }

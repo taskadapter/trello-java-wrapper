@@ -22,6 +22,10 @@ public class Board extends TrelloEntity {
         return trelloService.getLists(id);
     }
 
+    public List<Member> getMembers() {
+        return trelloService.getMembers(id);
+    }
+
     public String getId() {
         return id;
     }
