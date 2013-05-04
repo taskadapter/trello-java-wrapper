@@ -12,6 +12,7 @@ public class Card extends TrelloEntity {
     private String name;
     private String idList;
     private String desc;
+    private String url;
     private Date due;
     private List<String> idMembers;
     private List<Label> labels;
@@ -74,5 +75,13 @@ public class Card extends TrelloEntity {
 
     public void setLabels(List<Label> labels) {
         this.labels = labels;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }
