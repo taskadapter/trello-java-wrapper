@@ -83,6 +83,22 @@ public class BoardTest {
     }
 
     @Test
+    public void testGetBoardFetchActions() {
+        Board board = trello.getBoard(BOARD_ID);
+        List<Action> actions = board.fetchActions();
+
+        assertThat(actions).hasSize(26);
+    }
+
+    @Test
+    public void testGetBoardFetchCards() {
+        Board board = trello.getBoard(BOARD_ID);
+        List<Card> cards = board.fetchCards();
+
+        assertThat(cards).hasSize(2);
+    }
+
+    @Test
     public void testGetBoardActions(){
         List<Action> boardActions = trello.getBoardActions(BOARD_ID);
 
@@ -98,5 +114,12 @@ public class BoardTest {
         assertThat(boardCards).isNotNull();
         assertThat(boardCards).hasSize(2);
         assertThat(boardCards.get(0).getId()).isEqualTo("518bab520967804c03002994");
+    }
+
+    @Test
+    public void testGetBoardCard(){
+        Card boardCard = trello.getBoardCard(BOARD_ID, "518bab520967804c03002994");
+
+        assertThat(boardCard).isNotNull();
     }
 }

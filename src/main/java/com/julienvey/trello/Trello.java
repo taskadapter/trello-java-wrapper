@@ -15,6 +15,7 @@ public interface Trello {
 
     List<Card> getBoardCards(String boardId, Argument... args);
 
+    Card getBoardCard(String boardId, String cardId, Argument... args);
 
     /////////////////
     List<TList> getLists(String boardId, Argument... args);

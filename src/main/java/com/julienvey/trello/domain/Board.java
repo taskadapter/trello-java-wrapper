@@ -24,6 +24,14 @@ public class Board extends TrelloEntity {
         return trelloService.getMembers(id);
     }
 
+    public List<Action> fetchActions(Argument... args) {
+        return trelloService.getBoardActions(id, args);
+    }
+
+    public List<Card> fetchCards(Argument... args){
+        return trelloService.getBoardCards(id, args);
+    }
+
     /* Accessors */
     public String getId() {
         return id;
