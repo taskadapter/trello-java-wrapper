@@ -120,8 +120,8 @@ public class Action {
     public static final class Data {
 
         private Board board;
-        private TListShort list;
-        private CardShort card;
+        private TList list;
+        private Card card;
         private AttachementShort attachment;
         private String text;
         private CheckList checklist;
@@ -137,19 +137,19 @@ public class Action {
             this.board = board;
         }
 
-        public CardShort getCard() {
+        public Card getCard() {
             return card;
         }
 
-        public void setCard(CardShort card) {
+        public void setCard(Card card) {
             this.card = card;
         }
 
-        public TListShort getList() {
+        public TList getList() {
             return list;
         }
 
-        public void setList(TListShort list) {
+        public void setList(TList list) {
             this.list = list;
         }
 
@@ -282,8 +282,6 @@ public class Action {
             }
         }
 
-
-
         public static final class AttachementShort {
             private String name;
             private String id;
@@ -332,64 +330,5 @@ public class Action {
             }
         }
 
-        public static final class TListShort {
-            private String name;
-            private String id;
-
-            public String getId() {
-                return id;
-            }
-
-            public void setId(String id) {
-                this.id = id;
-            }
-
-            public String getName() {
-                return name;
-            }
-
-            public void setName(String name) {
-                this.name = name;
-            }
-        }
-
-        public static final class CardShort {
-            private int idShort;
-            private String name;
-            private String id;
-            private boolean closed;
-
-            public String getId() {
-                return id;
-            }
-
-            public void setId(String id) {
-                this.id = id;
-            }
-
-            public int getIdShort() {
-                return idShort;
-            }
-
-            public void setIdShort(int idShort) {
-                this.idShort = idShort;
-            }
-
-            public String getName() {
-                return name;
-            }
-
-            public void setName(String name) {
-                this.name = name;
-            }
-
-            public boolean isClosed() {
-                return closed;
-            }
-
-            public void setClosed(boolean closed) {
-                this.closed = closed;
-            }
-        }
-    }
+      }
 }
