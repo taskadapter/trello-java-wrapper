@@ -1,9 +1,6 @@
 package com.julienvey.trello;
 
-import com.julienvey.trello.domain.Action;
-import com.julienvey.trello.domain.Board;
-import com.julienvey.trello.domain.Member;
-import com.julienvey.trello.domain.TList;
+import com.julienvey.trello.domain.*;
 import com.julienvey.trello.impl.TrelloImpl;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -92,5 +89,14 @@ public class BoardTest {
         assertThat(boardActions).isNotNull();
         assertThat(boardActions).hasSize(26);
         assertThat(boardActions.get(0).getId()).isEqualTo("51990c2143453ab27e0087d5");
+    }
+
+    @Test
+    public void testGetBoardCards(){
+        List<Card> boardCards = trello.getBoardCards(BOARD_ID);
+
+        assertThat(boardCards).isNotNull();
+        assertThat(boardCards).hasSize(2);
+        assertThat(boardCards.get(0).getId()).isEqualTo("518bab520967804c03002994");
     }
 }

@@ -36,6 +36,12 @@ public class TrelloImpl implements Trello {
     }
 
     @Override
+    public List<Card> getBoardCards(String boardId, Argument... args) {
+        List<Card> cards = Arrays.asList(get(createUrl(GET_BOARD_CARDS).params(args).asString(), Card[].class, boardId));
+        return cards;
+    }
+
+    @Override
     public List<TList> getLists(String boardId, Argument... args) {
         List<TList> tLists = Arrays.asList(get(createUrl(GET_LISTS_BY_BOARD_ID).params(args).asString(), TList[].class, boardId));
         for (TList list : tLists) {

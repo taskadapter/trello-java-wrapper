@@ -8,6 +8,7 @@ public class TrelloUrl {
     public static final String API_KEY_TOKEN_PARAM = "key={applicationKey}&token={userToken}";
     public static final String GET_BOARD_BY_ID = API_URL + "/boards/{boardId}?" + API_KEY_TOKEN_PARAM;
     public static final String GET_BOARD_ACTIONS = API_URL + "/boards/{boardId}/actions?" + API_KEY_TOKEN_PARAM;
+    public static final String GET_BOARD_CARDS = API_URL + "/boards/{boardId}/cards?" + API_KEY_TOKEN_PARAM;
     public static final String GET_LISTS_BY_BOARD_ID = API_URL + "/boards/{boardId}/lists?" + API_KEY_TOKEN_PARAM;
     public static final String CREATE_CARD = API_URL + "/cards?pos=top&" + API_KEY_TOKEN_PARAM;
     public static final String GET_BASIC_MEMBER = API_URL + "/members/{username}?fields=username,fullName&" + API_KEY_TOKEN_PARAM;
