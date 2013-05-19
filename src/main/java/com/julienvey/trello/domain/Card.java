@@ -14,8 +14,8 @@ public class Card extends TrelloEntity {
     private Date due;
     private List<String> idMembers;
     private List<Label> labels;
-    private Map<String, String> badges;
-    private List<String> checkItemStates;
+    private Badges badges;
+    private List<CheckItem> checkItemStates;
     private boolean closed;
     private Date dateLastActivity;
     private String idBoard;
@@ -98,19 +98,11 @@ public class Card extends TrelloEntity {
         this.url = url;
     }
 
-    public Map<String, String> getBadges() {
-        return badges;
-    }
-
-    public void setBadges(Map<String, String> badges) {
-        this.badges = badges;
-    }
-
-    public List<String> getCheckItemStates() {
+    public List<CheckItem> getCheckItemStates() {
         return checkItemStates;
     }
 
-    public void setCheckItemStates(List<String> checkItemStates) {
+    public void setCheckItemStates(List<CheckItem> checkItemStates) {
         this.checkItemStates = checkItemStates;
     }
 
@@ -200,5 +192,13 @@ public class Card extends TrelloEntity {
 
     public void setSubscribed(boolean subscribed) {
         this.subscribed = subscribed;
+    }
+
+    public Badges getBadges() {
+        return badges;
+    }
+
+    public void setBadges(Badges badges) {
+        this.badges = badges;
     }
 }
