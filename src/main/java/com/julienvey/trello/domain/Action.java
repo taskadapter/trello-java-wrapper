@@ -1,0 +1,395 @@
+package com.julienvey.trello.domain;
+
+import java.util.Date;
+import java.util.Map;
+
+public class Action {
+
+    private String id;
+    private String idMemberCreator;
+    private Data data;
+    private String type;
+    private Date date;
+    private MemberShort memberCreator;
+    private MemberShort member;
+
+    public Data getData() {
+        return data;
+    }
+
+    public void setData(Data data) {
+        this.data = data;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getIdMemberCreator() {
+        return idMemberCreator;
+    }
+
+    public void setIdMemberCreator(String idMemberCreator) {
+        this.idMemberCreator = idMemberCreator;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public MemberShort getMemberCreator() {
+        return memberCreator;
+    }
+
+    public void setMemberCreator(MemberShort memberCreator) {
+        this.memberCreator = memberCreator;
+    }
+
+    public MemberShort getMember() {
+        return member;
+    }
+
+    public void setMember(MemberShort member) {
+        this.member = member;
+    }
+
+    public static final class MemberShort {
+        private String id;
+        private String avatarHash;
+        private String fullName;
+        private String initials;
+        private String username;
+
+        public String getAvatarHash() {
+            return avatarHash;
+        }
+
+        public void setAvatarHash(String avatarHash) {
+            this.avatarHash = avatarHash;
+        }
+
+        public String getFullName() {
+            return fullName;
+        }
+
+        public void setFullName(String fullName) {
+            this.fullName = fullName;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getInitials() {
+            return initials;
+        }
+
+        public void setInitials(String initials) {
+            this.initials = initials;
+        }
+
+        public String getUsername() {
+            return username;
+        }
+
+        public void setUsername(String username) {
+            this.username = username;
+        }
+    }
+
+    public static final class Data {
+
+        private Board board;
+        private TListShort list;
+        private CardShort card;
+        private AttachementShort attachment;
+        private String text;
+        private CheckList checklist;
+        private CheckItem checkItem;
+        private String idMember;
+        private Old old;
+
+        public Board getBoard() {
+            return board;
+        }
+
+        public void setBoard(Board board) {
+            this.board = board;
+        }
+
+        public CardShort getCard() {
+            return card;
+        }
+
+        public void setCard(CardShort card) {
+            this.card = card;
+        }
+
+        public TListShort getList() {
+            return list;
+        }
+
+        public void setList(TListShort list) {
+            this.list = list;
+        }
+
+        public AttachementShort getAttachment() {
+            return attachment;
+        }
+
+        public void setAttachment(AttachementShort attachment) {
+            this.attachment = attachment;
+        }
+
+        public String getText() {
+            return text;
+        }
+
+        public void setText(String text) {
+            this.text = text;
+        }
+
+        public CheckList getChecklist() {
+            return checklist;
+        }
+
+        public void setChecklist(CheckList checklist) {
+            this.checklist = checklist;
+        }
+
+        public CheckItem getCheckItem() {
+            return checkItem;
+        }
+
+        public void setCheckItem(CheckItem checkItem) {
+            this.checkItem = checkItem;
+        }
+
+        public String getIdMember() {
+            return idMember;
+        }
+
+        public void setIdMember(String idMember) {
+            this.idMember = idMember;
+        }
+
+        public Old getOld() {
+            return old;
+        }
+
+        public void setOld(Old old) {
+            this.old = old;
+        }
+
+        public static final class Old {
+            private boolean closed;
+            private Map<String, String> labelNames;
+            private String desc;
+
+            public boolean isClosed() {
+                return closed;
+            }
+
+            public void setClosed(boolean closed) {
+                this.closed = closed;
+            }
+
+            public Map<String, String> getLabelNames() {
+                return labelNames;
+            }
+
+            public void setLabelNames(Map<String, String> labelNames) {
+                this.labelNames = labelNames;
+            }
+
+            public String getDesc() {
+                return desc;
+            }
+
+            public void setDesc(String desc) {
+                this.desc = desc;
+            }
+        }
+
+        public static final class CheckItem {
+            private String state;
+            private String name;
+            private String id;
+
+            public String getId() {
+                return id;
+            }
+
+            public void setId(String id) {
+                this.id = id;
+            }
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public String getState() {
+                return state;
+            }
+
+            public void setState(String state) {
+                this.state = state;
+            }
+        }
+
+        public static final class CheckList {
+            private String name;
+            private String id;
+
+            public String getId() {
+                return id;
+            }
+
+            public void setId(String id) {
+                this.id = id;
+            }
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+        }
+
+
+
+        public static final class AttachementShort {
+            private String name;
+            private String id;
+            private String url;
+            private String previewUrl;
+            private String previewUrl2x;
+
+            public String getPreviewUrl2x() {
+                return previewUrl2x;
+            }
+
+            public void setPreviewUrl2x(String previewUrl2x) {
+                this.previewUrl2x = previewUrl2x;
+            }
+
+            public String getPreviewUrl() {
+                return previewUrl;
+            }
+
+            public void setPreviewUrl(String previewUrl) {
+                this.previewUrl = previewUrl;
+            }
+
+            public String getUrl() {
+                return url;
+            }
+
+            public void setUrl(String url) {
+                this.url = url;
+            }
+
+            public String getId() {
+                return id;
+            }
+
+            public void setId(String id) {
+                this.id = id;
+            }
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+        }
+
+        public static final class TListShort {
+            private String name;
+            private String id;
+
+            public String getId() {
+                return id;
+            }
+
+            public void setId(String id) {
+                this.id = id;
+            }
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+        }
+
+        public static final class CardShort {
+            private int idShort;
+            private String name;
+            private String id;
+            private boolean closed;
+
+            public String getId() {
+                return id;
+            }
+
+            public void setId(String id) {
+                this.id = id;
+            }
+
+            public int getIdShort() {
+                return idShort;
+            }
+
+            public void setIdShort(int idShort) {
+                this.idShort = idShort;
+            }
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public boolean isClosed() {
+                return closed;
+            }
+
+            public void setClosed(boolean closed) {
+                this.closed = closed;
+            }
+        }
+    }
+}
