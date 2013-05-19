@@ -1,11 +1,9 @@
 package com.julienvey.trello.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class Card extends TrelloEntity {
 
     private String id;
@@ -16,11 +14,26 @@ public class Card extends TrelloEntity {
     private Date due;
     private List<String> idMembers;
     private List<Label> labels;
+    private Map<String, String> badges;
+    private List<String> checkItemStates;
+    private boolean closed;
+    private Date dateLastActivity;
+    private String idBoard;
+    private List<String> idChecklists;
+    private List<String> idMembersVoted;
+    private String idShort;
+    private String idAttachmentCover;
+    private boolean manualCoverAttachment;
+    private int pos;
+    private String shortUrl;
+    private boolean subscribed;
 
+    /* API */
     public void addLabels(String... labels) {
         trelloService.addLabelsToCard(id, labels);
     }
 
+    /* Accessors */
     public String getId() {
         return id;
     }
@@ -83,5 +96,109 @@ public class Card extends TrelloEntity {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public Map<String, String> getBadges() {
+        return badges;
+    }
+
+    public void setBadges(Map<String, String> badges) {
+        this.badges = badges;
+    }
+
+    public List<String> getCheckItemStates() {
+        return checkItemStates;
+    }
+
+    public void setCheckItemStates(List<String> checkItemStates) {
+        this.checkItemStates = checkItemStates;
+    }
+
+    public boolean isClosed() {
+        return closed;
+    }
+
+    public void setClosed(boolean closed) {
+        this.closed = closed;
+    }
+
+    public Date getDateLastActivity() {
+        return dateLastActivity;
+    }
+
+    public void setDateLastActivity(Date dateLastActivity) {
+        this.dateLastActivity = dateLastActivity;
+    }
+
+    public String getIdBoard() {
+        return idBoard;
+    }
+
+    public void setIdBoard(String idBoard) {
+        this.idBoard = idBoard;
+    }
+
+    public List<String> getIdChecklists() {
+        return idChecklists;
+    }
+
+    public void setIdChecklists(List<String> idChecklists) {
+        this.idChecklists = idChecklists;
+    }
+
+    public List<String> getIdMembersVoted() {
+        return idMembersVoted;
+    }
+
+    public void setIdMembersVoted(List<String> idMembersVoted) {
+        this.idMembersVoted = idMembersVoted;
+    }
+
+    public String getIdShort() {
+        return idShort;
+    }
+
+    public void setIdShort(String idShort) {
+        this.idShort = idShort;
+    }
+
+    public String getIdAttachmentCover() {
+        return idAttachmentCover;
+    }
+
+    public void setIdAttachmentCover(String idAttachmentCover) {
+        this.idAttachmentCover = idAttachmentCover;
+    }
+
+    public boolean isManualCoverAttachment() {
+        return manualCoverAttachment;
+    }
+
+    public void setManualCoverAttachment(boolean manualCoverAttachment) {
+        this.manualCoverAttachment = manualCoverAttachment;
+    }
+
+    public int getPos() {
+        return pos;
+    }
+
+    public void setPos(int pos) {
+        this.pos = pos;
+    }
+
+    public String getShortUrl() {
+        return shortUrl;
+    }
+
+    public void setShortUrl(String shortUrl) {
+        this.shortUrl = shortUrl;
+    }
+
+    public boolean isSubscribed() {
+        return subscribed;
+    }
+
+    public void setSubscribed(boolean subscribed) {
+        this.subscribed = subscribed;
     }
 }

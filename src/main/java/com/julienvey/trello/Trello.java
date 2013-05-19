@@ -1,17 +1,14 @@
 package com.julienvey.trello;
 
-import com.julienvey.trello.domain.Board;
-import com.julienvey.trello.domain.Card;
-import com.julienvey.trello.domain.Member;
-import com.julienvey.trello.domain.TList;
+import com.julienvey.trello.domain.*;
 
 import java.util.List;
 
 public interface Trello {
 
-    Board getBoard(String boardId);
+    Board getBoard(String boardId, Argument... args);
 
-    List<TList> getLists(String boardId);
+    List<TList> getLists(String boardId, Argument... args);
 
     Member getBasicMemberInformation(String username);
 
@@ -20,4 +17,5 @@ public interface Trello {
     void addLabelsToCard(String idCard, String[] labels);
 
     List<Member> getMembers(String boardId);
+
 }

@@ -1,11 +1,8 @@
 package com.julienvey.trello.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import java.util.List;
 import java.util.Map;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class Board extends TrelloEntity {
 
     private String id;
@@ -15,17 +12,19 @@ public class Board extends TrelloEntity {
     private String idOrganization;
     private boolean pinned;
     private String url;
-    private Map<String, Object> prefs;
-    private Map<String, Object> labelNames;
+    private Map<String, String> prefs;
+    private Map<String, String> labelNames;
 
-    public List<TList> getLists() {
-        return trelloService.getLists(id);
+    /* API */
+    public List<TList> fetchLists(Argument... args) {
+        return trelloService.getLists(id, args);
     }
 
-    public List<Member> getMembers() {
+    public List<Member> fetchMembers() {
         return trelloService.getMembers(id);
     }
 
+    /* Accessors */
     public String getId() {
         return id;
     }
@@ -82,19 +81,19 @@ public class Board extends TrelloEntity {
         this.url = url;
     }
 
-    public Map<String, Object> getPrefs() {
+    public Map<String, String> getPrefs() {
         return prefs;
     }
 
-    public void setPrefs(Map<String, Object> prefs) {
+    public void setPrefs(Map<String, String> prefs) {
         this.prefs = prefs;
     }
 
-    public Map<String, Object> getLabelNames() {
+    public Map<String, String> getLabelNames() {
         return labelNames;
     }
 
-    public void setLabelNames(Map<String, Object> labelNames) {
+    public void setLabelNames(Map<String, String> labelNames) {
         this.labelNames = labelNames;
     }
 }

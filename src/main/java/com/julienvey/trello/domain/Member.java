@@ -1,14 +1,12 @@
 package com.julienvey.trello.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class Member extends TrelloEntity {
 
     private String id;
     private String username;
     private String fullName;
 
+    /* Accessors */
     public String getId() {
         return id;
     }

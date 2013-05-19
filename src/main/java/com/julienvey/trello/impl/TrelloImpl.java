@@ -1,10 +1,7 @@
 package com.julienvey.trello.impl;
 
 import com.julienvey.trello.Trello;
-import com.julienvey.trello.domain.Board;
-import com.julienvey.trello.domain.Card;
-import com.julienvey.trello.domain.Member;
-import com.julienvey.trello.domain.TList;
+import com.julienvey.trello.domain.*;
 import com.julienvey.trello.impl.domaininternal.Label;
 import org.springframework.web.client.RestTemplate;
 
@@ -12,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.julienvey.trello.impl.TrelloURLConstants.*;
+import static com.julienvey.trello.impl.TrelloUrl.*;
 
 public class TrelloImpl implements Trello {
 
@@ -26,15 +23,15 @@ public class TrelloImpl implements Trello {
     }
 
     @Override
-    public Board getBoard(String boardId) {
-        Board board = get(GET_BOARD_BY_ID, Board.class, boardId);
+    public Board getBoard(String boardId, Argument... args) {
+        Board board = get(createUrl(GET_BOARD_BY_ID).params(args).asString(), Board.class, boardId);
         board.setInternalTrello(this);
         return board;
     }
 
     @Override
-    public List<TList> getLists(String boardId) {
-        List<TList> tLists = Arrays.asList(get(GET_LISTS_BY_BOARD_ID, TList[].class, boardId));
+    public List<TList> getLists(String boardId, Argument... args) {
+        List<TList> tLists = Arrays.asList(get(createUrl(GET_LISTS_BY_BOARD_ID).params(args).asString(), TList[].class, boardId));
         for (TList list : tLists) {
             list.setInternalTrello(this);
         }
@@ -44,7 +41,7 @@ public class TrelloImpl implements Trello {
     @Override
     public Card createCard(String listId, Card card) {
         card.setIdList(listId);
-        Card createdCard = postForObject(TrelloURLConstants.CREATE_CARD, card, Card.class);
+        Card createdCard = postForObject(CREATE_CARD, card, Card.class);
         createdCard.setInternalTrello(this);
         return createdCard;
     }
@@ -57,7 +54,7 @@ public class TrelloImpl implements Trello {
     }
 
     public void addLabelsToCard(String idCard, String[] labels) {
-        for(String label : labels){
+        for (String label : labels) {
             postForLocation(ADD_LABEL_TO_CARD, new Label(label), idCard);
         }
     }

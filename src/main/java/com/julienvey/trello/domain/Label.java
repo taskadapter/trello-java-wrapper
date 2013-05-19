@@ -5,6 +5,7 @@ public class Label extends TrelloEntity {
     private String color;
     private String name;
 
+    /* Accessors */
     public String getColor() {
         return color;
     }
