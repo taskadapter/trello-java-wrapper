@@ -47,8 +47,6 @@ public class TrelloUrl {
             builder.append("=");
             builder.append(arg.getArgValue());
         }
-        String url = builder.toString();
-        System.out.println("URL : " + url);
-        return url;
+        return builder.toString();
     }
 }
