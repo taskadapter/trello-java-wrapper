@@ -2,6 +2,7 @@ package com.julienvey.trello;
 
 import com.julienvey.trello.domain.*;
 import com.julienvey.trello.impl.TrelloImpl;
+import com.julienvey.trello.utils.ArgUtils;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -64,6 +65,17 @@ public class BoardTest {
     }
 
     @Test
+    public void testGetBoardFetchCard() {
+        Board board = trello.getBoard(BOARD_ID);
+        Card card = board.fetchCard("518bab520967804c03002994");
+
+        assertThat(card).isNotNull();
+        assertThat(card.getId()).isEqualTo("518bab520967804c03002994");
+        assertThat(card.getName()).isEqualTo("Test 1");
+
+    }
+
+    @Test
     public void testGetBoardFetchListsCardsOpen() {
         Board board = trello.getBoard(BOARD_ID);
         List<TList> lists = board.fetchLists(arg("cards", "open"));
@@ -96,6 +108,33 @@ public class BoardTest {
         List<Card> cards = board.fetchCards();
 
         assertThat(cards).hasSize(2);
+        assertThat(cards.get(0).getId()).isEqualTo("518bab520967804c03002994");
+    }
+
+    @Test
+    public void testGetBoardFetchCheckLists() {
+        Board board = trello.getBoard(BOARD_ID);
+        List<CheckList> checkLists = board.fetchCheckLists();
+
+        assertThat(checkLists).hasSize(2);
+        assertThat(checkLists.get(0).getId()).isEqualTo("51990272b1740a191800e5af");
+    }
+
+    @Test
+    public void testGetBoardFetchMemberCards() {
+        Board board = trello.getBoard(BOARD_ID);
+        List<Card> cards = board.fetchMemberCards("5187a69eabd0b7305100beaa");
+
+        assertThat(cards).hasSize(1);
+        assertThat(cards.get(0).getId()).isEqualTo("518bab520967804c03002994");
+    }
+
+    @Test
+    public void testGetBoardFetchMembersInvited() {
+        Board board = trello.getBoard(BOARD_ID);
+        List<Member> members = board.fetchMembersInvited();
+
+        assertThat(members).hasSize(0);
     }
 
     @Test
@@ -121,5 +160,61 @@ public class BoardTest {
         Card boardCard = trello.getBoardCard(BOARD_ID, "518bab520967804c03002994");
 
         assertThat(boardCard).isNotNull();
+    }
+
+    @Test
+    public void testGetBoardChecklists(){
+        List<CheckList> boardChecklists = trello.getBoardChecklists(BOARD_ID);
+
+        assertThat(boardChecklists).isNotNull();
+        assertThat(boardChecklists).hasSize(2);
+    }
+
+    @Test
+    public void testGetBoardLists(){
+        List<TList> boardLists = trello.getBoardLists(BOARD_ID);
+
+        assertThat(boardLists).isNotNull();
+        assertThat(boardLists).hasSize(4);
+    }
+
+    @Test
+    public void testGetBoardMembers(){
+        List<Member> boardMembers = trello.getBoardMembers(BOARD_ID, arg("fields", "all"));
+
+        assertThat(boardMembers).isNotNull();
+        assertThat(boardMembers).hasSize(1);
+        assertThat(boardMembers.get(0).getId()).isEqualTo("5187a69eabd0b7305100beaa");
+    }
+
+    @Test
+    public void testGetBoardMemberCards(){
+        List<Card> boardMemberCards = trello.getBoardMemberCards(BOARD_ID, "5187a69eabd0b7305100beaa");
+
+        assertThat(boardMemberCards).isNotNull();
+        assertThat(boardMemberCards).hasSize(1);
+    }
+
+    @Test
+    public void testGetBoardMembersInvited(){
+        List<Member> boardMembersInvited = trello.getBoardMembersInvited(BOARD_ID);
+
+        assertThat(boardMembersInvited).isNotNull();
+        assertThat(boardMembersInvited).hasSize(0);
+    }
+
+    @Test
+    public void testGetBoardMyPrefs(){
+        Prefs boardMyPrefs = trello.getBoardMyPrefs(BOARD_ID);
+
+        assertThat(boardMyPrefs).isNotNull();
+    }
+
+    @Test
+    public void testGetBoardOrganization(){
+        Organization boardOrganization = trello.getBoardOrganization(BOARD_ID);
+
+        assertThat(boardOrganization).isNotNull();
+        assertThat(boardOrganization.getId()).isEqualTo("518baaaa815af84031004375");
     }
 }

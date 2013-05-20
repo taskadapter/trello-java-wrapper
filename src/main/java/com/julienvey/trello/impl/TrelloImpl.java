@@ -31,29 +31,56 @@ public class TrelloImpl implements Trello {
 
     @Override
     public List<Action> getBoardActions(String boardId, Argument... args) {
-        List<Action> actions = Arrays.asList(get(createUrl(GET_BOARD_ACTIONS).params(args).asString(), Action[].class, boardId));
-        return actions;
+        return Arrays.asList(get(createUrl(GET_BOARD_ACTIONS).params(args).asString(), Action[].class, boardId));
     }
 
     @Override
     public List<Card> getBoardCards(String boardId, Argument... args) {
-        List<Card> cards = Arrays.asList(get(createUrl(GET_BOARD_CARDS).params(args).asString(), Card[].class, boardId));
-        return cards;
+        return Arrays.asList(get(createUrl(GET_BOARD_CARDS).params(args).asString(), Card[].class, boardId));
     }
 
     @Override
     public Card getBoardCard(String boardId, String cardId, Argument... args) {
-        Card card = get(createUrl(GET_BOARD_CARD).params(args).asString(), Card.class, boardId, cardId);
-        return card;
+        return get(createUrl(GET_BOARD_CARD).params(args).asString(), Card.class, boardId, cardId);
     }
 
     @Override
-    public List<TList> getLists(String boardId, Argument... args) {
-        List<TList> tLists = Arrays.asList(get(createUrl(GET_LISTS_BY_BOARD_ID).params(args).asString(), TList[].class, boardId));
+    public List<CheckList> getBoardChecklists(String boardId, Argument... args) {
+        return Arrays.asList(get(createUrl(GET_BOARD_CHECKLISTS).params(args).asString(), CheckList[].class, boardId));
+    }
+
+    @Override
+    public List<TList> getBoardLists(String boardId, Argument... args) {
+        List<TList> tLists = Arrays.asList(get(createUrl(GET_BOARD_LISTS).params(args).asString(), TList[].class, boardId));
         for (TList list : tLists) {
             list.setInternalTrello(this);
         }
         return tLists;
+    }
+
+    @Override
+    public List<Member> getBoardMembers(String boardId, Argument... args) {
+        return Arrays.asList(get(createUrl(GET_BOARD_MEMBERS).params(args).asString(), Member[].class, boardId));
+    }
+
+    @Override
+    public List<Card> getBoardMemberCards(String boardId, String memberId, Argument... args) {
+        return Arrays.asList(get(createUrl(GET_BOARD_MEMBER_CARDS).params(args).asString(), Card[].class, boardId, memberId));
+    }
+
+    @Override
+    public List<Member> getBoardMembersInvited(String boardId, Argument... args) {
+        return Arrays.asList(get(createUrl(GET_BOARD_MEMBERS_INVITED).params(args).asString(), Member[].class, boardId));
+    }
+
+    @Override
+    public Prefs getBoardMyPrefs(String boardId) {
+        return get(createUrl(GET_BOARD_MYPREFS).asString(), Prefs.class, boardId);
+    }
+
+    @Override
+    public Organization getBoardOrganization(String boardId, Argument... args) {
+        return get(createUrl(GET_BOARD_ORGANIZATION).params(args).asString(), Organization.class, boardId);
     }
 
     @Override
@@ -75,11 +102,6 @@ public class TrelloImpl implements Trello {
         for (String label : labels) {
             postForLocation(ADD_LABEL_TO_CARD, new Label(label), idCard);
         }
-    }
-
-    @Override
-    public List<Member> getMembers(String boardId) {
-        return Arrays.asList(get(GET_BOARD_MEMBERS, Member[].class, boardId));
     }
 
     private <T> T postForObject(String url, T object, Class<T> objectClass, String... params) {

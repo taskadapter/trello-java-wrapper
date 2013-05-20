@@ -2,7 +2,6 @@ package com.julienvey.trello.domain;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 public class Card extends TrelloEntity {
 
@@ -15,7 +14,7 @@ public class Card extends TrelloEntity {
     private List<String> idMembers;
     private List<Label> labels;
     private Badges badges;
-    private List<CheckItem> checkItemStates;
+    private List<CardCheckItem> checkItemStates;
     private boolean closed;
     private Date dateLastActivity;
     private String idBoard;
@@ -98,11 +97,11 @@ public class Card extends TrelloEntity {
         this.url = url;
     }
 
-    public List<CheckItem> getCheckItemStates() {
+    public List<CardCheckItem> getCheckItemStates() {
         return checkItemStates;
     }
 
-    public void setCheckItemStates(List<CheckItem> checkItemStates) {
+    public void setCheckItemStates(List<CardCheckItem> checkItemStates) {
         this.checkItemStates = checkItemStates;
     }
 
@@ -200,5 +199,28 @@ public class Card extends TrelloEntity {
 
     public void setBadges(Badges badges) {
         this.badges = badges;
+    }
+
+    public static class CardCheckItem {
+
+        private String idCheckItem;
+        private String state;
+
+        public String getIdCheckItem() {
+            return idCheckItem;
+        }
+
+        public void setIdCheckItem(String idCheckItem) {
+            this.idCheckItem = idCheckItem;
+        }
+
+        public String getState() {
+            return state;
+        }
+
+        public void setState(String state) {
+            this.state = state;
+        }
+
     }
 }

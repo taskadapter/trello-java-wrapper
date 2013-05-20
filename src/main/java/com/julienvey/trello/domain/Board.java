@@ -16,13 +16,6 @@ public class Board extends TrelloEntity {
     private Map<String, String> labelNames;
 
     /* API */
-    public List<TList> fetchLists(Argument... args) {
-        return trelloService.getLists(id, args);
-    }
-
-    public List<Member> fetchMembers() {
-        return trelloService.getMembers(id);
-    }
 
     public List<Action> fetchActions(Argument... args) {
         return trelloService.getBoardActions(id, args);
@@ -30,6 +23,30 @@ public class Board extends TrelloEntity {
 
     public List<Card> fetchCards(Argument... args){
         return trelloService.getBoardCards(id, args);
+    }
+
+    public Card fetchCard(String cardId, Argument... args){
+        return trelloService.getBoardCard(id, cardId, args);
+    }
+
+    public List<CheckList> fetchCheckLists(Argument... args){
+        return trelloService.getBoardChecklists(id, args);
+    }
+
+    public List<TList> fetchLists(Argument... args) {
+        return trelloService.getBoardLists(id, args);
+    }
+
+    public List<Member> fetchMembers() {
+        return trelloService.getBoardMembers(id);
+    }
+
+    public List<Card> fetchMemberCards(String idMember, Argument... args){
+        return trelloService.getBoardMemberCards(id, idMember, args);
+    }
+
+    public List<Member> fetchMembersInvited(Argument... args){
+        return trelloService.getBoardMembersInvited(id, args);
     }
 
     /* Accessors */

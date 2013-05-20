@@ -11,12 +11,17 @@ public class TrelloUrl {
     public static final String GET_BOARD_ACTIONS = API_URL + "/boards/{boardId}/actions?" + API_KEY_TOKEN_PARAM;
     public static final String GET_BOARD_CARDS = API_URL + "/boards/{boardId}/cards?" + API_KEY_TOKEN_PARAM;
     public static final String GET_BOARD_CARD = API_URL + "/boards/{boardId}/cards/{cardId}?" + API_KEY_TOKEN_PARAM;
+    public static final String GET_BOARD_CHECKLISTS = API_URL + "/boards/{boardId}/checklists?" + API_KEY_TOKEN_PARAM;
+    public static final String GET_BOARD_MEMBERS = API_URL + "/boards/{boardId}/members?" + API_KEY_TOKEN_PARAM;
+    public static final String GET_BOARD_MEMBER_CARDS = API_URL + "/boards/{boardId}/members/{memberId}/cards?" + API_KEY_TOKEN_PARAM;
+    public static final String GET_BOARD_LISTS = API_URL + "/boards/{boardId}/lists?" + API_KEY_TOKEN_PARAM;
+    public static final String GET_BOARD_MEMBERS_INVITED = API_URL + "/boards/{boardId}/membersInvited?" + API_KEY_TOKEN_PARAM;
+    public static final String GET_BOARD_MYPREFS = API_URL + "/boards/{boardId}/myPrefs?" + API_KEY_TOKEN_PARAM;
+    public static final String GET_BOARD_ORGANIZATION = API_URL + "/boards/{boardId}/organization?" + API_KEY_TOKEN_PARAM;
 
-    public static final String GET_LISTS_BY_BOARD_ID = API_URL + "/boards/{boardId}/lists?" + API_KEY_TOKEN_PARAM;
     public static final String CREATE_CARD = API_URL + "/cards?pos=top&" + API_KEY_TOKEN_PARAM;
     public static final String GET_BASIC_MEMBER = API_URL + "/members/{username}?fields=username,fullName&" + API_KEY_TOKEN_PARAM;
     public static final String ADD_LABEL_TO_CARD = API_URL + "/cards/{cardId}/labels?" + API_KEY_TOKEN_PARAM;
-    public static final String GET_BOARD_MEMBERS = API_URL + "/boards/{boardId}/members?" + API_KEY_TOKEN_PARAM;
     private static Argument[] args;
 
     private String baseUrl;

@@ -2,15 +2,33 @@ package com.julienvey.trello.domain;
 
 public class CheckItem {
 
-    private String idCheckItem;
     private String state;
+    private String id;
+    private String name;
+    private int pos;
 
-    public String getIdCheckItem() {
-        return idCheckItem;
+    public String getId() {
+        return id;
     }
 
-    public void setIdCheckItem(String idCheckItem) {
-        this.idCheckItem = idCheckItem;
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getPos() {
+        return pos;
+    }
+
+    public void setPos(int pos) {
+        this.pos = pos;
     }
 
     public String getState() {
