@@ -25,9 +25,9 @@ public class TrelloUrl {
     public static final String CREATE_CARD = "/cards?pos=top&";
     public static final String GET_BASIC_MEMBER = "/members/{username}?fields=username,fullName&";
     public static final String ADD_LABEL_TO_CARD = "/cards/{cardId}/labels?";
-    private static Argument[] args;
 
     private String baseUrl;
+    private Argument[] args = {};
 
     private TrelloUrl(String baseUrl) {
         this.baseUrl = baseUrl;
@@ -38,7 +38,7 @@ public class TrelloUrl {
     }
 
     public TrelloUrl params(Argument... args){
-        TrelloUrl.args = args;
+        this.args = args;
         return this;
     }
 
