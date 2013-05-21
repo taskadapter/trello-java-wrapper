@@ -24,7 +24,7 @@ public class TrelloImpl implements Trello {
 
     @Override
     public Board getBoard(String boardId, Argument... args) {
-        Board board = get(createUrl(GET_BOARD_BY_ID).params(args).asString(), Board.class, boardId);
+        Board board = get(createUrl(GET_BOARD).params(args).asString(), Board.class, boardId);
         board.setInternalTrello(this);
         return board;
     }
@@ -74,8 +74,8 @@ public class TrelloImpl implements Trello {
     }
 
     @Override
-    public Prefs getBoardMyPrefs(String boardId) {
-        return get(createUrl(GET_BOARD_MYPREFS).asString(), Prefs.class, boardId);
+    public MyPrefs getBoardMyPrefs(String boardId) {
+        return get(createUrl(GET_BOARD_MYPREFS).asString(), MyPrefs.class, boardId);
     }
 
     @Override
@@ -84,23 +84,33 @@ public class TrelloImpl implements Trello {
     }
 
     @Override
+    public Action getAction(String actionId, Argument... args) {
+        return get(createUrl(GET_ACTION).params(args).asString(), Action.class, actionId);
+    }
+
+    @Override
+    public Board getActionBoard(String actionId, Argument... args) {
+        return get(createUrl(GET_ACTION_BOARD).params(args).asString(), Board.class, actionId);
+    }
+
+    @Override
     public Card createCard(String listId, Card card) {
         card.setIdList(listId);
-        Card createdCard = postForObject(CREATE_CARD, card, Card.class);
+        Card createdCard = postForObject(createUrl(CREATE_CARD).asString(), card, Card.class);
         createdCard.setInternalTrello(this);
         return createdCard;
     }
 
     @Override
     public Member getBasicMemberInformation(String username) {
-        Member member = get(GET_BASIC_MEMBER, Member.class, username);
+        Member member = get(createUrl(GET_BASIC_MEMBER).asString(), Member.class, username);
         member.setInternalTrello(this);
         return member;
     }
 
     public void addLabelsToCard(String idCard, String[] labels) {
         for (String label : labels) {
-            postForLocation(ADD_LABEL_TO_CARD, new Label(label), idCard);
+            postForLocation(createUrl(ADD_LABEL_TO_CARD).asString(), new Label(label), idCard);
         }
     }
 

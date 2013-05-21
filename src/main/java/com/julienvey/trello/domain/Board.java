@@ -12,8 +12,13 @@ public class Board extends TrelloEntity {
     private String idOrganization;
     private boolean pinned;
     private String url;
-    private Map<String, String> prefs;
     private Map<String, String> labelNames;
+    private boolean invited;
+    private List<String> invitations;
+    private List<Membership> memberships;
+    private String shortUrl;
+    private boolean subscribed;
+    private Prefs prefs;
 
     /* API */
 
@@ -49,7 +54,7 @@ public class Board extends TrelloEntity {
         return trelloService.getBoardMembersInvited(id, args);
     }
 
-    public Prefs fetchMyPrefs(){
+    public MyPrefs fetchMyPrefs(){
         return trelloService.getBoardMyPrefs(id);
     }
 
@@ -114,19 +119,152 @@ public class Board extends TrelloEntity {
         this.url = url;
     }
 
-    public Map<String, String> getPrefs() {
-        return prefs;
-    }
-
-    public void setPrefs(Map<String, String> prefs) {
-        this.prefs = prefs;
-    }
-
     public Map<String, String> getLabelNames() {
         return labelNames;
     }
 
     public void setLabelNames(Map<String, String> labelNames) {
         this.labelNames = labelNames;
+    }
+
+    public boolean isInvited() {
+        return invited;
+    }
+
+    public void setInvited(boolean invited) {
+        this.invited = invited;
+    }
+
+    public List<String> getInvitations() {
+        return invitations;
+    }
+
+    public void setInvitations(List<String> invitations) {
+        this.invitations = invitations;
+    }
+
+    public List<Membership> getMemberships() {
+        return memberships;
+    }
+
+    public void setMemberships(List<Membership> memberships) {
+        this.memberships = memberships;
+    }
+
+    public String getShortUrl() {
+        return shortUrl;
+    }
+
+    public void setShortUrl(String shortUrl) {
+        this.shortUrl = shortUrl;
+    }
+
+    public boolean isSubscribed() {
+        return subscribed;
+    }
+
+    public void setSubscribed(boolean subscribed) {
+        this.subscribed = subscribed;
+    }
+
+    public Prefs getPrefs() {
+        return prefs;
+    }
+
+    public void setPrefs(Prefs prefs) {
+        this.prefs = prefs;
+    }
+
+    public static final class Prefs {
+        private String permissionLevel;
+        private String voting;
+        private String comments;
+        private String invitations;
+        private boolean selfJoin;
+        private boolean cardCovers;
+        private boolean canBePublic;
+        private boolean canBeOrg;
+        private boolean canBePrivate;
+        private boolean canInvite;
+
+        public String getPermissionLevel() {
+            return permissionLevel;
+        }
+
+        public void setPermissionLevel(String permissionLevel) {
+            this.permissionLevel = permissionLevel;
+        }
+
+        public String getVoting() {
+            return voting;
+        }
+
+        public void setVoting(String voting) {
+            this.voting = voting;
+        }
+
+        public String getComments() {
+            return comments;
+        }
+
+        public void setComments(String comments) {
+            this.comments = comments;
+        }
+
+        public String getInvitations() {
+            return invitations;
+        }
+
+        public void setInvitations(String invitations) {
+            this.invitations = invitations;
+        }
+
+        public boolean isSelfJoin() {
+            return selfJoin;
+        }
+
+        public void setSelfJoin(boolean selfJoin) {
+            this.selfJoin = selfJoin;
+        }
+
+        public boolean isCardCovers() {
+            return cardCovers;
+        }
+
+        public void setCardCovers(boolean cardCovers) {
+            this.cardCovers = cardCovers;
+        }
+
+        public boolean isCanBePublic() {
+            return canBePublic;
+        }
+
+        public void setCanBePublic(boolean canBePublic) {
+            this.canBePublic = canBePublic;
+        }
+
+        public boolean isCanBeOrg() {
+            return canBeOrg;
+        }
+
+        public void setCanBeOrg(boolean canBeOrg) {
+            this.canBeOrg = canBeOrg;
+        }
+
+        public boolean isCanBePrivate() {
+            return canBePrivate;
+        }
+
+        public void setCanBePrivate(boolean canBePrivate) {
+            this.canBePrivate = canBePrivate;
+        }
+
+        public boolean isCanInvite() {
+            return canInvite;
+        }
+
+        public void setCanInvite(boolean canInvite) {
+            this.canInvite = canInvite;
+        }
     }
 }

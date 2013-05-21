@@ -1,6 +1,6 @@
 package com.julienvey.trello.domain;
 
-public class Prefs {
+public class MyPrefs {
     private boolean showSidebar;
     private boolean showSidebarMembers;
     private boolean showSidebarBoardActions;

@@ -25,9 +25,15 @@ public interface Trello {
 
     List<Member> getBoardMembersInvited(String boardId, Argument... args);
 
-    Prefs getBoardMyPrefs(String boardId);
+    MyPrefs getBoardMyPrefs(String boardId);
 
     Organization getBoardOrganization(String boardId, Argument... args);
+
+    /* Actions */
+
+    Action getAction(String actionId, Argument... args);
+
+    Board getActionBoard(String actionId, Argument... args);
 
     /////////////////
 

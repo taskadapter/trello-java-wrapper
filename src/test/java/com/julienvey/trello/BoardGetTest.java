@@ -2,7 +2,6 @@ package com.julienvey.trello;
 
 import com.julienvey.trello.domain.*;
 import com.julienvey.trello.impl.TrelloImpl;
-import com.julienvey.trello.utils.ArgUtils;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -42,7 +41,7 @@ public class BoardGetTest {
         assertThat(board.getUrl()).isEqualTo("https://trello.com/board/trello-test-board/518baad5b05dbf4703004852");
         assertThat(board.isClosed()).isFalse();
         assertThat(board.isPinned()).isFalse();
-        assertThat(board.getPrefs()).isNotNull().isNotEmpty();
+        assertThat(board.getPrefs()).isNotNull();
     }
 
     @Test
@@ -140,9 +139,9 @@ public class BoardGetTest {
     @Test
     public void testGetBoardFetchMyPrefs() {
         Board board = trello.getBoard(BOARD_ID);
-        Prefs prefs = board.fetchMyPrefs();
+        MyPrefs myPrefs = board.fetchMyPrefs();
 
-        assertThat(prefs).isNotNull();
+        assertThat(myPrefs).isNotNull();
     }
 
     @Test
@@ -222,9 +221,9 @@ public class BoardGetTest {
 
     @Test
     public void testGetBoardMyPrefs(){
-        Prefs boardMyPrefs = trello.getBoardMyPrefs(BOARD_ID);
+        MyPrefs boardMyMyPrefs = trello.getBoardMyPrefs(BOARD_ID);
 
-        assertThat(boardMyPrefs).isNotNull();
+        assertThat(boardMyMyPrefs).isNotNull();
     }
 
     @Test
