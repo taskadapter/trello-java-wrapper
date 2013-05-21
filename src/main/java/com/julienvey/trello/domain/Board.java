@@ -49,6 +49,14 @@ public class Board extends TrelloEntity {
         return trelloService.getBoardMembersInvited(id, args);
     }
 
+    public Prefs fetchMyPrefs(){
+        return trelloService.getBoardMyPrefs(id);
+    }
+
+    public Organization fetchOrganization(Argument... args){
+        return trelloService.getBoardOrganization(id, args);
+    }
+
     /* Accessors */
     public String getId() {
         return id;

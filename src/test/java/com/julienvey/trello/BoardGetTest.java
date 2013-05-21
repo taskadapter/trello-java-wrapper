@@ -12,7 +12,7 @@ import static com.julienvey.trello.utils.ArgUtils.arg;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.fest.assertions.MapAssert.entry;
 
-public class BoardTest {
+public class BoardGetTest {
 
     private static final String TEST_APPLICATION_KEY = "db555c528ce160c33305d2ea51ae1197";
     public static final String BOARD_ID = "518baad5b05dbf4703004852";
@@ -135,6 +135,23 @@ public class BoardTest {
         List<Member> members = board.fetchMembersInvited();
 
         assertThat(members).hasSize(0);
+    }
+
+    @Test
+    public void testGetBoardFetchMyPrefs() {
+        Board board = trello.getBoard(BOARD_ID);
+        Prefs prefs = board.fetchMyPrefs();
+
+        assertThat(prefs).isNotNull();
+    }
+
+    @Test
+    public void testGetBoardFetchOrganization() {
+        Board board = trello.getBoard(BOARD_ID);
+        Organization organization = board.fetchOrganization();
+
+        assertThat(organization).isNotNull();
+        assertThat(organization.getId()).isEqualTo("518baaaa815af84031004375");
     }
 
     @Test
