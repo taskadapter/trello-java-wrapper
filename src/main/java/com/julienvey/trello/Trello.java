@@ -35,6 +35,10 @@ public interface Trello {
 
     Board getActionBoard(String actionId, Argument... args);
 
+    Card getActionCard(String actionId, Argument... args);
+
+    List<Entity> getActionEntities(String actionId);
+
     /////////////////
 
     Card createCard(String listId, Card card);

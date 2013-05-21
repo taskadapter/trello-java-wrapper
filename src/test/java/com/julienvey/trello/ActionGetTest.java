@@ -2,9 +2,13 @@ package com.julienvey.trello;
 
 import com.julienvey.trello.domain.Action;
 import com.julienvey.trello.domain.Board;
+import com.julienvey.trello.domain.Card;
+import com.julienvey.trello.domain.Entity;
 import com.julienvey.trello.impl.TrelloImpl;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import java.util.List;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.fest.assertions.MapAssert.entry;
@@ -36,6 +40,23 @@ public class ActionGetTest {
 
         assertThat(actionBoard).isNotNull();
         assertThat(actionBoard.getId()).isEqualTo("518baad5b05dbf4703004852");
+    }
+
+    @Test
+    public void testGetActionCard() {
+        Card actionCard = trello.getActionCard(ACTION_ID);
+
+        assertThat(actionCard).isNotNull();
+        assertThat(actionCard.getId()).isEqualTo("51990c2143453ab27e0087d4");
+    }
+
+    @Test
+    public void testGetActionEntities() {
+        List<Entity> actionEntities = trello.getActionEntities(ACTION_ID);
+
+        assertThat(actionEntities).isNotNull();
+        assertThat(actionEntities).hasSize(5);
+        assertThat(actionEntities.get(0).getId()).isEqualTo("5187a69eabd0b7305100beaa");
     }
 
 

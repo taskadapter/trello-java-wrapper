@@ -94,6 +94,16 @@ public class TrelloImpl implements Trello {
     }
 
     @Override
+    public Card getActionCard(String actionId, Argument... args) {
+        return get(createUrl(GET_ACTION_CARD).params(args).asString(), Card.class, actionId);
+    }
+
+    @Override
+    public List<Entity> getActionEntities(String actionId) {
+        return Arrays.asList(get(createUrl(GET_ACTION_ENTITIES).asString(), Entity[].class, actionId));
+    }
+
+    @Override
     public Card createCard(String listId, Card card) {
         card.setIdList(listId);
         Card createdCard = postForObject(createUrl(CREATE_CARD).asString(), card, Card.class);
