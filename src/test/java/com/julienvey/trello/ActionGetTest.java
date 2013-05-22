@@ -1,9 +1,6 @@
 package com.julienvey.trello;
 
-import com.julienvey.trello.domain.Action;
-import com.julienvey.trello.domain.Board;
-import com.julienvey.trello.domain.Card;
-import com.julienvey.trello.domain.Entity;
+import com.julienvey.trello.domain.*;
 import com.julienvey.trello.impl.TrelloImpl;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -57,6 +54,14 @@ public class ActionGetTest {
         assertThat(actionEntities).isNotNull();
         assertThat(actionEntities).hasSize(5);
         assertThat(actionEntities.get(0).getId()).isEqualTo("5187a69eabd0b7305100beaa");
+    }
+
+    @Test
+    public void testGetActionList() {
+        TList actionList = trello.getActionList(ACTION_ID);
+
+        assertThat(actionList).isNotNull();
+        assertThat(actionList.getId()).isEqualTo("518baad5b05dbf4703004853");
     }
 
 
