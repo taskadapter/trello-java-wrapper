@@ -24,6 +24,7 @@ public class TrelloUrl {
     public static final String GET_ACTION_CARD = "/actions/{actionId}/card?";
     public static final String GET_ACTION_ENTITIES = "/actions/{actionId}/entities?";
     public static final String GET_ACTION_LIST = "/actions/{actionId}/list?";
+    public static final String GET_ACTION_MEMBER = "/actions/{actionId}/member?";
 
     public static final String CREATE_CARD = "/cards?pos=top&";
     public static final String GET_BASIC_MEMBER = "/members/{username}?fields=username,fullName&";

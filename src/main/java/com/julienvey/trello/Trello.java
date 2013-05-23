@@ -39,7 +39,9 @@ public interface Trello {
 
     List<Entity> getActionEntities(String actionId);
 
-    TList getActionList(String actionId);
+    TList getActionList(String actionId, Argument... args);
+
+    Member getActionMember(String actionId, Argument... args);
 
     /////////////////
 

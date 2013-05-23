@@ -104,8 +104,13 @@ public class TrelloImpl implements Trello {
     }
 
     @Override
-    public TList getActionList(String actionId) {
-        return get(createUrl(GET_ACTION_LIST).asString(), TList.class, actionId);
+    public TList getActionList(String actionId, Argument... args) {
+        return get(createUrl(GET_ACTION_LIST).params(args).asString(), TList.class, actionId);
+    }
+
+    @Override
+    public Member getActionMember(String actionId, Argument... args) {
+        return get(createUrl(GET_ACTION_MEMBER).params(args).asString(), Member.class, actionId);
     }
 
     @Override

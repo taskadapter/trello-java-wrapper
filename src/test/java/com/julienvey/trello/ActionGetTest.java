@@ -64,5 +64,13 @@ public class ActionGetTest {
         assertThat(actionList.getId()).isEqualTo("518baad5b05dbf4703004853");
     }
 
+    @Test
+    public void testGetActionMember() {
+        Member actionMember = trello.getActionMember("5199022ced074110280076ed");
+
+        assertThat(actionMember).isNotNull();
+        assertThat(actionMember.getId()).isEqualTo("5187a69eabd0b7305100beaa");
+    }
+
 
 }
