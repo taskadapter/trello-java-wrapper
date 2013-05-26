@@ -1,6 +1,6 @@
 package com.julienvey.trello.domain;
 
-public class MyPrefs {
+public class MyPrefs extends TrelloEntity {
     private boolean showSidebar;
     private boolean showSidebarMembers;
     private boolean showSidebarBoardActions;

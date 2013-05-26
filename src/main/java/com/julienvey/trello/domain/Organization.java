@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-public class Organization {
+public class Organization extends TrelloEntity {
 
     private String id;
     private String name;

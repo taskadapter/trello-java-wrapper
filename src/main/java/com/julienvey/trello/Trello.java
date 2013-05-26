@@ -43,6 +43,13 @@ public interface Trello {
 
     Member getActionMember(String actionId, Argument... args);
 
+    Member getActionMemberCreator(String actionId, Argument... args);
+
+    Organization getActionOrganization(String actionId, Argument... args);
+
+    /* Cards */
+
+
     /////////////////
 
     Card createCard(String listId, Card card);

@@ -3,7 +3,7 @@ package com.julienvey.trello.domain;
 import java.util.Date;
 import java.util.Map;
 
-public class Action {
+public class Action extends TrelloEntity {
 
     private String id;
     private String idMemberCreator;

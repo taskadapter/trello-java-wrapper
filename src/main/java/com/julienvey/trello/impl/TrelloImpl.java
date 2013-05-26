@@ -22,6 +22,8 @@ public class TrelloImpl implements Trello {
         this.accessToken = accessToken;
     }
 
+    /* Boards */
+
     @Override
     public Board getBoard(String boardId, Argument... args) {
         Board board = get(createUrl(GET_BOARD).params(args).asString(), Board.class, boardId);
@@ -31,22 +33,36 @@ public class TrelloImpl implements Trello {
 
     @Override
     public List<Action> getBoardActions(String boardId, Argument... args) {
-        return Arrays.asList(get(createUrl(GET_BOARD_ACTIONS).params(args).asString(), Action[].class, boardId));
+        List<Action> actions = Arrays.asList(get(createUrl(GET_BOARD_ACTIONS).params(args).asString(), Action[].class, boardId));
+        for (Action action : actions) {
+            action.setInternalTrello(this);
+        }
+        return actions;
     }
 
     @Override
     public List<Card> getBoardCards(String boardId, Argument... args) {
-        return Arrays.asList(get(createUrl(GET_BOARD_CARDS).params(args).asString(), Card[].class, boardId));
+        List<Card> cards = Arrays.asList(get(createUrl(GET_BOARD_CARDS).params(args).asString(), Card[].class, boardId));
+        for (Card card : cards) {
+            card.setInternalTrello(this);
+        }
+        return cards;
     }
 
     @Override
     public Card getBoardCard(String boardId, String cardId, Argument... args) {
-        return get(createUrl(GET_BOARD_CARD).params(args).asString(), Card.class, boardId, cardId);
+        Card card = get(createUrl(GET_BOARD_CARD).params(args).asString(), Card.class, boardId, cardId);
+        card.setInternalTrello(this);
+        return card;
     }
 
     @Override
     public List<CheckList> getBoardChecklists(String boardId, Argument... args) {
-        return Arrays.asList(get(createUrl(GET_BOARD_CHECKLISTS).params(args).asString(), CheckList[].class, boardId));
+        List<CheckList> checkLists = Arrays.asList(get(createUrl(GET_BOARD_CHECKLISTS).params(args).asString(), CheckList[].class, boardId));
+        for (CheckList checkList : checkLists){
+            checkList.setInternalTrello(this);
+        }
+        return checkLists;
     }
 
     @Override
@@ -60,58 +76,106 @@ public class TrelloImpl implements Trello {
 
     @Override
     public List<Member> getBoardMembers(String boardId, Argument... args) {
-        return Arrays.asList(get(createUrl(GET_BOARD_MEMBERS).params(args).asString(), Member[].class, boardId));
+        List<Member> members = Arrays.asList(get(createUrl(GET_BOARD_MEMBERS).params(args).asString(), Member[].class, boardId));
+        for(Member member : members){
+            member.setInternalTrello(this);
+        }
+        return members;
     }
 
     @Override
     public List<Card> getBoardMemberCards(String boardId, String memberId, Argument... args) {
-        return Arrays.asList(get(createUrl(GET_BOARD_MEMBER_CARDS).params(args).asString(), Card[].class, boardId, memberId));
+        List<Card> cards = Arrays.asList(get(createUrl(GET_BOARD_MEMBER_CARDS).params(args).asString(), Card[].class, boardId, memberId));
+        for(Card card : cards){
+            card.setInternalTrello(this);
+        }
+        return cards;
     }
 
     @Override
     public List<Member> getBoardMembersInvited(String boardId, Argument... args) {
-        return Arrays.asList(get(createUrl(GET_BOARD_MEMBERS_INVITED).params(args).asString(), Member[].class, boardId));
+        List<Member> members = Arrays.asList(get(createUrl(GET_BOARD_MEMBERS_INVITED).params(args).asString(), Member[].class, boardId));
+        for(Member member : members){
+            member.setInternalTrello(this);
+        }
+        return members;
     }
 
     @Override
     public MyPrefs getBoardMyPrefs(String boardId) {
-        return get(createUrl(GET_BOARD_MYPREFS).asString(), MyPrefs.class, boardId);
+        MyPrefs myPrefs = get(createUrl(GET_BOARD_MYPREFS).asString(), MyPrefs.class, boardId);
+        myPrefs.setInternalTrello(this);
+        return myPrefs;
     }
 
     @Override
     public Organization getBoardOrganization(String boardId, Argument... args) {
-        return get(createUrl(GET_BOARD_ORGANIZATION).params(args).asString(), Organization.class, boardId);
+        Organization organization = get(createUrl(GET_BOARD_ORGANIZATION).params(args).asString(), Organization.class, boardId);
+        organization.setInternalTrello(this);
+        return organization;
     }
+
+    /* Action */
 
     @Override
     public Action getAction(String actionId, Argument... args) {
-        return get(createUrl(GET_ACTION).params(args).asString(), Action.class, actionId);
+        Action action = get(createUrl(GET_ACTION).params(args).asString(), Action.class, actionId);
+        action.setInternalTrello(this);
+        return action;
     }
 
     @Override
     public Board getActionBoard(String actionId, Argument... args) {
-        return get(createUrl(GET_ACTION_BOARD).params(args).asString(), Board.class, actionId);
+        Board board = get(createUrl(GET_ACTION_BOARD).params(args).asString(), Board.class, actionId);
+        board.setInternalTrello(this);
+        return board;
     }
 
     @Override
     public Card getActionCard(String actionId, Argument... args) {
-        return get(createUrl(GET_ACTION_CARD).params(args).asString(), Card.class, actionId);
+        Card card = get(createUrl(GET_ACTION_CARD).params(args).asString(), Card.class, actionId);
+        card.setInternalTrello(this);
+        return card;
     }
 
     @Override
     public List<Entity> getActionEntities(String actionId) {
-        return Arrays.asList(get(createUrl(GET_ACTION_ENTITIES).asString(), Entity[].class, actionId));
+        List<Entity> entities = Arrays.asList(get(createUrl(GET_ACTION_ENTITIES).asString(), Entity[].class, actionId));
+        for(Entity entity : entities){
+            entity.setInternalTrello(this);
+        }
+        return entities;
     }
 
     @Override
     public TList getActionList(String actionId, Argument... args) {
-        return get(createUrl(GET_ACTION_LIST).params(args).asString(), TList.class, actionId);
+        TList tList = get(createUrl(GET_ACTION_LIST).params(args).asString(), TList.class, actionId);
+        tList.setInternalTrello(this);
+        return tList;
     }
 
     @Override
     public Member getActionMember(String actionId, Argument... args) {
-        return get(createUrl(GET_ACTION_MEMBER).params(args).asString(), Member.class, actionId);
+        Member member = get(createUrl(GET_ACTION_MEMBER).params(args).asString(), Member.class, actionId);
+        member.setInternalTrello(this);
+        return member;
     }
+
+    @Override
+    public Member getActionMemberCreator(String actionId, Argument... args) {
+        Member member = get(createUrl(GET_ACTION_MEMBER_CREATOR).params(args).asString(), Member.class, actionId);
+        member.setInternalTrello(this);
+        return member;
+    }
+
+    @Override
+    public Organization getActionOrganization(String actionId, Argument... args) {
+        Organization organization = get(createUrl(GET_ACTION_ORGANIZATION).params(args).asString(), Organization.class, actionId);
+        organization.setInternalTrello(this);
+        return organization;
+    }
+
+    /* Others */
 
     @Override
     public Card createCard(String listId, Card card) {

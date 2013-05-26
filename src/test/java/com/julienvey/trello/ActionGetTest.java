@@ -72,5 +72,21 @@ public class ActionGetTest {
         assertThat(actionMember.getId()).isEqualTo("5187a69eabd0b7305100beaa");
     }
 
+    @Test
+    public void testGetActionMembeCreator() {
+        Member actionMemberCreator = trello.getActionMemberCreator("5199022ced074110280076ed");
+
+        assertThat(actionMemberCreator).isNotNull();
+        assertThat(actionMemberCreator.getId()).isEqualTo("5187a69eabd0b7305100beaa");
+    }
+
+    @Test
+    public void testGetActionOrganization() {
+//        Organization actionOrganization = trello.getActionOrganization("5199022ced074110280076ed");
+//
+//        assertThat(actionOrganization).isNotNull();
+//        assertThat(actionOrganization.getId()).isEqualTo("5187a69eabd0b7305100beaa");
+    }
+
 
 }

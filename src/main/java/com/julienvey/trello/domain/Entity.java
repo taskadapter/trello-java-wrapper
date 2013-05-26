@@ -1,6 +1,6 @@
 package com.julienvey.trello.domain;
 
-public class Entity {
+public class Entity extends TrelloEntity {
     private String type;
     private String id;
     private String text;

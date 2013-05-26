@@ -2,7 +2,7 @@ package com.julienvey.trello.domain;
 
 import java.util.List;
 
-public class CheckList {
+public class CheckList extends TrelloEntity {
 
     private String id;
     private String name;
