@@ -1,6 +1,7 @@
 package com.julienvey.trello.domain;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 public class Action extends TrelloEntity {
@@ -13,6 +14,37 @@ public class Action extends TrelloEntity {
     private MemberShort memberCreator;
     private MemberShort member;
 
+    /* API */
+
+    Board fetchBoard(Argument... args) {
+        return trelloService.getActionBoard(id, args);
+    }
+
+    Card fetchCard(Argument... args) {
+        return trelloService.getActionCard(id, args);
+    }
+
+    List<Entity> fetchEntities() {
+        return trelloService.getActionEntities(id);
+    }
+
+    TList fetchTList(Argument... args) {
+        return trelloService.getActionList(id, args);
+    }
+
+    Member fetchMember(Argument... args){
+        return trelloService.getActionMember(id, args);
+    }
+
+    Member fetchMemberCreator(Argument... args){
+        return trelloService.getActionMemberCreator(id, args);
+    }
+
+    Organization fetchOrganization(Argument... args){
+        return trelloService.getActionOrganization(id, args);
+    }
+
+    /* Accessors */
     public Data getData() {
         return data;
     }
@@ -330,5 +362,5 @@ public class Action extends TrelloEntity {
             }
         }
 
-      }
+    }
 }

@@ -175,6 +175,46 @@ public class TrelloImpl implements Trello {
         return organization;
     }
 
+    @Override
+    public Card getCard(String cardId, Argument... args) {
+        Card card = get(createUrl(GET_CARD).params(args).asString(), Card.class, cardId);
+        card.setInternalTrello(this);
+        return card;
+    }
+
+    @Override
+    public List<Action> getCardActions(String cardId, Argument... args) {
+        List<Action> actions = Arrays.asList(get(createUrl(GET_CARD_ACTIONS).params(args).asString(), Action[].class, cardId));
+        for(Action action : actions){
+            action.setInternalTrello(this);
+        }
+        return actions;
+    }
+
+    @Override
+    public List<Attachment> getCardAttachments(String cardId, Argument... args) {
+        List<Attachment> attachments = Arrays.asList(get(createUrl(GET_CARD_ATTACHMENTS).params(args).asString(), Attachment[].class, cardId));
+        for(Attachment attachment : attachments){
+            attachment.setInternalTrello(this);
+        }
+        return attachments;
+
+    }
+
+    @Override
+    public Attachment getCardAttachment(String cardId, String attachmentId, Argument... args) {
+        Attachment attachment = get(createUrl(GET_CARD_ATTACHMENT).params(args).asString(), Attachment.class, cardId, attachmentId);
+        attachment.setInternalTrello(this);
+        return attachment;
+    }
+
+    @Override
+    public Board getCardBoard(String cardId, Argument... args) {
+        Board board = get(createUrl(GET_CARD_BOARD).params(args).asString(), Board.class, cardId);
+        board.setInternalTrello(this);
+        return board;
+    }
+
     /* Others */
 
     @Override

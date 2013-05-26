@@ -49,6 +49,17 @@ public interface Trello {
 
     /* Cards */
 
+    Card getCard(String cardId, Argument... args);
+
+    List<Action> getCardActions(String cardId, Argument... args);
+
+    List<Attachment> getCardAttachments(String cardId, Argument... args);
+
+    Attachment getCardAttachment(String cardId, String attachmentId, Argument... args);
+
+    Board getCardBoard(String cardId, Argument... args);
+
+
 
     /////////////////
 
