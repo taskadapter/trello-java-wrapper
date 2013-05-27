@@ -192,6 +192,7 @@ public class BoardGetTest {
 
         assertThat(boardLists).isNotNull();
         assertThat(boardLists).hasSize(4);
+        assertThat(boardLists.get(0).getId()).isEqualTo("518baad5b05dbf4703004853");
     }
 
     @Test

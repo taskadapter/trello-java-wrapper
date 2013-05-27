@@ -59,6 +59,12 @@ public interface Trello {
 
     Board getCardBoard(String cardId, Argument... args);
 
+    //TODO Finish card methods
+
+    /* Lists */
+
+    TList getList(String listId, Argument... args);
+
 
 
     /////////////////

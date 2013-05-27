@@ -215,6 +215,15 @@ public class TrelloImpl implements Trello {
         return board;
     }
 
+    /* Lists */
+
+    @Override
+    public TList getList(String listId, Argument... args) {
+        TList tList = get(createUrl(GET_LIST).params(args).asString(), TList.class, listId);
+        tList.setInternalTrello(this);
+        return tList;
+    }
+
     /* Others */
 
     @Override
