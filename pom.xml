@@ -70,12 +70,6 @@
     </properties>
 
     <dependencies>
-        <!-- Spring -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
 
         <!-- Jackson -->
         <dependency>
@@ -124,6 +118,22 @@
             <version>${fest-assert.version}</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- optionnal dependencies -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>${spring.version}</version>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>com.ning</groupId>
+            <artifactId>async-http-client</artifactId>
+            <version>1.7.16</version>
+            <optional>true</optional>
+        </dependency>
+
     </dependencies>
 
     <build>
