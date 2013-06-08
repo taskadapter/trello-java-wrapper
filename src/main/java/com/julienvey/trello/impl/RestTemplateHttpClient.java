@@ -3,6 +3,8 @@ package com.julienvey.trello.impl;
 import com.julienvey.trello.TrelloHttpClient;
 import org.springframework.web.client.RestTemplate;
 
+import java.net.URI;
+
 public class RestTemplateHttpClient implements TrelloHttpClient {
 
     private RestTemplate restTemplate;
@@ -18,8 +20,8 @@ public class RestTemplateHttpClient implements TrelloHttpClient {
     }
 
     @Override
-    public void postForLocation(String url, Object object, String... params) {
-        restTemplate.postForLocation(url, object, params);
+    public URI postForLocation(String url, Object object, String... params) {
+        return restTemplate.postForLocation(url, object, params);
     }
 
     @Override
