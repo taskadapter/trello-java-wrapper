@@ -1,12 +1,13 @@
 package com.julienvey.trello.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TList extends TrelloEntity {
 
     private String id;
     private String name;
-    private List<Card> cards;
+    private List<Card> cards = new ArrayList<>();
     private boolean closed;
     private String idBoard;
     private int pos;
