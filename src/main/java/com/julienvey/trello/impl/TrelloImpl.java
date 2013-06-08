@@ -59,7 +59,7 @@ public class TrelloImpl implements Trello {
     @Override
     public List<CheckList> getBoardChecklists(String boardId, Argument... args) {
         List<CheckList> checkLists = Arrays.asList(get(createUrl(GET_BOARD_CHECKLISTS).params(args).asString(), CheckList[].class, boardId));
-        for (CheckList checkList : checkLists){
+        for (CheckList checkList : checkLists) {
             checkList.setInternalTrello(this);
         }
         return checkLists;
@@ -70,6 +70,10 @@ public class TrelloImpl implements Trello {
         List<TList> tLists = Arrays.asList(get(createUrl(GET_BOARD_LISTS).params(args).asString(), TList[].class, boardId));
         for (TList list : tLists) {
             list.setInternalTrello(this);
+
+            for (Card card : list.getCards()) {
+                card.setInternalTrello(this);
+            }
         }
         return tLists;
     }
@@ -77,7 +81,7 @@ public class TrelloImpl implements Trello {
     @Override
     public List<Member> getBoardMembers(String boardId, Argument... args) {
         List<Member> members = Arrays.asList(get(createUrl(GET_BOARD_MEMBERS).params(args).asString(), Member[].class, boardId));
-        for(Member member : members){
+        for (Member member : members) {
             member.setInternalTrello(this);
         }
         return members;
@@ -86,7 +90,7 @@ public class TrelloImpl implements Trello {
     @Override
     public List<Card> getBoardMemberCards(String boardId, String memberId, Argument... args) {
         List<Card> cards = Arrays.asList(get(createUrl(GET_BOARD_MEMBER_CARDS).params(args).asString(), Card[].class, boardId, memberId));
-        for(Card card : cards){
+        for (Card card : cards) {
             card.setInternalTrello(this);
         }
         return cards;
@@ -95,7 +99,7 @@ public class TrelloImpl implements Trello {
     @Override
     public List<Member> getBoardMembersInvited(String boardId, Argument... args) {
         List<Member> members = Arrays.asList(get(createUrl(GET_BOARD_MEMBERS_INVITED).params(args).asString(), Member[].class, boardId));
-        for(Member member : members){
+        for (Member member : members) {
             member.setInternalTrello(this);
         }
         return members;
@@ -141,7 +145,7 @@ public class TrelloImpl implements Trello {
     @Override
     public List<Entity> getActionEntities(String actionId) {
         List<Entity> entities = Arrays.asList(get(createUrl(GET_ACTION_ENTITIES).asString(), Entity[].class, actionId));
-        for(Entity entity : entities){
+        for (Entity entity : entities) {
             entity.setInternalTrello(this);
         }
         return entities;
@@ -185,7 +189,7 @@ public class TrelloImpl implements Trello {
     @Override
     public List<Action> getCardActions(String cardId, Argument... args) {
         List<Action> actions = Arrays.asList(get(createUrl(GET_CARD_ACTIONS).params(args).asString(), Action[].class, cardId));
-        for(Action action : actions){
+        for (Action action : actions) {
             action.setInternalTrello(this);
         }
         return actions;
@@ -194,7 +198,7 @@ public class TrelloImpl implements Trello {
     @Override
     public List<Attachment> getCardAttachments(String cardId, Argument... args) {
         List<Attachment> attachments = Arrays.asList(get(createUrl(GET_CARD_ATTACHMENTS).params(args).asString(), Attachment[].class, cardId));
-        for(Attachment attachment : attachments){
+        for (Attachment attachment : attachments) {
             attachment.setInternalTrello(this);
         }
         return attachments;

@@ -32,15 +32,15 @@ public class Action extends TrelloEntity {
         return trelloService.getActionList(id, args);
     }
 
-    Member fetchMember(Argument... args){
+    Member fetchMember(Argument... args) {
         return trelloService.getActionMember(id, args);
     }
 
-    Member fetchMemberCreator(Argument... args){
+    Member fetchMemberCreator(Argument... args) {
         return trelloService.getActionMemberCreator(id, args);
     }
 
-    Organization fetchOrganization(Argument... args){
+    Organization fetchOrganization(Argument... args) {
         return trelloService.getActionOrganization(id, args);
     }
 
@@ -160,6 +160,33 @@ public class Action extends TrelloEntity {
         private CheckItem checkItem;
         private String idMember;
         private Old old;
+        private TList listAfter;
+        private TList listBefore;
+        private Date dateLastEdited;
+
+        public Date getDateLastEdited() {
+            return dateLastEdited;
+        }
+
+        public void setDateLastEdited(Date dateLastEdited) {
+            this.dateLastEdited = dateLastEdited;
+        }
+
+        public TList getListAfter() {
+            return listAfter;
+        }
+
+        public void setListAfter(TList listAfter) {
+            this.listAfter = listAfter;
+        }
+
+        public TList getListBefore() {
+            return listBefore;
+        }
+
+        public void setListBefore(TList listBefore) {
+            this.listBefore = listBefore;
+        }
 
         public Board getBoard() {
             return board;
@@ -237,6 +264,15 @@ public class Action extends TrelloEntity {
             private boolean closed;
             private Map<String, String> labelNames;
             private String desc;
+            private String idList;
+
+            public String getIdList() {
+                return idList;
+            }
+
+            public void setIdList(String idList) {
+                this.idList = idList;
+            }
 
             public boolean isClosed() {
                 return closed;

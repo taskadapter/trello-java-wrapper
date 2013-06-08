@@ -32,6 +32,10 @@ public class Card extends TrelloEntity {
         trelloService.addLabelsToCard(id, labels);
     }
 
+    public List<Action> getActions(Argument... filters) {
+        return trelloService.getCardActions(id, filters);
+    }
+
     /* Accessors */
     public String getId() {
         return id;
