@@ -1,8 +1,19 @@
 package com.julienvey.trello;
 
-import com.julienvey.trello.domain.*;
-
 import java.util.List;
+
+import com.julienvey.trello.domain.Action;
+import com.julienvey.trello.domain.Argument;
+import com.julienvey.trello.domain.Attachment;
+import com.julienvey.trello.domain.Board;
+import com.julienvey.trello.domain.Card;
+import com.julienvey.trello.domain.CardWithActions;
+import com.julienvey.trello.domain.CheckList;
+import com.julienvey.trello.domain.Entity;
+import com.julienvey.trello.domain.Member;
+import com.julienvey.trello.domain.MyPrefs;
+import com.julienvey.trello.domain.Organization;
+import com.julienvey.trello.domain.TList;
 
 public interface Trello {
 
@@ -22,6 +33,9 @@ public interface Trello {
     List<Member> getBoardMembers(String boardId, Argument... args);
 
     List<Card> getBoardMemberCards(String boardId, String memberId, Argument... args);
+
+	List<CardWithActions> getBoardMemberActivity(String boardId, String memberId,
+			String actionsFilter, Argument... args);
 
     List<Member> getBoardMembersInvited(String boardId, Argument... args);
 

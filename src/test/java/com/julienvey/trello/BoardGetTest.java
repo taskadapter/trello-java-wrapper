@@ -1,15 +1,24 @@
 package com.julienvey.trello;
 
-import com.julienvey.trello.domain.*;
-import com.julienvey.trello.impl.TrelloImpl;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
-import java.util.List;
-
 import static com.julienvey.trello.utils.ArgUtils.arg;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.fest.assertions.MapAssert.entry;
+
+import java.util.List;
+
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import com.julienvey.trello.domain.Action;
+import com.julienvey.trello.domain.Board;
+import com.julienvey.trello.domain.Card;
+import com.julienvey.trello.domain.CardWithActions;
+import com.julienvey.trello.domain.CheckList;
+import com.julienvey.trello.domain.Member;
+import com.julienvey.trello.domain.MyPrefs;
+import com.julienvey.trello.domain.Organization;
+import com.julienvey.trello.domain.TList;
+import com.julienvey.trello.impl.TrelloImpl;
 
 public class BoardGetTest {
 
@@ -234,4 +243,20 @@ public class BoardGetTest {
         assertThat(boardOrganization).isNotNull();
         assertThat(boardOrganization.getId()).isEqualTo("518baaaa815af84031004375");
     }
+
+	@Test
+	public void testGetBoardMemberActivityComments() {
+		List<CardWithActions> commentActivity = trello.getBoardMemberActivity(BOARD_ID,
+				"5187a69eabd0b7305100beaa", "commentCard");
+
+		assertThat(commentActivity).isNotNull();
+		assertThat(commentActivity).hasSize(1);
+		assertThat(commentActivity.get(0).getActions()).isNotNull();
+		assertThat(commentActivity.get(0).getActions()).hasSize(1);
+		assertThat(commentActivity.get(0).getActions().get(0)).isNotNull();
+		assertThat(commentActivity.get(0).getActions().get(0).getData()).isNotNull();
+		assertThat(commentActivity.get(0).getActions().get(0).getData().getText()).isNotNull();
+		assertThat(commentActivity.get(0).getActions().get(0).getData().getText())
+				.isEqualToIgnoringCase("a comment");
+	}
 }
