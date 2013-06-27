@@ -1,5 +1,6 @@
 package com.julienvey.trello.domain;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +20,8 @@ public class Board extends TrelloEntity {
     private String shortUrl;
     private boolean subscribed;
     private Prefs prefs;
+	private Date dateLastActivity;
+	private Date dateLastView;
 
     /* API */
 
@@ -166,6 +169,22 @@ public class Board extends TrelloEntity {
     public void setSubscribed(boolean subscribed) {
         this.subscribed = subscribed;
     }
+
+	public Date getDateLastActivity() {
+		return dateLastActivity;
+	}
+
+	public void setDateLastActivity(Date dateLastActivity) {
+		this.dateLastActivity = dateLastActivity;
+	}
+
+	public Date getDateLastView() {
+		return dateLastView;
+	}
+
+	public void setDateLastView(Date dateLastView) {
+		this.dateLastView = dateLastView;
+	}
 
     public Prefs getPrefs() {
         return prefs;
