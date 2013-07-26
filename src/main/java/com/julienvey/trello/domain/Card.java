@@ -24,6 +24,7 @@ public class Card extends TrelloEntity {
     private String idAttachmentCover;
     private boolean manualCoverAttachment;
     private int pos;
+    private String shortLink;
     private String shortUrl;
     private boolean subscribed;
 
@@ -181,12 +182,12 @@ public class Card extends TrelloEntity {
         this.pos = pos;
     }
 
-    public String getShortUrl() {
-        return shortUrl;
+    public String getShortLink() {
+        return shortLink;
     }
 
-    public void setShortUrl(String shortUrl) {
-        this.shortUrl = shortUrl;
+    public void setShortLink(String shortLink) {
+        this.shortLink = shortLink;
     }
 
     public boolean isSubscribed() {
@@ -203,6 +204,14 @@ public class Card extends TrelloEntity {
 
     public void setBadges(Badges badges) {
         this.badges = badges;
+    }
+
+    public String getShortUrl() {
+        return shortUrl;
+    }
+
+    public void setShortUrl(String shortUrl) {
+        this.shortUrl = shortUrl;
     }
 
     public static class CardCheckItem {

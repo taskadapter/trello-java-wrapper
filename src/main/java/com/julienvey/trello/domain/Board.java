@@ -22,6 +22,8 @@ public class Board extends TrelloEntity {
     private Prefs prefs;
 	private Date dateLastActivity;
 	private Date dateLastView;
+    private String shortLink;
+    private List<String> powerUps;
 
     /* API */
 
@@ -192,6 +194,22 @@ public class Board extends TrelloEntity {
 
     public void setPrefs(Prefs prefs) {
         this.prefs = prefs;
+    }
+
+    public String getShortLink() {
+        return shortLink;
+    }
+
+    public void setShortLink(String shortLink) {
+        this.shortLink = shortLink;
+    }
+
+    public List<String> getPowerUps() {
+        return powerUps;
+    }
+
+    public void setPowerUps(List<String> powerUps) {
+        this.powerUps = powerUps;
     }
 
     public static final class Prefs {

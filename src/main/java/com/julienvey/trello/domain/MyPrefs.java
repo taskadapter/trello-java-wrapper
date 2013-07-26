@@ -6,6 +6,9 @@ public class MyPrefs extends TrelloEntity {
     private boolean showSidebarBoardActions;
     private boolean showSidebarActivity;
     private boolean showListGuide;
+    private String emailKey;
+    private String idEmailList;
+    private String emailPosition;
 
     public boolean isShowListGuide() {
         return showListGuide;
@@ -45,5 +48,29 @@ public class MyPrefs extends TrelloEntity {
 
     public void setShowSidebarMembers(boolean showSidebarMembers) {
         this.showSidebarMembers = showSidebarMembers;
+    }
+
+    public String getEmailKey() {
+        return emailKey;
+    }
+
+    public void setEmailKey(String emailKey) {
+        this.emailKey = emailKey;
+    }
+
+    public String getIdEmailList() {
+        return idEmailList;
+    }
+
+    public void setIdEmailList(String idEmailList) {
+        this.idEmailList = idEmailList;
+    }
+
+    public String getEmailPosition() {
+        return emailPosition;
+    }
+
+    public void setEmailPosition(String emailPosition) {
+        this.emailPosition = emailPosition;
     }
 }

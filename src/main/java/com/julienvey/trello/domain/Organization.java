@@ -20,6 +20,7 @@ public class Organization extends TrelloEntity {
     private String logoHash;
     private List<String> premiumFeatures;
     private Prefs prefs;
+    private List<String> products;
 
     public String getDesc() {
         return desc;
@@ -131,6 +132,14 @@ public class Organization extends TrelloEntity {
 
     public void setMemberships(List<Membership> memberships) {
         this.memberships = memberships;
+    }
+
+    public List<String> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<String> products) {
+        this.products = products;
     }
 
     public static final class Prefs {

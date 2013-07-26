@@ -47,7 +47,7 @@ public class BoardGetTest {
                 entry("purple", "Label 5 Purple"),
                 entry("blue", "Label 6 Blue"));
         assertThat(board.getName()).isEqualTo("Trello Test Board");
-        assertThat(board.getUrl()).isEqualTo("https://trello.com/board/trello-test-board/518baad5b05dbf4703004852");
+        assertThat(board.getUrl()).isEqualTo("https://trello.com/b/laQO5ODb/trello-test-board");
         assertThat(board.isClosed()).isFalse();
         assertThat(board.isPinned()).isFalse();
         assertThat(board.getPrefs()).isNotNull();
