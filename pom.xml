@@ -9,6 +9,8 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
         <jackson.version>2.2.0</jackson.version>
         <spring.version>3.2.2.RELEASE</spring.version>
         <logback.version>1.0.11</logback.version>
