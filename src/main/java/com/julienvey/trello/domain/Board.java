@@ -20,8 +20,8 @@ public class Board extends TrelloEntity {
     private String shortUrl;
     private boolean subscribed;
     private Prefs prefs;
-	private Date dateLastActivity;
-	private Date dateLastView;
+    private Date dateLastActivity;
+    private Date dateLastView;
     private String shortLink;
     private List<String> powerUps;
 
@@ -31,15 +31,15 @@ public class Board extends TrelloEntity {
         return trelloService.getBoardActions(id, args);
     }
 
-    public List<Card> fetchCards(Argument... args){
+    public List<Card> fetchCards(Argument... args) {
         return trelloService.getBoardCards(id, args);
     }
 
-    public Card fetchCard(String cardId, Argument... args){
+    public Card fetchCard(String cardId, Argument... args) {
         return trelloService.getBoardCard(id, cardId, args);
     }
 
-    public List<CheckList> fetchCheckLists(Argument... args){
+    public List<CheckList> fetchCheckLists(Argument... args) {
         return trelloService.getBoardChecklists(id, args);
     }
 
@@ -51,19 +51,19 @@ public class Board extends TrelloEntity {
         return trelloService.getBoardMembers(id);
     }
 
-    public List<Card> fetchMemberCards(String idMember, Argument... args){
+    public List<Card> fetchMemberCards(String idMember, Argument... args) {
         return trelloService.getBoardMemberCards(id, idMember, args);
     }
 
-    public List<Member> fetchMembersInvited(Argument... args){
+    public List<Member> fetchMembersInvited(Argument... args) {
         return trelloService.getBoardMembersInvited(id, args);
     }
 
-    public MyPrefs fetchMyPrefs(){
+    public MyPrefs fetchMyPrefs() {
         return trelloService.getBoardMyPrefs(id);
     }
 
-    public Organization fetchOrganization(Argument... args){
+    public Organization fetchOrganization(Argument... args) {
         return trelloService.getBoardOrganization(id, args);
     }
 
@@ -172,21 +172,21 @@ public class Board extends TrelloEntity {
         this.subscribed = subscribed;
     }
 
-	public Date getDateLastActivity() {
-		return dateLastActivity;
-	}
+    public Date getDateLastActivity() {
+        return dateLastActivity;
+    }
 
-	public void setDateLastActivity(Date dateLastActivity) {
-		this.dateLastActivity = dateLastActivity;
-	}
+    public void setDateLastActivity(Date dateLastActivity) {
+        this.dateLastActivity = dateLastActivity;
+    }
 
-	public Date getDateLastView() {
-		return dateLastView;
-	}
+    public Date getDateLastView() {
+        return dateLastView;
+    }
 
-	public void setDateLastView(Date dateLastView) {
-		this.dateLastView = dateLastView;
-	}
+    public void setDateLastView(Date dateLastView) {
+        this.dateLastView = dateLastView;
+    }
 
     public Prefs getPrefs() {
         return prefs;
@@ -217,12 +217,30 @@ public class Board extends TrelloEntity {
         private String voting;
         private String comments;
         private String invitations;
+        private String cardAging;
         private boolean selfJoin;
         private boolean cardCovers;
         private boolean canBePublic;
         private boolean canBeOrg;
         private boolean canBePrivate;
         private boolean canInvite;
+        private boolean calendarFeedEnabled;
+
+        public boolean isCalendarFeedEnabled() {
+            return calendarFeedEnabled;
+        }
+
+        public void setCalendarFeedEnabled(boolean calendarFeedEnabled) {
+            this.calendarFeedEnabled = calendarFeedEnabled;
+        }
+
+        public String getCardAging() {
+            return cardAging;
+        }
+
+        public void setCardAging(String cardAging) {
+            this.cardAging = cardAging;
+        }
 
         public String getPermissionLevel() {
             return permissionLevel;
