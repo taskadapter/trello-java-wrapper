@@ -4,7 +4,7 @@
 
     <groupId>com.julienvey.trello</groupId>
     <artifactId>trello-java-wrapper</artifactId>
-    <version>0.1-SNAPSHOT</version>
+    <version>0.1</version>
 
     <name>Trello Java Wrapper</name>
     <description>Java Wrapper for Trello API</description>
