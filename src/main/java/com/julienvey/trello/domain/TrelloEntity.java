@@ -1,8 +1,10 @@
 package com.julienvey.trello.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.julienvey.trello.Trello;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class TrelloEntity {
 
     @JsonIgnore

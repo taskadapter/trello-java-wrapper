@@ -1,9 +1,12 @@
 package com.julienvey.trello.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Action extends TrelloEntity {
 
     private String id;
