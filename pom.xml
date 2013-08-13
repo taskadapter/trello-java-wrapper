@@ -9,19 +9,26 @@
     <version>0.1-SNAPSHOT</version>
 
     <properties>
+        <!-- Configuration -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>1.7</java.version>
 
+        <!-- Dependencies versions -->
         <jackson.version>2.2.0</jackson.version>
         <spring.version>3.2.2.RELEASE</spring.version>
         <logback.version>1.0.11</logback.version>
         <slf4j.version>1.7.5</slf4j.version>
         <junit.version>4.8.2</junit.version>
         <fest-assert.version>1.4</fest-assert.version>
+
+        <!-- Plugins versions -->
+        <maven-jgitflow-plugin.version>1.0-alpha14</maven-jgitflow-plugin.version>
+        <maven-source-plugin.version>2.2.1</maven-source-plugin.version>
+        <maven-compiler-plugin.version>2.5.1</maven-compiler-plugin.version>
     </properties>
 
     <dependencies>
         <!-- Spring -->
-
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
@@ -29,7 +36,6 @@
         </dependency>
 
         <!-- Jackson -->
-
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
@@ -47,7 +53,6 @@
         </dependency>
 
         <!-- Others -->
-
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-core</artifactId>
@@ -69,10 +74,13 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- Others -->
         <dependency>
             <groupId>org.easytesting</groupId>
             <artifactId>fest-assert</artifactId>
             <version>${fest-assert.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -81,7 +89,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>2.2.1</version>
+                <version>${maven-source-plugin.version}</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
@@ -95,10 +103,22 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.5.1</version>
+                <version>${maven-compiler-plugin.version}</version>
                 <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.atlassian.maven.plugins</groupId>
+                <artifactId>maven-jgitflow-plugin</artifactId>
+                <version>${maven-jgitflow-plugin.version}</version>
+                <configuration>
+                    <flowInitContext>
+                        <developBranchName>master</developBranchName>
+                        <versionTagPrefix>v</versionTagPrefix>
+                    </flowInitContext>
+                    <noDeploy>true</noDeploy>
                 </configuration>
             </plugin>
         </plugins>
