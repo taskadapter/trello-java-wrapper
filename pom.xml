@@ -118,7 +118,7 @@
                 <version>${maven-jgitflow-plugin.version}</version>
                 <configuration>
                     <flowInitContext>
-                        <developBranchName>master</developBranchName>
+                        <developBranchName>dev</developBranchName>
                         <versionTagPrefix>v</versionTagPrefix>
                     </flowInitContext>
                     <noDeploy>true</noDeploy>
