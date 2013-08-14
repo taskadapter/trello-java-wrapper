@@ -157,7 +157,6 @@
                         <developBranchName>dev</developBranchName>
                         <versionTagPrefix>v</versionTagPrefix>
                     </flowInitContext>
-                    <noDeploy>true</noDeploy>
                 </configuration>
             </plugin>
         </plugins>
