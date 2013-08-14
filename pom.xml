@@ -5,9 +5,39 @@
     <groupId>com.julienvey.trello</groupId>
     <artifactId>trello-java-wrapper</artifactId>
     <version>0.2-SNAPSHOT</version>
+    <packaging>jar</packaging>
 
     <name>Trello Java Wrapper</name>
     <description>Java Wrapper for Trello API</description>
+    <url>https://github.com/julienvey/trello-java-wrapper</url>
+
+    <licenses>
+        <license>
+            <name>The MIT License</name>
+            <url>http://www.opensource.org/licenses/mit-license.php</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <scm>
+        <url>https://github.com/julienvey/trello-java-wrapper.git</url>
+        <connection>git@github.com:julienvey/trello-java-wrapper.git</connection>
+    </scm>
+
+    <developers>
+        <developer>
+            <name>Julien Vey</name>
+            <url>https://github.com/julienvey</url>
+        </developer>
+        <developer>
+            <name>Eric Bellemon</name>
+            <url>https://github.com/haklop</url>
+        </developer>
+        <developer>
+            <name>Simon Baslé</name>
+            <url>https://github.com/edralzar</url>
+        </developer>
+    </developers>
 
     <properties>
         <!-- Configuration -->
