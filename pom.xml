@@ -26,8 +26,10 @@
     </licenses>
 
     <scm>
-        <url>https://github.com/julienvey/trello-java-wrapper.git</url>
-        <connection>git@github.com:julienvey/trello-java-wrapper.git</connection>
+        <connection>scm:git:git@github.com:julienvey/trello-java-wrapper.git</connection>
+        <developerConnection>scm:git:git@github.com:julienvey/trello-java-wrapper.git</developerConnection>
+        <url>https://github.com/julienvey/trello-java-wrapper</url>
+        <tag>HEAD</tag>
     </scm>
 
     <developers>
