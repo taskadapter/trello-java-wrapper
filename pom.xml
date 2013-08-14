@@ -28,7 +28,7 @@
     <scm>
         <connection>scm:git:git@github.com:julienvey/trello-java-wrapper.git</connection>
         <developerConnection>scm:git:git@github.com:julienvey/trello-java-wrapper.git</developerConnection>
-        <url>https://github.com/julienvey/trello-java-wrapper</url>
+        <url>git@github.com/julienvey/trello-java-wrapper.git</url>
         <tag>HEAD</tag>
     </scm>
 
