@@ -34,14 +34,17 @@
 
     <developers>
         <developer>
+            <id>julienvey</id>
             <name>Julien Vey</name>
             <url>https://github.com/julienvey</url>
         </developer>
         <developer>
+            <id>haklop</id>
             <name>Eric Bellemon</name>
             <url>https://github.com/haklop</url>
         </developer>
         <developer>
+            <id>edralzar</id>
             <name>Simon Baslé</name>
             <url>https://github.com/edralzar</url>
         </developer>
