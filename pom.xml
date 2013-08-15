@@ -10,7 +10,7 @@
 
     <groupId>com.julienvey.trello</groupId>
     <artifactId>trello-java-wrapper</artifactId>
-    <version>0.2-SNAPSHOT</version>
+    <version>0.2</version>
     <packaging>jar</packaging>
 
     <name>Trello Java Wrapper</name>
