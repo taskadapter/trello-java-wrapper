@@ -34,6 +34,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.web.client.RestTemplate;
 
 import com.julienvey.trello.Trello;
@@ -56,6 +58,8 @@ public class TrelloImpl implements Trello {
     private RestTemplate restTemplate = new RestTemplate();
     private String applicationKey;
     private String accessToken;
+
+    private static Logger logger = LoggerFactory.getLogger(TrelloImpl.class);
 
     public TrelloImpl(String applicationKey, String accessToken) {
         this.applicationKey = applicationKey;
@@ -308,15 +312,20 @@ public class TrelloImpl implements Trello {
         }
     }
 
+    /* internal methods */
+
     private <T> T postForObject(String url, T object, Class<T> objectClass, String... params) {
+        logger.debug("PostForObject request on Trello API at url {} for class {} with params {}", url, objectClass.getCanonicalName(), params);
         return restTemplate.postForObject(url, object, objectClass, enrichParams(params));
     }
 
     private void postForLocation(String url, Object object, String... params) {
+        logger.debug("PostForLocation request on Trello API at url {} for class {} with params {}", url, object.getClass().getCanonicalName(), params);
         restTemplate.postForLocation(url, object, enrichParams(params));
     }
 
     private <T> T get(String url, Class<T> objectClass, String... params) {
+        logger.debug("Get request on Trello API at url {} for class {} with params {}", url, objectClass.getCanonicalName(), params);
         return restTemplate.getForObject(url, objectClass, enrichParams(params));
     }
 
