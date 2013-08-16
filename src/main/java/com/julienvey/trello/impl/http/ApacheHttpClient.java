@@ -22,12 +22,12 @@ public class ApacheHttpClient extends AbstractHttpClient {
     private ObjectMapper mapper;
 
     public ApacheHttpClient() {
-        this.httpClient = new DefaultHttpClient();
-        this.mapper = new ObjectMapper();
+        this(new DefaultHttpClient());
     }
 
     public ApacheHttpClient(DefaultHttpClient httpClient) {
         this.httpClient = httpClient;
+        this.mapper = new ObjectMapper();
     }
 
     @Override
