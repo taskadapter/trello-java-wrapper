@@ -2,6 +2,7 @@ package com.julienvey.trello.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.julienvey.trello.TrelloHttpClient;
+import com.julienvey.trello.exception.TrelloHttpException;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -43,7 +44,7 @@ public class HttpClient implements TrelloHttpClient {
                 throw new NullPointerException();
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new TrelloHttpException(e);
         } finally {
             httpGet.releaseConnection();
         }
@@ -67,7 +68,7 @@ public class HttpClient implements TrelloHttpClient {
                 throw new NullPointerException();
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new TrelloHttpException(e);
         } finally {
             httpPost.releaseConnection();
         }
@@ -90,7 +91,7 @@ public class HttpClient implements TrelloHttpClient {
                 throw new NullPointerException();
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new TrelloHttpException(e);
         } finally {
             httpPost.releaseConnection();
         }
