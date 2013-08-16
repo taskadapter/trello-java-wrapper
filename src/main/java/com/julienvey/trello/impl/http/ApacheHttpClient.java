@@ -1,4 +1,4 @@
-package com.julienvey.trello.impl;
+package com.julienvey.trello.impl.http;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

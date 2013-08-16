@@ -1,4 +1,4 @@
-package com.julienvey.trello.impl;
+package com.julienvey.trello.impl.http;
 
 import com.julienvey.trello.TrelloHttpClient;
 import com.julienvey.trello.exception.TrelloHttpException;

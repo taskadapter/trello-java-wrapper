@@ -4,6 +4,7 @@ import com.julienvey.trello.Trello;
 import com.julienvey.trello.TrelloHttpClient;
 import com.julienvey.trello.domain.*;
 import com.julienvey.trello.impl.domaininternal.Label;
+import com.julienvey.trello.impl.http.RestTemplateHttpClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
