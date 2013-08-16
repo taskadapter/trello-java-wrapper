@@ -17,14 +17,14 @@ import java.net.URI;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class HttpClient implements TrelloHttpClient {
+public class ApacheHttpClient implements TrelloHttpClient {
 
     private static final Pattern NAMES_PATTERN = Pattern.compile("\\{([^/]+?)\\}");
 
     private DefaultHttpClient httpClient;
     private ObjectMapper mapper;
 
-    public HttpClient() {
+    public ApacheHttpClient() {
         this.httpClient = new DefaultHttpClient();
         this.mapper = new ObjectMapper();
     }
