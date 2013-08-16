@@ -2,7 +2,6 @@ package com.julienvey.trello.impl.http;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.julienvey.trello.TrelloHttpClient;
 import com.julienvey.trello.exception.TrelloHttpException;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
@@ -16,12 +15,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.IOException;
 import java.net.URI;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-public class ApacheHttpClient implements TrelloHttpClient {
-
-    private static final Pattern NAMES_PATTERN = Pattern.compile("\\{([^/]+?)\\}");
+public class ApacheHttpClient extends AbstractHttpClient {
 
     private DefaultHttpClient httpClient;
     private ObjectMapper mapper;
@@ -98,27 +93,5 @@ public class ApacheHttpClient implements TrelloHttpClient {
         } finally {
             httpRequest.releaseConnection();
         }
-    }
-
-    private String expandUrl(String url, String... params) {
-        if (url == null) {
-            return null;
-        }
-        if (url.indexOf('{') == -1) {
-            return url;
-        }
-        Matcher matcher = NAMES_PATTERN.matcher(url);
-        StringBuffer sb = new StringBuffer();
-
-        int variable = 0;
-        while (matcher.find()) {
-            String variableValue = params[variable];
-            String replacement = Matcher.quoteReplacement(variableValue);
-            matcher.appendReplacement(sb, replacement);
-            variable++;
-        }
-
-        matcher.appendTail(sb);
-        return sb.toString();
     }
 }
