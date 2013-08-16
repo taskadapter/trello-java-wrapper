@@ -1,5 +1,6 @@
 package com.julienvey.trello.impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.julienvey.trello.TrelloHttpClient;
 import com.julienvey.trello.exception.TrelloHttpException;
@@ -8,6 +9,7 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.ContentType;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -32,22 +34,7 @@ public class ApacheHttpClient implements TrelloHttpClient {
     @Override
     public <T> T get(String url, Class<T> objectClass, String... params) {
         HttpGet httpGet = new HttpGet(expandUrl(url, params));
-
-        try {
-            HttpResponse httpResponse = this.httpClient.execute(httpGet);
-            // TODO : check http code
-            HttpEntity httpEntity = httpResponse.getEntity();
-            if (httpEntity != null) {
-                return this.mapper.readValue(httpEntity.getContent(), objectClass);
-            } else {
-                // TODO : error
-                throw new NullPointerException();
-            }
-        } catch (IOException e) {
-            throw new TrelloHttpException(e);
-        } finally {
-            httpGet.releaseConnection();
-        }
+        return getEntityAndReleaseConnection(objectClass, httpGet);
     }
 
     @Override
@@ -57,20 +44,11 @@ public class ApacheHttpClient implements TrelloHttpClient {
         try {
             HttpEntity entity = new ByteArrayEntity(this.mapper.writeValueAsBytes(object), ContentType.APPLICATION_JSON);
             httpPost.setEntity(entity);
-            HttpResponse httpResponse = this.httpClient.execute(httpPost);
 
-            // TODO : check http code
-            HttpEntity httpEntity = httpResponse.getEntity();
-            if (httpEntity != null) {
-                return this.mapper.readValue(httpEntity.getContent(), objectClass);
-            } else {
-                // TODO : error
-                throw new NullPointerException();
-            }
-        } catch (IOException e) {
-            throw new TrelloHttpException(e);
-        } finally {
-            httpPost.releaseConnection();
+            return getEntityAndReleaseConnection(objectClass, httpPost);
+        } catch (JsonProcessingException e) {
+            // TODO : custom exception
+            throw new RuntimeException(e);
         }
     }
 
@@ -83,17 +61,38 @@ public class ApacheHttpClient implements TrelloHttpClient {
             httpPost.setEntity(entity);
             HttpResponse httpResponse = this.httpClient.execute(httpPost);
 
-            // TODO : check http code
             Header location = httpResponse.getFirstHeader("Location");
             if (location != null) {
                 return URI.create(location.getValue());
             } else {
+                // TODO : error
+                throw new NullPointerException();
+            }
+        } catch (JsonProcessingException e) {
+            // TODO : custom exception
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new TrelloHttpException(e);
+        } finally {
+            httpPost.releaseConnection();
+        }
+    }
+
+    private <T> T getEntityAndReleaseConnection(Class<T> objectClass, HttpRequestBase httpRequest) {
+        try {
+            HttpResponse httpResponse = this.httpClient.execute(httpRequest);
+
+            HttpEntity httpEntity = httpResponse.getEntity();
+            if (httpEntity != null) {
+                return this.mapper.readValue(httpEntity.getContent(), objectClass);
+            } else {
+                // TODO : error
                 throw new NullPointerException();
             }
         } catch (IOException e) {
             throw new TrelloHttpException(e);
         } finally {
-            httpPost.releaseConnection();
+            httpRequest.releaseConnection();
         }
     }
 
