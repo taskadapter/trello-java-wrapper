@@ -22,6 +22,7 @@ public class TrelloImpl implements Trello {
 
     private static Logger logger = LoggerFactory.getLogger(TrelloImpl.class);
 
+    // FIXME : remove me
     public TrelloImpl(String applicationKey, String accessToken) {
         this(applicationKey, accessToken, new RestTemplateHttpClient());
     }
