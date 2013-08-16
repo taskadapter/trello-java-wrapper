@@ -31,6 +31,10 @@ public class ApacheHttpClient implements TrelloHttpClient {
         this.mapper = new ObjectMapper();
     }
 
+    public ApacheHttpClient(DefaultHttpClient httpClient) {
+        this.httpClient = httpClient;
+    }
+
     @Override
     public <T> T get(String url, Class<T> objectClass, String... params) {
         HttpGet httpGet = new HttpGet(expandUrl(url, params));
