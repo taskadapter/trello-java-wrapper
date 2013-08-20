@@ -1,26 +1,18 @@
-package com.julienvey.trello;
+package com.julienvey.trello.integration;
+
+import com.julienvey.trello.Trello;
+import com.julienvey.trello.domain.*;
+import com.julienvey.trello.impl.TrelloImpl;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import java.util.List;
 
 import static com.julienvey.trello.utils.ArgUtils.arg;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.fest.assertions.MapAssert.entry;
 
-import java.util.List;
-
-import org.junit.BeforeClass;
-import org.junit.Test;
-
-import com.julienvey.trello.domain.Action;
-import com.julienvey.trello.domain.Board;
-import com.julienvey.trello.domain.Card;
-import com.julienvey.trello.domain.CardWithActions;
-import com.julienvey.trello.domain.CheckList;
-import com.julienvey.trello.domain.Member;
-import com.julienvey.trello.domain.MyPrefs;
-import com.julienvey.trello.domain.Organization;
-import com.julienvey.trello.domain.TList;
-import com.julienvey.trello.impl.TrelloImpl;
-
-public class BoardGetTest {
+public class BoardGetITCase {
 
     private static final String TEST_APPLICATION_KEY = "db555c528ce160c33305d2ea51ae1197";
     public static final String BOARD_ID = "518baad5b05dbf4703004852";

@@ -1,5 +1,6 @@
-package com.julienvey.trello;
+package com.julienvey.trello.unit;
 
+import com.julienvey.trello.Trello;
 import com.julienvey.trello.domain.TList;
 import com.julienvey.trello.impl.TrelloImpl;
 import org.fest.assertions.Assertions;
