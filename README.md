@@ -59,7 +59,7 @@ If you are missing some fonctionnalities, you can easily contribute and propose 
 [![Build Status](https://travis-ci.org/julienvey/trello-java-wrapper.png?branch=master)](https://travis-ci.org/julienvey/trello-java-wrapper)
 
 ## Implementation Status
-action
+
 | Method                    | Implementation    | Unit Test  | Integration Test |
 | :-----------------------: | :---------------: | :--------: | :--------------: |
 | GET /1/actions/[idAction]
