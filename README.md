@@ -60,8 +60,8 @@ If you are missing some fonctionnalities, you can easily contribute and propose 
 
 ## Implementation Status
 
-| Method                    | Implementation    | Unit Test  | Integration Test |
-| :-----------------------: | :---------------: | :--------: | :--------------: |
+| Method                    | Impl | Unit Test  | Int Test |
+| ------------------------- | :--: | :--------: | :------: |
 | GET /1/actions/[idAction]
 | GET /1/actions/[idAction]/[field]
 | GET /1/actions/[idAction]/board
