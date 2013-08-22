@@ -24,7 +24,7 @@ import com.julienvey.trello.domain.TList;
 import com.julienvey.trello.impl.TrelloImpl;
 import org.mockito.Mockito;
 
-public class BoardGetTest {
+public class BoardGetUnitTest {
 
     private static final String TEST_APPLICATION_KEY = "db555c528ce160c33305d2ea51ae1197";
     public static final String BOARD_ID = "518baad5b05dbf4703004852";

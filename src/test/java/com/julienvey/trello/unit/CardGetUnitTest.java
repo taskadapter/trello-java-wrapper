@@ -16,7 +16,7 @@ import java.util.List;
 
 import static org.fest.assertions.Assertions.assertThat;
 
-public class CardGetTest {
+public class CardGetUnitTest {
 
     private static final String TEST_APPLICATION_KEY = "db555c528ce160c33305d2ea51ae1197";
     public static final String CARD_ID = "518bab520967804c03002994";
