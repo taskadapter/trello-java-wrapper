@@ -1,40 +1,57 @@
 package com.julienvey.trello.unit;
 
 import com.julienvey.trello.Trello;
+import com.julienvey.trello.TrelloHttpClient;
 import com.julienvey.trello.domain.*;
 import com.julienvey.trello.impl.TrelloImpl;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.mockito.Matchers;
+import org.mockito.Mockito;
 
 import java.util.List;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.fest.assertions.MapAssert.entry;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.*;
 
 public class ActionGetTest {
 
-    private static final String TEST_APPLICATION_KEY = "db555c528ce160c33305d2ea51ae1197";
-    public static final String ACTION_ID = "51990c2143453ab27e0087d5";
 
-    private static Trello trello;
+    private Trello trello;
 
-    @BeforeClass
-    public static void setUp() {
-        trello = new TrelloImpl(TEST_APPLICATION_KEY, "");
+    private TrelloHttpClient httpClient;
+
+    @Before
+    public void setUp() {
+        httpClient = mock(TrelloHttpClient.class);
+        trello = new TrelloImpl("", "", httpClient);
     }
 
     @Test
     public void testGetActionById() {
-        Action board = trello.getAction(ACTION_ID);
+        //Given
+        Action mockAction = new Action();
+        mockAction.setId("idAction");
+        mockAction.setType("createCard");
 
-        assertThat(board).isNotNull();
-        assertThat(board.getId()).isEqualTo(ACTION_ID);
-        assertThat(board.getType()).isEqualTo("createCard");
+        when(httpClient.get(anyString(), eq(Action.class), (String[]) any())).thenReturn(mockAction);
+
+        //When
+        Action action = trello.getAction("idAction");
+
+        //Then
+        assertThat(action).isNotNull();
+        assertThat(action.getId()).isEqualTo("idAction");
+        assertThat(action.getType()).isEqualTo("createCard");
     }
 
     @Test
     public void testGetActionBoard() {
-        Board actionBoard = trello.getActionBoard(ACTION_ID);
+        Board actionBoard = trello.getActionBoard("idAction");
 
         assertThat(actionBoard).isNotNull();
         assertThat(actionBoard.getId()).isEqualTo("518baad5b05dbf4703004852");
@@ -42,7 +59,7 @@ public class ActionGetTest {
 
     @Test
     public void testGetActionCard() {
-        Card actionCard = trello.getActionCard(ACTION_ID);
+        Card actionCard = trello.getActionCard("idAction");
 
         assertThat(actionCard).isNotNull();
         assertThat(actionCard.getId()).isEqualTo("51990c2143453ab27e0087d4");
@@ -50,7 +67,7 @@ public class ActionGetTest {
 
     @Test
     public void testGetActionEntities() {
-        List<Entity> actionEntities = trello.getActionEntities(ACTION_ID);
+        List<Entity> actionEntities = trello.getActionEntities("idAction");
 
         assertThat(actionEntities).isNotNull();
         assertThat(actionEntities).hasSize(5);
@@ -59,7 +76,7 @@ public class ActionGetTest {
 
     @Test
     public void testGetActionList() {
-        TList actionList = trello.getActionList(ACTION_ID);
+        TList actionList = trello.getActionList("idAction");
 
         assertThat(actionList).isNotNull();
         assertThat(actionList.getId()).isEqualTo("518baad5b05dbf4703004853");

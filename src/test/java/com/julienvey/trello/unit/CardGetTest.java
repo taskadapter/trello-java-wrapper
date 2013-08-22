@@ -1,13 +1,16 @@
 package com.julienvey.trello.unit;
 
 import com.julienvey.trello.Trello;
+import com.julienvey.trello.TrelloHttpClient;
 import com.julienvey.trello.domain.Action;
 import com.julienvey.trello.domain.Attachment;
 import com.julienvey.trello.domain.Board;
 import com.julienvey.trello.domain.Card;
 import com.julienvey.trello.impl.TrelloImpl;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import java.util.List;
 
@@ -18,11 +21,14 @@ public class CardGetTest {
     private static final String TEST_APPLICATION_KEY = "db555c528ce160c33305d2ea51ae1197";
     public static final String CARD_ID = "518bab520967804c03002994";
 
-    private static Trello trello;
+    private Trello trello;
 
-    @BeforeClass
-    public static void setUp() {
-        trello = new TrelloImpl(TEST_APPLICATION_KEY, "");
+    private TrelloHttpClient httpClient;
+
+    @Before
+    public void setUp() {
+        httpClient = Mockito.mock(TrelloHttpClient.class);
+        trello = new TrelloImpl(TEST_APPLICATION_KEY, "", httpClient);
     }
 
     @Test
