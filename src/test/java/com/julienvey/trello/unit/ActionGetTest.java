@@ -38,7 +38,7 @@ public class ActionGetTest {
         mockAction.setId("idAction");
         mockAction.setType("createCard");
 
-        when(httpClient.get(anyString(), eq(Action.class), any(String[].class))).thenReturn(mockAction);
+        when(httpClient.get(anyString(), any(Class.class), any(String[].class))).thenReturn(mockAction);
 
         //When
         Action action = trello.getAction("idAction");
