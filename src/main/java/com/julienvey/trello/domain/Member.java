@@ -14,7 +14,7 @@ public class Member extends TrelloEntity {
     private String avatarHash;
     private String avatarSource;
     private String bio;
-    private String idPremOrgsAdmin;
+    private List<String> idPremOrgsAdmin;
     private String initials;
     private String memberType;
     private String status;
@@ -75,11 +75,11 @@ public class Member extends TrelloEntity {
         this.bio = bio;
     }
 
-    public String getIdPremOrgsAdmin() {
+    public List<String> getIdPremOrgsAdmin() {
         return idPremOrgsAdmin;
     }
 
-    public void setIdPremOrgsAdmin(String idPremOrgsAdmin) {
+    public void setIdPremOrgsAdmin(List<String> idPremOrgsAdmin) {
         this.idPremOrgsAdmin = idPremOrgsAdmin;
     }
 
