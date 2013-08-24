@@ -30,7 +30,7 @@ public class Member extends TrelloEntity {
     private List<String> loginTypes;
     private String newEmail;
     private List<String> oneTimeMessagesDismissed;
-    private Map<String, String> prefs;
+    private Map<String, Object> prefs;
     private List<String> trophies;
     private String uploadedAvatarHash;
 
@@ -211,11 +211,11 @@ public class Member extends TrelloEntity {
         this.oneTimeMessagesDismissed = oneTimeMessagesDismissed;
     }
 
-    public Map<String, String> getPrefs() {
+    public Map<String, Object> getPrefs() {
         return prefs;
     }
 
-    public void setPrefs(Map<String, String> prefs) {
+    public void setPrefs(Map<String, Object> prefs) {
         this.prefs = prefs;
     }
 
