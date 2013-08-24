@@ -29,7 +29,7 @@ public class Member extends TrelloEntity {
     private List<String> idOrganizationsInvited;
     private List<String> loginTypes;
     private String newEmail;
-    private String oneTimeMessagesDismissed;
+    private List<String> oneTimeMessagesDismissed;
     private Map<String, String> prefs;
     private List<String> trophies;
     private String uploadedAvatarHash;
@@ -203,11 +203,11 @@ public class Member extends TrelloEntity {
         this.newEmail = newEmail;
     }
 
-    public String getOneTimeMessagesDismissed() {
+    public List<String> getOneTimeMessagesDismissed() {
         return oneTimeMessagesDismissed;
     }
 
-    public void setOneTimeMessagesDismissed(String oneTimeMessagesDismissed) {
+    public void setOneTimeMessagesDismissed(List<String> oneTimeMessagesDismissed) {
         this.oneTimeMessagesDismissed = oneTimeMessagesDismissed;
     }
 
