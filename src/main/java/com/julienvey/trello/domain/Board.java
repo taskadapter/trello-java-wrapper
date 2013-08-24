@@ -215,6 +215,7 @@ public class Board extends TrelloEntity {
         this.powerUps = powerUps;
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Prefs {
         private String permissionLevel;
         private String voting;

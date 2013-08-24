@@ -144,6 +144,7 @@ public class Organization extends TrelloEntity {
         this.products = products;
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Prefs {
         private String permissionLevel;
         private List<String> orgInviteRestrict;
@@ -191,11 +192,14 @@ public class Organization extends TrelloEntity {
             this.boardVisibilityRestrict = boardVisibilityRestrict;
         }
 
+        @JsonIgnoreProperties(ignoreUnknown = true)
         public static final class BoardVisibilityRestrict {
             @JsonProperty("private")
             private String privateVisibility;
+
             @JsonProperty("org")
             private String orgVisibility;
+
             @JsonProperty("public")
             private String publicVisibility;
 
