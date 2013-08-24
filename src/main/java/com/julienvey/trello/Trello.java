@@ -89,4 +89,6 @@ public interface Trello {
 
     Member getBasicMemberInformation(String username);
 
+    Member getMemberInformation(String username);
+
 }
