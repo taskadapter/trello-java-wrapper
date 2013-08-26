@@ -1,69 +1,36 @@
 package com.julienvey.trello.impl;
 
-import static com.julienvey.trello.impl.TrelloUrl.ADD_LABEL_TO_CARD;
-import static com.julienvey.trello.impl.TrelloUrl.CREATE_CARD;
-import static com.julienvey.trello.impl.TrelloUrl.GET_ACTION;
-import static com.julienvey.trello.impl.TrelloUrl.GET_ACTION_BOARD;
-import static com.julienvey.trello.impl.TrelloUrl.GET_ACTION_CARD;
-import static com.julienvey.trello.impl.TrelloUrl.GET_ACTION_ENTITIES;
-import static com.julienvey.trello.impl.TrelloUrl.GET_ACTION_LIST;
-import static com.julienvey.trello.impl.TrelloUrl.GET_ACTION_MEMBER;
-import static com.julienvey.trello.impl.TrelloUrl.GET_ACTION_MEMBER_CREATOR;
-import static com.julienvey.trello.impl.TrelloUrl.GET_ACTION_ORGANIZATION;
-import static com.julienvey.trello.impl.TrelloUrl.GET_BASIC_MEMBER;
-import static com.julienvey.trello.impl.TrelloUrl.GET_BOARD;
-import static com.julienvey.trello.impl.TrelloUrl.GET_BOARD_ACTIONS;
-import static com.julienvey.trello.impl.TrelloUrl.GET_BOARD_CARD;
-import static com.julienvey.trello.impl.TrelloUrl.GET_BOARD_CARDS;
-import static com.julienvey.trello.impl.TrelloUrl.GET_BOARD_CHECKLISTS;
-import static com.julienvey.trello.impl.TrelloUrl.GET_BOARD_LISTS;
-import static com.julienvey.trello.impl.TrelloUrl.GET_BOARD_MEMBERS;
-import static com.julienvey.trello.impl.TrelloUrl.GET_BOARD_MEMBERS_INVITED;
-import static com.julienvey.trello.impl.TrelloUrl.GET_BOARD_MEMBER_CARDS;
-import static com.julienvey.trello.impl.TrelloUrl.GET_BOARD_MYPREFS;
-import static com.julienvey.trello.impl.TrelloUrl.GET_BOARD_ORGANIZATION;
-import static com.julienvey.trello.impl.TrelloUrl.GET_CARD;
-import static com.julienvey.trello.impl.TrelloUrl.GET_CARD_ACTIONS;
-import static com.julienvey.trello.impl.TrelloUrl.GET_CARD_ATTACHMENT;
-import static com.julienvey.trello.impl.TrelloUrl.GET_CARD_ATTACHMENTS;
-import static com.julienvey.trello.impl.TrelloUrl.GET_CARD_BOARD;
-import static com.julienvey.trello.impl.TrelloUrl.GET_LIST;
-import static com.julienvey.trello.impl.TrelloUrl.createUrl;
+import com.julienvey.trello.Trello;
+import com.julienvey.trello.TrelloHttpClient;
+import com.julienvey.trello.domain.*;
+import com.julienvey.trello.impl.domaininternal.Label;
+import com.julienvey.trello.impl.http.RestTemplateHttpClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
-import org.springframework.web.client.RestTemplate;
-
-import com.julienvey.trello.Trello;
-import com.julienvey.trello.domain.Action;
-import com.julienvey.trello.domain.Argument;
-import com.julienvey.trello.domain.Attachment;
-import com.julienvey.trello.domain.Board;
-import com.julienvey.trello.domain.Card;
-import com.julienvey.trello.domain.CardWithActions;
-import com.julienvey.trello.domain.CheckList;
-import com.julienvey.trello.domain.Entity;
-import com.julienvey.trello.domain.Member;
-import com.julienvey.trello.domain.MyPrefs;
-import com.julienvey.trello.domain.Organization;
-import com.julienvey.trello.domain.TList;
-import com.julienvey.trello.impl.domaininternal.Label;
+import static com.julienvey.trello.impl.TrelloUrl.*;
 
 public class TrelloImpl implements Trello {
 
-    private RestTemplate restTemplate = new RestTemplate();
+    private TrelloHttpClient httpClient;
     private String applicationKey;
     private String accessToken;
 
     private static Logger logger = LoggerFactory.getLogger(TrelloImpl.class);
 
+    // FIXME : remove me
     public TrelloImpl(String applicationKey, String accessToken) {
+        this(applicationKey, accessToken, new RestTemplateHttpClient());
+    }
+
+    public TrelloImpl(String applicationKey, String accessToken, TrelloHttpClient httpClient) {
         this.applicationKey = applicationKey;
         this.accessToken = accessToken;
+        this.httpClient = httpClient;
     }
 
     /* Boards */
@@ -140,22 +107,22 @@ public class TrelloImpl implements Trello {
         return cards;
     }
 
-	@Override
-	public List<CardWithActions> getBoardMemberActivity(String boardId, String memberId,
-			String actionFilter, Argument... args) {
-		if (actionFilter == null)
-			actionFilter = "all";
-		Argument[] argsAndFilter = Arrays.copyOf(args, args.length + 1);
-		argsAndFilter[args.length] = new Argument("actions", actionFilter);
+    @Override
+    public List<CardWithActions> getBoardMemberActivity(String boardId, String memberId,
+                                                        String actionFilter, Argument... args) {
+        if (actionFilter == null)
+            actionFilter = "all";
+        Argument[] argsAndFilter = Arrays.copyOf(args, args.length + 1);
+        argsAndFilter[args.length] = new Argument("actions", actionFilter);
 
-		List<CardWithActions> cards = Arrays.asList(get(
-				createUrl(GET_BOARD_MEMBER_CARDS).params(argsAndFilter).asString(),
-				CardWithActions[].class, boardId, memberId));
-		for (Card card : cards) {
-			card.setInternalTrello(this);
-		}
-		return cards;
-	}
+        List<CardWithActions> cards = Arrays.asList(get(
+                createUrl(GET_BOARD_MEMBER_CARDS).params(argsAndFilter).asString(),
+                CardWithActions[].class, boardId, memberId));
+        for (Card card : cards) {
+            card.setInternalTrello(this);
+        }
+        return cards;
+    }
 
     @Override
     public List<Member> getBoardMembersInvited(String boardId, Argument... args) {
@@ -301,7 +268,14 @@ public class TrelloImpl implements Trello {
 
     @Override
     public Member getBasicMemberInformation(String username) {
-        Member member = get(createUrl(GET_BASIC_MEMBER).asString(), Member.class, username);
+        Member member = get(createUrl(GET_MEMBER).params(new Argument("fields", "username,fullName")).asString(), Member.class, username);
+        member.setInternalTrello(this);
+        return member;
+    }
+
+    @Override
+    public Member getMemberInformation(String username) {
+        Member member = get(createUrl(GET_MEMBER).asString(), Member.class, username);
         member.setInternalTrello(this);
         return member;
     }
@@ -316,23 +290,23 @@ public class TrelloImpl implements Trello {
 
     private <T> T postForObject(String url, T object, Class<T> objectClass, String... params) {
         logger.debug("PostForObject request on Trello API at url {} for class {} with params {}", url, objectClass.getCanonicalName(), params);
-        return restTemplate.postForObject(url, object, objectClass, enrichParams(params));
+        return httpClient.postForObject(url, object, objectClass, enrichParams(params));
     }
 
     private void postForLocation(String url, Object object, String... params) {
         logger.debug("PostForLocation request on Trello API at url {} for class {} with params {}", url, object.getClass().getCanonicalName(), params);
-        restTemplate.postForLocation(url, object, enrichParams(params));
+        httpClient.postForLocation(url, object, enrichParams(params));
     }
 
     private <T> T get(String url, Class<T> objectClass, String... params) {
         logger.debug("Get request on Trello API at url {} for class {} with params {}", url, objectClass.getCanonicalName(), params);
-        return restTemplate.getForObject(url, objectClass, enrichParams(params));
+        return httpClient.get(url, objectClass, enrichParams(params));
     }
 
-    private Object[] enrichParams(String[] params) {
+    private String[] enrichParams(String[] params) {
         List<String> paramList = new ArrayList<>(Arrays.asList(params));
         paramList.add(applicationKey);
         paramList.add(accessToken);
-        return paramList.toArray();
+        return paramList.toArray(new String[paramList.size()]);
     }
 }

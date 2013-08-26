@@ -90,6 +90,7 @@ public class Attachment extends TrelloEntity {
         this.url = url;
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Preview {
         private int width;
         private int height;

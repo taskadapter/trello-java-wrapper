@@ -14,7 +14,7 @@ public class Member extends TrelloEntity {
     private String avatarHash;
     private String avatarSource;
     private String bio;
-    private String idPremOrgsAdmin;
+    private List<String> idPremOrgsAdmin;
     private String initials;
     private String memberType;
     private String status;
@@ -29,8 +29,8 @@ public class Member extends TrelloEntity {
     private List<String> idOrganizationsInvited;
     private List<String> loginTypes;
     private String newEmail;
-    private String oneTimeMessagesDismissed;
-    private Map<String, String> prefs;
+    private List<String> oneTimeMessagesDismissed;
+    private Map<String, Object> prefs;
     private List<String> trophies;
     private String uploadedAvatarHash;
 
@@ -75,11 +75,11 @@ public class Member extends TrelloEntity {
         this.bio = bio;
     }
 
-    public String getIdPremOrgsAdmin() {
+    public List<String> getIdPremOrgsAdmin() {
         return idPremOrgsAdmin;
     }
 
-    public void setIdPremOrgsAdmin(String idPremOrgsAdmin) {
+    public void setIdPremOrgsAdmin(List<String> idPremOrgsAdmin) {
         this.idPremOrgsAdmin = idPremOrgsAdmin;
     }
 
@@ -203,19 +203,19 @@ public class Member extends TrelloEntity {
         this.newEmail = newEmail;
     }
 
-    public String getOneTimeMessagesDismissed() {
+    public List<String> getOneTimeMessagesDismissed() {
         return oneTimeMessagesDismissed;
     }
 
-    public void setOneTimeMessagesDismissed(String oneTimeMessagesDismissed) {
+    public void setOneTimeMessagesDismissed(List<String> oneTimeMessagesDismissed) {
         this.oneTimeMessagesDismissed = oneTimeMessagesDismissed;
     }
 
-    public Map<String, String> getPrefs() {
+    public Map<String, Object> getPrefs() {
         return prefs;
     }
 
-    public void setPrefs(Map<String, String> prefs) {
+    public void setPrefs(Map<String, Object> prefs) {
         this.prefs = prefs;
     }
 

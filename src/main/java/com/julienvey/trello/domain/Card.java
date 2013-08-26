@@ -217,6 +217,7 @@ public class Card extends TrelloEntity {
         this.shortUrl = shortUrl;
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class CardCheckItem {
 
         private String idCheckItem;

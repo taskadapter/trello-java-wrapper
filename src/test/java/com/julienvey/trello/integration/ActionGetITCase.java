@@ -1,25 +1,46 @@
-package com.julienvey.trello;
+package com.julienvey.trello.integration;
 
+import com.julienvey.trello.Trello;
+import com.julienvey.trello.TrelloHttpClient;
 import com.julienvey.trello.domain.*;
 import com.julienvey.trello.impl.TrelloImpl;
+import com.julienvey.trello.impl.http.ApacheHttpClient;
+import com.julienvey.trello.impl.http.AsyncTrelloHttpClient;
+import com.julienvey.trello.impl.http.RestTemplateHttpClient;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import static org.fest.assertions.Assertions.assertThat;
-import static org.fest.assertions.MapAssert.entry;
 
-public class ActionGetTest {
+@RunWith(Parameterized.class)
+public class ActionGetITCase {
 
     private static final String TEST_APPLICATION_KEY = "db555c528ce160c33305d2ea51ae1197";
     public static final String ACTION_ID = "51990c2143453ab27e0087d5";
 
-    private static Trello trello;
+    private Trello trello;
 
-    @BeforeClass
-    public static void setUp() {
-        trello = new TrelloImpl(TEST_APPLICATION_KEY, "");
+    private TrelloHttpClient httpClient;
+
+    @Parameterized.Parameters
+    public static Collection<Object[]> data() {
+        return Arrays.asList(new Object[][]{{new ApacheHttpClient()}, {new AsyncTrelloHttpClient()}, {new RestTemplateHttpClient()}});
+    }
+
+    public ActionGetITCase(TrelloHttpClient httpClient) {
+        this.httpClient = httpClient;
+    }
+
+    @Before
+    public void setUp() {
+        trello = new TrelloImpl(TEST_APPLICATION_KEY, "", httpClient);
     }
 
     @Test

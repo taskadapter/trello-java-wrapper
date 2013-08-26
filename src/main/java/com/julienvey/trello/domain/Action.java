@@ -104,6 +104,7 @@ public class Action extends TrelloEntity {
         this.member = member;
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class MemberShort {
         private String id;
         private String avatarHash;
@@ -152,6 +153,7 @@ public class Action extends TrelloEntity {
         }
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Data {
 
         private Board board;
@@ -263,6 +265,7 @@ public class Action extends TrelloEntity {
             this.old = old;
         }
 
+        @JsonIgnoreProperties(ignoreUnknown = true)
         public static final class Old {
             private boolean closed;
             private Map<String, String> labelNames;
@@ -302,6 +305,7 @@ public class Action extends TrelloEntity {
             }
         }
 
+        @JsonIgnoreProperties(ignoreUnknown = true)
         public static final class CheckItem {
             private String state;
             private String name;
@@ -332,6 +336,7 @@ public class Action extends TrelloEntity {
             }
         }
 
+        @JsonIgnoreProperties(ignoreUnknown = true)
         public static final class CheckList {
             private String name;
             private String id;
@@ -353,6 +358,7 @@ public class Action extends TrelloEntity {
             }
         }
 
+        @JsonIgnoreProperties(ignoreUnknown = true)
         public static final class AttachementShort {
             private String name;
             private String id;
