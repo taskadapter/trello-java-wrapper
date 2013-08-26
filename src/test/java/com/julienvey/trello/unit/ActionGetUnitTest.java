@@ -17,7 +17,6 @@ import static org.mockito.Mockito.*;
 
 public class ActionGetUnitTest {
 
-
     private Trello trello;
 
     private TrelloHttpClient httpClient;

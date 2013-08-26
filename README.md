@@ -80,7 +80,6 @@ If you are missing some fonctionnalities, you can easily contribute and propose 
 | PUT /1/actions/[idAction]
 | PUT /1/actions/[idAction]/text
 | DELETE /1/actions/[idAction]
-| board
 | GET /1/boards/[board_id]
 | GET /1/boards/[board_id]/[field]
 | GET /1/boards/[board_id]/actions
