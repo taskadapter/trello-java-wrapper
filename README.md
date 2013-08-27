@@ -62,42 +62,42 @@ If you are missing some fonctionnalities, you can easily contribute and propose 
 
 | Method                    | Impl | Unit Test  | Int Test |
 | ------------------------- | :--: | :--------: | :------: |
-| GET /1/actions/[idAction]
+| GET /1/actions/[idAction] | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
 | GET /1/actions/[idAction]/[field]
-| GET /1/actions/[idAction]/board
+| GET /1/actions/[idAction]/board  | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
 | GET /1/actions/[idAction]/board/[field]
-| GET /1/actions/[idAction]/card
+| GET /1/actions/[idAction]/card | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
 | GET /1/actions/[idAction]/card/[field]
-| GET /1/actions/[idAction]/entities
-| GET /1/actions/[idAction]/list
+| GET /1/actions/[idAction]/entities | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
+| GET /1/actions/[idAction]/list | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
 | GET /1/actions/[idAction]/list/[field]
-| GET /1/actions/[idAction]/member
+| GET /1/actions/[idAction]/member | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
 | GET /1/actions/[idAction]/member/[field]
-| GET /1/actions/[idAction]/memberCreator
+| GET /1/actions/[idAction]/memberCreator | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
 | GET /1/actions/[idAction]/memberCreator/[field]
-| GET /1/actions/[idAction]/organization
+| GET /1/actions/[idAction]/organization | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
 | GET /1/actions/[idAction]/organization/[field]
 | PUT /1/actions/[idAction]
 | PUT /1/actions/[idAction]/text
 | DELETE /1/actions/[idAction]
-| GET /1/boards/[board_id] | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
+| GET /1/boards/[board_id] | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
 | GET /1/boards/[board_id]/[field]
-| GET /1/boards/[board_id]/actions
-| GET /1/boards/[board_id]/cards
+| GET /1/boards/[board_id]/actions | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
+| GET /1/boards/[board_id]/cards | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
 | GET /1/boards/[board_id]/cards/[filter]
-| GET /1/boards/[board_id]/cards/[idCard]
-| GET /1/boards/[board_id]/checklists
-| GET /1/boards/[board_id]/lists
+| GET /1/boards/[board_id]/cards/[idCard]  | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
+| GET /1/boards/[board_id]/checklists | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
+| GET /1/boards/[board_id]/lists | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
 | GET /1/boards/[board_id]/lists/[filter]
-| GET /1/boards/[board_id]/members
+| GET /1/boards/[board_id]/members | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
 | GET /1/boards/[board_id]/members/[filter]
-| GET /1/boards/[board_id]/members/[idMember]/cards
-| GET /1/boards/[board_id]/membersInvited
+| GET /1/boards/[board_id]/members/[idMember]/cards | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
+| GET /1/boards/[board_id]/membersInvited | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
 | GET /1/boards/[board_id]/membersInvited/[field]
 | GET /1/boards/[board_id]/memberships
 | GET /1/boards/[board_id]/memberships/[idMembership]
-| GET /1/boards/[board_id]/myPrefs
-| GET /1/boards/[board_id]/organization
+| GET /1/boards/[board_id]/myPrefs | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
+| GET /1/boards/[board_id]/organization | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
 | GET /1/boards/[board_id]/organization/[field]
 | PUT /1/boards/[board_id]
 | PUT /1/boards/[board_id]/closed
@@ -138,12 +138,12 @@ If you are missing some fonctionnalities, you can easily contribute and propose 
 | POST /1/boards/[board_id]/powerUps
 | DELETE /1/boards/[board_id]/members/[idMember]
 | DELETE /1/boards/[board_id]/powerUps/[powerUp]
-| GET /1/cards/[card id or shortlink]
+| GET /1/cards/[card id or shortlink] | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
 | GET /1/cards/[card id or shortlink]/[field]
-| GET /1/cards/[card id or shortlink]/actions
-| GET /1/cards/[card id or shortlink]/attachments
-| GET /1/cards/[card id or shortlink]/attachments/[idAttachment]
-| GET /1/cards/[card id or shortlink]/board
+| GET /1/cards/[card id or shortlink]/actions | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
+| GET /1/cards/[card id or shortlink]/attachments | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
+| GET /1/cards/[card id or shortlink]/attachments/[idAttachment] | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
+| GET /1/cards/[card id or shortlink]/board | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
 | GET /1/cards/[card id or shortlink]/board/[field]
 | GET /1/cards/[card id or shortlink]/checkItemStates
 | GET /1/cards/[card id or shortlink]/checklists
@@ -169,14 +169,14 @@ If you are missing some fonctionnalities, you can easily contribute and propose 
 | PUT /1/cards/[card id or shortlink]/pos
 | PUT /1/cards/[card id or shortlink]/subscribed
 | PUT /1/cards/[card id or shortlink]/warnWhenUpcoming
-| POST /1/cards
+| POST /1/cards | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
 | POST /1/cards/[card id or shortlink]/actions/comments
 | POST /1/cards/[card id or shortlink]/attachments
 | POST /1/cards/[card id or shortlink]/checklist/[idChecklist]/checkItem
 | POST /1/cards/[card id or shortlink]/checklist/[idChecklist]/checkItem/[idCheckItem]/convertToCard
 | POST /1/cards/[card id or shortlink]/checklists
 | POST /1/cards/[card id or shortlink]/idMembers
-| POST /1/cards/[card id or shortlink]/labels
+| POST /1/cards/[card id or shortlink]/labels  | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
 | POST /1/cards/[card id or shortlink]/markAssociatedNotificationsRead
 | POST /1/cards/[card id or shortlink]/membersVoted
 | DELETE /1/cards/[card id or shortlink]
@@ -203,7 +203,7 @@ If you are missing some fonctionnalities, you can easily contribute and propose 
 | POST /1/checklists/[idChecklist]/checkItems
 | DELETE /1/checklists/[idChecklist]
 | DELETE /1/checklists/[idChecklist]/checkItems/[idCheckItem]
-| GET /1/lists/[idList]
+| GET /1/lists/[idList] | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
 | GET /1/lists/[idList]/[field]
 | GET /1/lists/[idList]/actions
 | GET /1/lists/[idList]/board
@@ -218,7 +218,7 @@ If you are missing some fonctionnalities, you can easily contribute and propose 
 | PUT /1/lists/[idList]/subscribed
 | POST /1/lists
 | POST /1/lists/[idList]/cards
-| GET /1/members/[idMember or username]
+| GET /1/members/[idMember or username] | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
 | GET /1/members/[idMember or username]/[field]
 | GET /1/members/[idMember or username]/actions
 | GET /1/members/[idMember or username]/boards
