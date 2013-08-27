@@ -35,6 +35,7 @@ public interface Trello {
     List<Card> getBoardMemberCards(String boardId, String memberId, Argument... args);
 
     //FIXME Remove this method
+    @Deprecated
 	List<CardWithActions> getBoardMemberActivity(String boardId, String memberId,
 			String actionsFilter, Argument... args);
 
@@ -85,6 +86,7 @@ public interface Trello {
     void addLabelsToCard(String idCard, String[] labels);
 
     //FIXME Remove this method
+    @Deprecated
     Member getBasicMemberInformation(String username);
 
     Member getMemberInformation(String username);
