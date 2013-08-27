@@ -107,6 +107,7 @@ public class TrelloImpl implements Trello {
         return cards;
     }
 
+    //FIXME Remove this method
     @Override
     public List<CardWithActions> getBoardMemberActivity(String boardId, String memberId,
                                                         String actionFilter, Argument... args) {
@@ -267,6 +268,7 @@ public class TrelloImpl implements Trello {
     }
 
     @Override
+    //FIXME Remove this method
     public Member getBasicMemberInformation(String username) {
         Member member = get(createUrl(GET_MEMBER).params(new Argument("fields", "username,fullName")).asString(), Member.class, username);
         member.setInternalTrello(this);

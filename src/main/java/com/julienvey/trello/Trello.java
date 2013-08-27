@@ -34,6 +34,7 @@ public interface Trello {
 
     List<Card> getBoardMemberCards(String boardId, String memberId, Argument... args);
 
+    //FIXME Remove this method
 	List<CardWithActions> getBoardMemberActivity(String boardId, String memberId,
 			String actionsFilter, Argument... args);
 
@@ -73,13 +74,9 @@ public interface Trello {
 
     Board getCardBoard(String cardId, Argument... args);
 
-    //TODO Finish card methods
-
     /* Lists */
 
     TList getList(String listId, Argument... args);
-
-
 
     /////////////////
 
@@ -87,6 +84,7 @@ public interface Trello {
 
     void addLabelsToCard(String idCard, String[] labels);
 
+    //FIXME Remove this method
     Member getBasicMemberInformation(String username);
 
     Member getMemberInformation(String username);
