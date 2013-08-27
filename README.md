@@ -80,7 +80,7 @@ If you are missing some fonctionnalities, you can easily contribute and propose 
 | PUT /1/actions/[idAction]
 | PUT /1/actions/[idAction]/text
 | DELETE /1/actions/[idAction]
-| GET /1/boards/[board_id] | ![http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png]
+| GET /1/boards/[board_id] | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
 | GET /1/boards/[board_id]/[field]
 | GET /1/boards/[board_id]/actions
 | GET /1/boards/[board_id]/cards
