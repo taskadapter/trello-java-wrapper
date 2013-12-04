@@ -56,7 +56,7 @@ trello-java-wrapper is still a work in progress and has not yet reached version 
 
 If you are missing some fonctionnalities, you can easily contribute and propose a pull request. Each pull request should respect current code conventions and also provide tests for the newly implemented features.
 
-[![Build Status](https://travis-ci.org/julienvey/trello-java-wrapper.png?branch=master)](https://travis-ci.org/julienvey/trello-java-wrapper)
+[![Build Status](https://travis-ci.org/julienvey/trello-java-wrapper.png?branch=dev)](https://travis-ci.org/julienvey/trello-java-wrapper)
 
 ## Implementation Status
 
