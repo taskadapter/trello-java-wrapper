@@ -52,7 +52,7 @@ List<TList> lists = trelloApi.getBoard(trelloBoardForAddingCardsId).fetchLists()
 
 ## Contribute
 
-trello-java-wrapper is still a work in progress and has not yet reached version 1.0
+trello-java-wrapper is still a work in progress and has not yet reached version 1.0. It is licensed under the Apache v2 License.
 
 If you are missing some fonctionnalities, you can easily contribute and propose a pull request. Each pull request should respect current code conventions and also provide tests for the newly implemented features.
 
