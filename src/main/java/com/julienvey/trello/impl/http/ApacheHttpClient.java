@@ -8,6 +8,7 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.ContentType;
@@ -47,6 +48,19 @@ public class ApacheHttpClient extends AbstractHttpClient {
             return getEntityAndReleaseConnection(objectClass, httpPost);
         } catch (JsonProcessingException e) {
             // TODO : custom exception
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public <T> T putForObject(String url, T object, Class<T> objectClass, String... params) {
+        HttpPut put = new HttpPut(expandUrl(url, params));
+        try {
+            HttpEntity entity = new ByteArrayEntity(this.mapper.writeValueAsBytes(object), ContentType.APPLICATION_JSON);
+            put.setEntity(entity);
+
+            return getEntityAndReleaseConnection(objectClass, put);
+        } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
     }

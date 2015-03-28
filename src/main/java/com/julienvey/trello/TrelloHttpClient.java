@@ -10,4 +10,6 @@ public interface TrelloHttpClient {
     public <T> T postForObject(String url, T object, Class<T> objectClass, String... params);
 
     public URI postForLocation(String url, Object object, String... params);
+
+    public <T> T putForObject(String url, T object, Class<T> objectClass, String... params);
 }
