@@ -2,6 +2,8 @@ package com.julienvey.trello.impl.http;
 
 import com.julienvey.trello.TrelloHttpClient;
 import com.julienvey.trello.exception.TrelloHttpException;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
@@ -38,6 +40,15 @@ public class RestTemplateHttpClient implements TrelloHttpClient {
     public <T> T get(String url, Class<T> objectClass, String... params) {
         try {
             return restTemplate.getForObject(url, objectClass, params);
+        } catch (RestClientException e) {
+            throw new TrelloHttpException(e);
+        }
+    }
+
+    @Override
+    public <T> T putForObject(String url, T object, Class<T> objectClass, String... params) {
+        try {
+            return restTemplate.exchange(url, HttpMethod.PUT, new HttpEntity<>(object), objectClass, params).getBody();
         } catch (RestClientException e) {
             throw new TrelloHttpException(e);
         }
