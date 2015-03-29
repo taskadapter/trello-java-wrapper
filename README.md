@@ -151,7 +151,7 @@ If you are missing some fonctionnalities, you can easily contribute and propose 
 | GET /1/cards/[card id or shortlink]/list/[field]
 | GET /1/cards/[card id or shortlink]/members
 | GET /1/cards/[card id or shortlink]/membersVoted
-| PUT /1/cards/[card id or shortlink]
+| PUT /1/cards/[card id or shortlink] | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
 | PUT /1/cards/[card id or shortlink]/actions/[idAction]/comments
 | PUT /1/cards/[card id or shortlink]/checklist/[idChecklist]/checkItem/[idCheckItem]/name
 | PUT /1/cards/[card id or shortlink]/checklist/[idChecklist]/checkItem/[idCheckItem]/pos
@@ -322,4 +322,3 @@ If you are missing some fonctionnalities, you can easily contribute and propose 
 | PUT /1/webhooks/[idWebhook]/idModel
 | POST /1/webhooks
 | DELETE /1/webhooks/[idWebhook]
-
