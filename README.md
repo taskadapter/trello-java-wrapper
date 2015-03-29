@@ -14,7 +14,7 @@ trello-java-wrapper is available on maven central. The current release is 0.3
 <dependency>
     <groupId>com.julienvey.trello</groupId>
     <artifactId>trello-java-wrapper</artifactId>
-    <version>0.3</version>
+    <version>0.3.1</version>
 </dependency>
 ```
 
