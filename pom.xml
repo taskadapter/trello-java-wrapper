@@ -10,12 +10,12 @@
 
     <groupId>com.julienvey.trello</groupId>
     <artifactId>trello-java-wrapper</artifactId>
-    <version>0.3</version>
+    <version>0.3.1</version>
     <packaging>jar</packaging>
 
     <name>Trello Java Wrapper</name>
     <description>Java Wrapper for Trello API</description>
-    <url>https://github.com/julienvey/trello-java-wrapper</url>
+    <url>https://github.com/bywan/trello-java-wrapper</url>
 
     <licenses>
         <license>
@@ -26,9 +26,9 @@
     </licenses>
 
     <scm>
-        <connection>scm:git:git@github.com:julienvey/trello-java-wrapper.git</connection>
-        <developerConnection>scm:git:git@github.com:julienvey/trello-java-wrapper.git</developerConnection>
-        <url>git@github.com/julienvey/trello-java-wrapper.git</url>
+        <connection>scm:git:git@github.com:bywan/trello-java-wrapper.git</connection>
+        <developerConnection>scm:git:git@github.com:bywan/trello-java-wrapper.git</developerConnection>
+        <url>git@github.com/bywan/trello-java-wrapper.git</url>
         <tag>HEAD</tag>
     </scm>
 

@@ -107,7 +107,9 @@ public class TrelloImpl implements Trello {
         return cards;
     }
 
+    //FIXME Remove this method
     @Override
+    @Deprecated
     public List<CardWithActions> getBoardMemberActivity(String boardId, String memberId,
                                                         String actionFilter, Argument... args) {
         if (actionFilter == null)
@@ -267,6 +269,8 @@ public class TrelloImpl implements Trello {
     }
 
     @Override
+    //FIXME Remove this method
+    @Deprecated
     public Member getBasicMemberInformation(String username) {
         Member member = get(createUrl(GET_MEMBER).params(new Argument("fields", "username,fullName")).asString(), Member.class, username);
         member.setInternalTrello(this);
@@ -286,6 +290,13 @@ public class TrelloImpl implements Trello {
         }
     }
 
+    @Override
+    public Card updateCard(Card card) {
+        Card put = put(createUrl(UPDATE_CARD).asString(), card, Card.class, card.getId());
+        put.setInternalTrello(this);
+        return put;
+    }
+
     /* internal methods */
 
     private <T> T postForObject(String url, T object, Class<T> objectClass, String... params) {
@@ -301,6 +312,11 @@ public class TrelloImpl implements Trello {
     private <T> T get(String url, Class<T> objectClass, String... params) {
         logger.debug("Get request on Trello API at url {} for class {} with params {}", url, objectClass.getCanonicalName(), params);
         return httpClient.get(url, objectClass, enrichParams(params));
+    }
+
+    private <T> T put(String url, T object, Class<T> objectClass, String... params) {
+        logger.debug("Put request on Trello API at url {} for class {} with params {}", url, object.getClass().getCanonicalName(), params);
+        return httpClient.putForObject(url, object, objectClass, enrichParams(params));
     }
 
     private String[] enrichParams(String[] params) {

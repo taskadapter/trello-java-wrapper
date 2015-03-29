@@ -100,4 +100,28 @@ public class AsyncTrelloHttpClient extends AbstractHttpClient {
             throw new TrelloHttpException(e);
         }
     }
+
+    @Override
+    public <T> T putForObject(String url, T object, final Class<T> objectClass, String... params) {
+        Future<T> f;
+        try {
+            byte[] body = this.mapper.writeValueAsBytes(object);
+            f = asyncHttpClient.preparePut(expandUrl(url, params)).setBody(body).execute(
+                    new AsyncCompletionHandler<T>() {
+
+                        @Override
+                        public T onCompleted(Response response) throws Exception {
+                            return mapper.readValue(response.getResponseBody(), objectClass);
+                        }
+
+                        @Override
+                        public void onThrowable(Throwable t) {
+                            throw new TrelloHttpException(t);
+                        }
+                    });
+            return f.get();
+        } catch (IOException | InterruptedException | ExecutionException e) {
+            throw new TrelloHttpException(e);
+        }
+    }
 }

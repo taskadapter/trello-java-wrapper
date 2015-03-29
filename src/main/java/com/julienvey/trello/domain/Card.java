@@ -217,6 +217,10 @@ public class Card extends TrelloEntity {
         this.shortUrl = shortUrl;
     }
 
+    public Card update() {
+        return trelloService.updateCard(this);
+    }
+
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class CardCheckItem {
 

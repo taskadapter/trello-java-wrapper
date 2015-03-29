@@ -40,6 +40,8 @@ public class TrelloUrl {
     public static final String GET_MEMBER = "/members/{username}?";
     public static final String ADD_LABEL_TO_CARD = "/cards/{cardId}/labels?";
 
+    public static final String UPDATE_CARD = "/cards/{cardId}?";
+
     private String baseUrl;
     private Argument[] args = {};
 
