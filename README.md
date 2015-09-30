@@ -14,7 +14,7 @@ trello-java-wrapper is available on maven central. The current release is 0.3.1
 <dependency>
     <groupId>com.julienvey.trello</groupId>
     <artifactId>trello-java-wrapper</artifactId>
-    <version>0.3.1</version>
+    <version>0.3.2</version>
 </dependency>
 ```
 
@@ -187,7 +187,7 @@ If you are missing some fonctionnalities, you can easily contribute and propose 
 | DELETE /1/cards/[card id or shortlink]/idMembers/[idMember]
 | DELETE /1/cards/[card id or shortlink]/labels/[color]
 | DELETE /1/cards/[card id or shortlink]/membersVoted/[idMember]
-| GET /1/checklists/[idChecklist]
+| GET /1/checklists/[idChecklist] | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
 | GET /1/checklists/[idChecklist]/[field]
 | GET /1/checklists/[idChecklist]/board
 | GET /1/checklists/[idChecklist]/board/[field]
