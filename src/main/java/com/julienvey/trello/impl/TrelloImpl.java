@@ -258,6 +258,15 @@ public class TrelloImpl implements Trello {
         return tList;
     }
 
+    /* CheckLists */
+
+    @Override
+    public CheckList getCheckList(String checkListId, Argument... args) {
+        CheckList checkList = get(createUrl(GET_CHECK_LIST).params(args).asString(), CheckList.class, checkListId);
+        checkList.setInternalTrello(this);
+        return checkList;
+    }
+
     /* Others */
 
     @Override
