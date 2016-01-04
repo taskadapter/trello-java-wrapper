@@ -8,7 +8,6 @@ import com.julienvey.trello.impl.http.ApacheHttpClient;
 import com.julienvey.trello.impl.http.AsyncTrelloHttpClient;
 import com.julienvey.trello.impl.http.RestTemplateHttpClient;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -71,6 +70,15 @@ public class BoardGetITCase {
         Board board = trello.getBoard(BOARD_ID);
         List<TList> lists = board.fetchLists();
 
+        assertThat(lists).hasSize(4);
+    }
+
+    @Test
+    public void testGetBoardWithLists() {
+        Board board = trello.getBoard(BOARD_ID, arg("lists", "all"));
+        List<TList> lists = board.getLists();
+
+        assertThat(lists).isNotNull();
         assertThat(lists).hasSize(4);
     }
 

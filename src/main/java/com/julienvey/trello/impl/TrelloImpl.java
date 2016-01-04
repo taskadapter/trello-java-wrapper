@@ -39,6 +39,9 @@ public class TrelloImpl implements Trello {
     public Board getBoard(String boardId, Argument... args) {
         Board board = get(createUrl(GET_BOARD).params(args).asString(), Board.class, boardId);
         board.setInternalTrello(this);
+        for (TList list : board.getLists()) {
+            list.setInternalTrello(this);
+        }
         return board;
     }
 
