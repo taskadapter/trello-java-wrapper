@@ -8,7 +8,6 @@ import com.julienvey.trello.impl.http.ApacheHttpClient;
 import com.julienvey.trello.impl.http.AsyncTrelloHttpClient;
 import com.julienvey.trello.impl.http.RestTemplateHttpClient;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;

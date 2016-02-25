@@ -2,22 +2,18 @@ package com.julienvey.trello.unit;
 
 import com.julienvey.trello.Trello;
 import com.julienvey.trello.TrelloHttpClient;
-import com.julienvey.trello.domain.Attachment;
-import com.julienvey.trello.domain.Card;
 import com.julienvey.trello.domain.TList;
 import com.julienvey.trello.impl.TrelloImpl;
-import org.fest.assertions.Assertions;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mockito;
 
 import static org.fest.assertions.Assertions.assertThat;
-import static org.mockito.Matchers.*;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.anyVararg;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class ListGetUnitTest {
 
