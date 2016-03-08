@@ -296,6 +296,16 @@ public class TrelloImpl implements Trello {
         return createdCard;
     }
 
+
+    @Override
+    public void deleteCards(String boardId, List<Card> cards) {
+
+        for (Card card : cards)
+        {
+            // @Todo implement
+        }
+    }
+
     @Override
     //FIXME Remove this method
     @Deprecated

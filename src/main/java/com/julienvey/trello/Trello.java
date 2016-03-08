@@ -84,6 +84,8 @@ public interface Trello {
 
     Card updateCard(Card card);
 
+    void deleteCards(String boardId, List<Card> cards);
+
     //FIXME Remove this method
     @Deprecated
     Member getBasicMemberInformation(String username);
