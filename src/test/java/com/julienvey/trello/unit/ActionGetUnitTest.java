@@ -7,6 +7,7 @@ import com.julienvey.trello.impl.TrelloImpl;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.fest.assertions.Assertions.assertThat;

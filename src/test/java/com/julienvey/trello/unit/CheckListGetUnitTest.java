@@ -2,6 +2,7 @@ package com.julienvey.trello.unit;
 
 import com.julienvey.trello.Trello;
 import com.julienvey.trello.TrelloHttpClient;
+import com.julienvey.trello.domain.Card;
 import com.julienvey.trello.domain.CheckList;
 import com.julienvey.trello.impl.TrelloImpl;
 import org.junit.Before;
@@ -13,7 +14,9 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.anyVararg;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 public class CheckListGetUnitTest {
 
