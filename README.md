@@ -18,6 +18,24 @@ trello-java-wrapper is available on maven central. The current release is 0.3.2
 </dependency>
 ```
 
+The wrapper can make use of one of the following HTTP clients: `Spring Web` (default), `Apache Http Components HttpClient`, `Ning async-http-client`. Choose one if you dont' already use one of those. If you use or choose anything but Spring Web, you'll need to instantiate the corresponding `TrelloHttpClient` implementation and pass it to the `TrelloImpl` constructor (see Init section below). The corresponding Maven coordinates are:
+
+```xml
+<dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-web</artifactId>
+</dependency>
+<dependency>
+    <groupId>org.apache.httpcomponents</groupId>
+    <artifactId>httpclient</artifactId>
+</dependency>
+<dependency>
+    <groupId>com.ning</groupId>
+    <artifactId>async-http-client</artifactId>
+</dependency>
+```
+Failure to do so will most probably cause a `NoClassDefFoundError`.
+
 ### Init
 
 To be able to use the wrapper, you simply need to instantiate the interface `Trello` and provide it with two parameters
