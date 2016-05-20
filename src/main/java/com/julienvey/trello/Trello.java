@@ -89,7 +89,7 @@ public interface Trello {
 
     void addLabelsToCard(String idCard, String[] labels);
 
-	void addCommentToCard(String idCard, String comment);
+    void addCommentToCard(String idCard, String comment);
 
     Card updateCard(Card card);
 
