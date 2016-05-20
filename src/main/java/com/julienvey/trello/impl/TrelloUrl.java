@@ -43,6 +43,7 @@ public class TrelloUrl {
     public static final String CREATE_CARD = "/cards?pos=top&";
     public static final String GET_MEMBER = "/members/{username}?";
     public static final String ADD_LABEL_TO_CARD = "/cards/{cardId}/labels?";
+    public static final String ADD_COMMENT_TO_CARD = "/cards/{cardId}/actions/comments?";
 
     public static final String UPDATE_CARD = "/cards/{cardId}?";
 
