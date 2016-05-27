@@ -3,6 +3,7 @@ package com.julienvey.trello.impl;
 import com.julienvey.trello.Trello;
 import com.julienvey.trello.TrelloHttpClient;
 import com.julienvey.trello.domain.*;
+import com.julienvey.trello.impl.domaininternal.Comment;
 import com.julienvey.trello.impl.domaininternal.Label;
 import com.julienvey.trello.impl.http.RestTemplateHttpClient;
 import org.slf4j.Logger;
@@ -312,10 +313,16 @@ public class TrelloImpl implements Trello {
         return member;
     }
 
+    @Override
     public void addLabelsToCard(String idCard, String[] labels) {
         for (String label : labels) {
             postForLocation(createUrl(ADD_LABEL_TO_CARD).asString(), new Label(label), idCard);
         }
+    }
+
+    @Override
+    public void addCommentToCard(String idCard, String comment) {
+        postForObject(createUrl(ADD_COMMENT_TO_CARD).asString(), new Comment(comment), Comment.class, idCard);
     }
 
     @Override
