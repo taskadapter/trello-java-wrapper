@@ -89,6 +89,13 @@ public interface Trello {
 
     void addLabelsToCard(String idCard, String[] labels);
 
+<<<<<<< Updated upstream
+=======
+    void addCommentToCard(String idCard, String comment);
+
+	void addAttachmentToCard(String idCard, byte[] bytes);
+
+>>>>>>> Stashed changes
     Card updateCard(Card card);
 
     //FIXME Remove this method
