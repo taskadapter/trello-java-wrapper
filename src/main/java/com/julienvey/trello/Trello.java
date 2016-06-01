@@ -1,19 +1,8 @@
 package com.julienvey.trello;
 
-import java.util.List;
+import com.julienvey.trello.domain.*;
 
-import com.julienvey.trello.domain.Action;
-import com.julienvey.trello.domain.Argument;
-import com.julienvey.trello.domain.Attachment;
-import com.julienvey.trello.domain.Board;
-import com.julienvey.trello.domain.Card;
-import com.julienvey.trello.domain.CardWithActions;
-import com.julienvey.trello.domain.CheckList;
-import com.julienvey.trello.domain.Entity;
-import com.julienvey.trello.domain.Member;
-import com.julienvey.trello.domain.MyPrefs;
-import com.julienvey.trello.domain.Organization;
-import com.julienvey.trello.domain.TList;
+import java.util.List;
 
 public interface Trello {
 
@@ -83,19 +72,20 @@ public interface Trello {
 
     CheckList getCheckList(String checkListId, Argument... args);
 
+    CheckList createCheckList(String cardId, CheckList checkList);
+
+    void createCheckItem(String checkListId, CheckItem checkItem);
+
     /////////////////
 
     Card createCard(String listId, Card card);
 
     void addLabelsToCard(String idCard, String[] labels);
 
-<<<<<<< Updated upstream
-=======
     void addCommentToCard(String idCard, String comment);
 
 	void addAttachmentToCard(String idCard, byte[] bytes);
 
->>>>>>> Stashed changes
     Card updateCard(Card card);
 
     //FIXME Remove this method
