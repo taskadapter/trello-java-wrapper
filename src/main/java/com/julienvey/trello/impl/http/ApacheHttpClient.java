@@ -1,8 +1,10 @@
 package com.julienvey.trello.impl.http;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.julienvey.trello.exception.TrelloHttpException;
+import java.io.File;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URI;
+
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -12,10 +14,14 @@ import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.ContentType;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 
-import java.io.IOException;
-import java.net.URI;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.julienvey.trello.exception.TrelloHttpException;
 
 public class ApacheHttpClient extends AbstractHttpClient {
 
@@ -50,6 +56,22 @@ public class ApacheHttpClient extends AbstractHttpClient {
             // TODO : custom exception
             throw new RuntimeException(e);
         }
+    }
+
+    public <T> T postFileForObject(String url, File file, Class<T> objectClass, String... params) {
+        HttpPost httpPost = new HttpPost(expandUrl(url, params));
+
+        MultipartEntity entity = new MultipartEntity();
+        entity.addPart("file", new FileBody(file));
+        try {
+            entity.addPart("filename", new StringBody(file.getName()));
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
+
+        httpPost.setEntity(entity);
+
+        return getEntityAndReleaseConnection(objectClass, httpPost);
     }
 
     @Override
