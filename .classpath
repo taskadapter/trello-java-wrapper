@@ -25,6 +25,7 @@
   <classpathentry kind="var" path="M2_REPO/org/apache/httpcomponents/httpclient/4.2.5/httpclient-4.2.5.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/apache/httpcomponents/httpcore/4.2.4/httpcore-4.2.4.jar"/>
   <classpathentry kind="var" path="M2_REPO/commons-codec/commons-codec/1.6/commons-codec-1.6.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/httpcomponents/httpmime/4.2.5/httpmime-4.2.5.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/ning/async-http-client/1.7.19/async-http-client-1.7.19.jar"/>
   <classpathentry kind="var" path="M2_REPO/io/netty/netty/3.6.6.Final/netty-3.6.6.Final.jar"/>
 </classpath>

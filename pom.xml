@@ -148,6 +148,12 @@
             <optional>true</optional>
         </dependency>
         <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpmime</artifactId>
+            <version>${httpclient.version}</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
             <groupId>com.ning</groupId>
             <artifactId>async-http-client</artifactId>
             <version>${async-http-client.version}</version>
