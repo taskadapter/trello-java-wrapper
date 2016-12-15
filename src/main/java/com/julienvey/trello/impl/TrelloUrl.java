@@ -40,11 +40,12 @@ public class TrelloUrl {
     public static final String CREATE_CHECKLIST = "/checklists?";
     public static final String ADD_CHECKITEMS_TO_CHECKLIST = "/checklists/{checkListId}/checkitems?";
 
-    public static final String CREATE_CARD = "/cards?pos=top&";
     public static final String GET_MEMBER = "/members/{username}?";
     public static final String ADD_LABEL_TO_CARD = "/cards/{cardId}/labels?";
     public static final String ADD_COMMENT_TO_CARD = "/cards/{cardId}/actions/comments?";
 
+    public static final String CREATE_CARD = "/cards?pos=top&";
+    public static final String DELETE_CARD = "/cards/{cardId}?";
     public static final String UPDATE_CARD = "/cards/{cardId}?";
 
 
