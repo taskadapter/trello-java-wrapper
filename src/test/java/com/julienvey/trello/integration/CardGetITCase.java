@@ -74,6 +74,16 @@ public class CardGetITCase {
     }
 
     @Test
+    public void testGetCardChecklists() {
+        List<CheckList> cardChecklists = trello.getCardChecklists(CARD_ID);
+
+        assertThat(cardChecklists).isNotNull();
+        assertThat(cardChecklists).hasSize(2);
+        assertThat(cardChecklists.get(0).getId()).isEqualTo("51990272b1740a191800e5af");
+        assertThat(cardChecklists.get(1).getId()).isEqualTo("519902831dc610b17800e3e6");
+    }
+
+    @Test
     public void testGetCardAttachments() {
         List<Attachment> cardAttachments = trello.getCardAttachments(CARD_ID);
 

@@ -253,6 +253,15 @@ public class TrelloImpl implements Trello {
         return board;
     }
 
+    @Override
+    public List<CheckList> getCardChecklists(String cardId, Argument... args) {
+        List<CheckList> checkLists = Arrays.asList(get(createUrl(GET_CARD_CHECKLIST).params(args).asString(), CheckList[].class, cardId));
+        for (CheckList checklist : checkLists) {
+            checklist.setInternalTrello(this);
+        }
+        return checkLists;
+    }
+
     /* Lists */
 
     @Override

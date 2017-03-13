@@ -33,6 +33,7 @@ public class TrelloUrl {
     public static final String GET_CARD_ATTACHMENTS = "/cards/{cardId}/attachments?";
     public static final String GET_CARD_ATTACHMENT = "/cards/{cardId}/attachments/{attachmentId}?";
     public static final String GET_CARD_BOARD = "/cards/{cardId}/board?";
+    public static final String GET_CARD_CHECKLIST = "/cards/{cardId}/checklists?";
 
     public static final String GET_LIST = "/lists/{listId}?";
     public static final String GET_LIST_CARDS = "/lists/{listId}/cards?";
