@@ -1,22 +1,24 @@
 package com.julienvey.trello.integration;
 
+import static org.fest.assertions.Assertions.assertThat;
+
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+
 import com.julienvey.trello.Trello;
 import com.julienvey.trello.TrelloHttpClient;
+import com.julienvey.trello.domain.Card;
 import com.julienvey.trello.domain.TList;
 import com.julienvey.trello.impl.TrelloImpl;
 import com.julienvey.trello.impl.http.ApacheHttpClient;
 import com.julienvey.trello.impl.http.AsyncTrelloHttpClient;
 import com.julienvey.trello.impl.http.RestTemplateHttpClient;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-
-import java.util.Arrays;
-import java.util.Collection;
-
-import static org.fest.assertions.Assertions.assertThat;
 
 @RunWith(Parameterized.class)
 public class ListGetITCase {
@@ -30,7 +32,7 @@ public class ListGetITCase {
 
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
-        return Arrays.asList(new Object[][]{{new ApacheHttpClient()}, {new AsyncTrelloHttpClient()}, {new RestTemplateHttpClient()}});
+        return Arrays.asList(new Object[][] { { new ApacheHttpClient() }, { new AsyncTrelloHttpClient() }, { new RestTemplateHttpClient() } });
     }
 
     public ListGetITCase(TrelloHttpClient httpClient) {
@@ -43,10 +45,19 @@ public class ListGetITCase {
     }
 
     @Test
-    public void testGetList(){
+    public void testGetList() {
         TList list = trello.getList(LIST_ID);
 
         assertThat(list).isNotNull();
         assertThat(list.getId()).isEqualTo(LIST_ID);
+    }
+
+    @Test
+    public void testGetListCards() {
+        List<Card> listCards = trello.getListCards(LIST_ID);
+
+        assertThat(listCards).isNotNull();
+        assertThat(listCards).hasSize(2);
+        assertThat(listCards.get(0).getId()).isEqualTo("518bab520967804c03002994");
     }
 }

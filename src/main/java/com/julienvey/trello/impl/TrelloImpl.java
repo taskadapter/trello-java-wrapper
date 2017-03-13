@@ -262,6 +262,15 @@ public class TrelloImpl implements Trello {
         return tList;
     }
 
+    @Override
+    public List<Card> getListCards(String listId, Argument... args) {
+        List<Card> cards = Arrays.asList(get(createUrl(GET_LIST_CARDS).params(args).asString(), Card[].class, listId));
+        for (Card card : cards) {
+            card.setInternalTrello(this);
+        }
+        return cards;
+    }
+
     /* CheckLists */
 
     @Override
@@ -272,8 +281,7 @@ public class TrelloImpl implements Trello {
     }
 
     @Override
-    public CheckList createCheckList(String cardId, CheckList checkList)
-    {
+    public CheckList createCheckList(String cardId, CheckList checkList) {
         checkList.setIdCard(cardId);
         CheckList createdCheckList = postForObject(createUrl(CREATE_CHECKLIST).asString(), checkList, CheckList.class);
         createdCheckList.setInternalTrello(this);
@@ -281,11 +289,9 @@ public class TrelloImpl implements Trello {
     }
 
     @Override
-    public void createCheckItem(String checkListId, CheckItem checkItem)
-    {
+    public void createCheckItem(String checkListId, CheckItem checkItem) {
         postForLocation(createUrl(ADD_CHECKITEMS_TO_CHECKLIST).asString(), checkItem, checkListId);
     }
-
 
     /* Others */
 
