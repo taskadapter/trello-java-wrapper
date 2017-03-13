@@ -164,7 +164,7 @@ If you are missing some fonctionnalities, you can easily contribute and propose 
 | GET /1/cards/[card id or shortlink]/board | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
 | GET /1/cards/[card id or shortlink]/board/[field]
 | GET /1/cards/[card id or shortlink]/checkItemStates
-| GET /1/cards/[card id or shortlink]/checklists
+| GET /1/cards/[card id or shortlink]/checklists | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
 | GET /1/cards/[card id or shortlink]/list
 | GET /1/cards/[card id or shortlink]/list/[field]
 | GET /1/cards/[card id or shortlink]/members
@@ -226,7 +226,7 @@ If you are missing some fonctionnalities, you can easily contribute and propose 
 | GET /1/lists/[idList]/actions
 | GET /1/lists/[idList]/board
 | GET /1/lists/[idList]/board/[field]
-| GET /1/lists/[idList]/cards
+| GET /1/lists/[idList]/cards | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
 | GET /1/lists/[idList]/cards/[filter]
 | PUT /1/lists/[idList]
 | PUT /1/lists/[idList]/closed
