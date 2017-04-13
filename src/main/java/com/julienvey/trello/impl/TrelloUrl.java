@@ -35,6 +35,7 @@ public class TrelloUrl {
     public static final String GET_CARD_BOARD = "/cards/{cardId}/board?";
 
     public static final String GET_LIST = "/lists/{listId}?";
+    public static final String GET_LIST_CARDS = "/lists/{listId}/cards?";
 
     public static final String GET_CHECK_LIST = "/checklists/{checkListId}?";
     public static final String CREATE_CHECKLIST = "/checklists?";

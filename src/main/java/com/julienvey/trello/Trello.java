@@ -79,6 +79,8 @@ public interface Trello {
 	/* Lists */
 
 	TList getList(String listId, Argument... args);
+	
+	List<Card> getListCards(String listId, Argument... args);
 
 	/* CheckLists */
 
