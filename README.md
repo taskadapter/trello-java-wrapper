@@ -226,7 +226,7 @@ If you are missing some fonctionnalities, you can easily contribute and propose 
 | GET /1/lists/[idList]/actions
 | GET /1/lists/[idList]/board
 | GET /1/lists/[idList]/board/[field]
-| GET /1/lists/[idList]/cards
+| GET /1/lists/[idList]/cards | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
 | GET /1/lists/[idList]/cards/[filter]
 | PUT /1/lists/[idList]
 | PUT /1/lists/[idList]/closed
@@ -288,7 +288,7 @@ If you are missing some fonctionnalities, you can easily contribute and propose 
 | GET /1/organizations/[idOrg or name]/actions
 | GET /1/organizations/[idOrg or name]/boards
 | GET /1/organizations/[idOrg or name]/boards/[filter]
-| GET /1/organizations/[idOrg or name]/members
+| GET /1/organizations/[idOrg or name]/members | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
 | GET /1/organizations/[idOrg or name]/members/[filter]
 | GET /1/organizations/[idOrg or name]/members/[idMember]/cards
 | GET /1/organizations/[idOrg or name]/membersInvited

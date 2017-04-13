@@ -1,251 +1,260 @@
 package com.julienvey.trello.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import java.util.Date;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Card extends TrelloEntity {
 
-    private String id;
-    private String name;
-    private String idList;
-    private String desc;
-    private String url;
-    private Date due;
-    private List<String> idMembers;
-    private List<Label> labels;
-    private Badges badges;
-    private List<CardCheckItem> checkItemStates;
-    private boolean closed;
-    private Date dateLastActivity;
-    private String idBoard;
-    private List<String> idChecklists;
-    private List<String> idMembersVoted;
-    private String idShort;
-    private String idAttachmentCover;
-    private boolean manualCoverAttachment;
-    private int pos;
-    private String shortLink;
-    private String shortUrl;
-    private boolean subscribed;
+	private String id;
+	private String name;
+	private String idList;
+	private String desc;
+	private String url;
+	private Date due;
+	private List<String> idMembers;
+	private List<Label> labels;
+	private Badges badges;
+	private List<CardCheckItem> checkItemStates;
+	private boolean closed;
+	private Date dateLastActivity;
+	private String idBoard;
+	private List<String> idChecklists;
+	private List<String> idMembersVoted;
+	private String idShort;
+	private String idAttachmentCover;
+	private boolean manualCoverAttachment;
+	private int pos;
+	private String shortLink;
+	private String shortUrl;
+	private boolean subscribed;
+	private List<PluginData> pluginData;
 
-    /* API */
-    public void addLabels(String... labels) {
-        trelloService.addLabelsToCard(id, labels);
-    }
+	/* API */
+	public void addLabels(String... labels) {
+		trelloService.addLabelsToCard(id, labels);
+	}
 
-    public void addComment(String comment) {
-        trelloService.addCommentToCard(id, comment);
-    }
+	public void addComment(String comment) {
+		trelloService.addCommentToCard(id, comment);
+	}
 
-    public List<Action> getActions(Argument... filters) {
-        return trelloService.getCardActions(id, filters);
-    }
+	public List<Action> getActions(Argument... filters) {
+		return trelloService.getCardActions(id, filters);
+	}
 
-    /* Accessors */
-    public String getId() {
-        return id;
-    }
+	/* Accessors */
+	public String getId() {
+		return id;
+	}
 
-    public void setId(String id) {
-        this.id = id;
-    }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public String getIdList() {
-        return idList;
-    }
+	public String getIdList() {
+		return idList;
+	}
 
-    public void setIdList(String idList) {
-        this.idList = idList;
-    }
+	public void setIdList(String idList) {
+		this.idList = idList;
+	}
 
-    public String getDesc() {
-        return desc;
-    }
+	public String getDesc() {
+		return desc;
+	}
 
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
+	public void setDesc(String desc) {
+		this.desc = desc;
+	}
 
-    public Date getDue() {
-        return due;
-    }
+	public Date getDue() {
+		return due;
+	}
 
-    public void setDue(Date due) {
-        this.due = due;
-    }
+	public void setDue(Date due) {
+		this.due = due;
+	}
 
-    public List<String> getIdMembers() {
-        return idMembers;
-    }
+	public List<String> getIdMembers() {
+		return idMembers;
+	}
 
-    public void setIdMembers(List<String> idMembers) {
-        this.idMembers = idMembers;
-    }
+	public void setIdMembers(List<String> idMembers) {
+		this.idMembers = idMembers;
+	}
 
-    public List<Label> getLabels() {
-        return labels;
-    }
+	public List<Label> getLabels() {
+		return labels;
+	}
 
-    public void setLabels(List<Label> labels) {
-        this.labels = labels;
-    }
+	public void setLabels(List<Label> labels) {
+		this.labels = labels;
+	}
 
-    public String getUrl() {
-        return url;
-    }
+	public String getUrl() {
+		return url;
+	}
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
+	public void setUrl(String url) {
+		this.url = url;
+	}
 
-    public List<CardCheckItem> getCheckItemStates() {
-        return checkItemStates;
-    }
+	public List<CardCheckItem> getCheckItemStates() {
+		return checkItemStates;
+	}
 
-    public void setCheckItemStates(List<CardCheckItem> checkItemStates) {
-        this.checkItemStates = checkItemStates;
-    }
+	public void setCheckItemStates(List<CardCheckItem> checkItemStates) {
+		this.checkItemStates = checkItemStates;
+	}
 
-    public boolean isClosed() {
-        return closed;
-    }
+	public boolean isClosed() {
+		return closed;
+	}
 
-    public void setClosed(boolean closed) {
-        this.closed = closed;
-    }
+	public void setClosed(boolean closed) {
+		this.closed = closed;
+	}
 
-    public Date getDateLastActivity() {
-        return dateLastActivity;
-    }
+	public Date getDateLastActivity() {
+		return dateLastActivity;
+	}
 
-    public void setDateLastActivity(Date dateLastActivity) {
-        this.dateLastActivity = dateLastActivity;
-    }
+	public void setDateLastActivity(Date dateLastActivity) {
+		this.dateLastActivity = dateLastActivity;
+	}
 
-    public String getIdBoard() {
-        return idBoard;
-    }
+	public String getIdBoard() {
+		return idBoard;
+	}
 
-    public void setIdBoard(String idBoard) {
-        this.idBoard = idBoard;
-    }
+	public void setIdBoard(String idBoard) {
+		this.idBoard = idBoard;
+	}
 
-    public List<String> getIdChecklists() {
-        return idChecklists;
-    }
+	public List<String> getIdChecklists() {
+		return idChecklists;
+	}
 
-    public void setIdChecklists(List<String> idChecklists) {
-        this.idChecklists = idChecklists;
-    }
+	public void setIdChecklists(List<String> idChecklists) {
+		this.idChecklists = idChecklists;
+	}
 
-    public List<String> getIdMembersVoted() {
-        return idMembersVoted;
-    }
+	public List<String> getIdMembersVoted() {
+		return idMembersVoted;
+	}
 
-    public void setIdMembersVoted(List<String> idMembersVoted) {
-        this.idMembersVoted = idMembersVoted;
-    }
+	public void setIdMembersVoted(List<String> idMembersVoted) {
+		this.idMembersVoted = idMembersVoted;
+	}
 
-    public String getIdShort() {
-        return idShort;
-    }
+	public String getIdShort() {
+		return idShort;
+	}
 
-    public void setIdShort(String idShort) {
-        this.idShort = idShort;
-    }
+	public void setIdShort(String idShort) {
+		this.idShort = idShort;
+	}
 
-    public String getIdAttachmentCover() {
-        return idAttachmentCover;
-    }
+	public String getIdAttachmentCover() {
+		return idAttachmentCover;
+	}
 
-    public void setIdAttachmentCover(String idAttachmentCover) {
-        this.idAttachmentCover = idAttachmentCover;
-    }
+	public void setIdAttachmentCover(String idAttachmentCover) {
+		this.idAttachmentCover = idAttachmentCover;
+	}
 
-    public boolean isManualCoverAttachment() {
-        return manualCoverAttachment;
-    }
+	public boolean isManualCoverAttachment() {
+		return manualCoverAttachment;
+	}
 
-    public void setManualCoverAttachment(boolean manualCoverAttachment) {
-        this.manualCoverAttachment = manualCoverAttachment;
-    }
+	public void setManualCoverAttachment(boolean manualCoverAttachment) {
+		this.manualCoverAttachment = manualCoverAttachment;
+	}
 
-    public int getPos() {
-        return pos;
-    }
+	public int getPos() {
+		return pos;
+	}
 
-    public void setPos(int pos) {
-        this.pos = pos;
-    }
+	public void setPos(int pos) {
+		this.pos = pos;
+	}
 
-    public String getShortLink() {
-        return shortLink;
-    }
+	public String getShortLink() {
+		return shortLink;
+	}
 
-    public void setShortLink(String shortLink) {
-        this.shortLink = shortLink;
-    }
+	public void setShortLink(String shortLink) {
+		this.shortLink = shortLink;
+	}
 
-    public boolean isSubscribed() {
-        return subscribed;
-    }
+	public boolean isSubscribed() {
+		return subscribed;
+	}
 
-    public void setSubscribed(boolean subscribed) {
-        this.subscribed = subscribed;
-    }
+	public void setSubscribed(boolean subscribed) {
+		this.subscribed = subscribed;
+	}
 
-    public Badges getBadges() {
-        return badges;
-    }
+	public Badges getBadges() {
+		return badges;
+	}
 
-    public void setBadges(Badges badges) {
-        this.badges = badges;
-    }
+	public void setBadges(Badges badges) {
+		this.badges = badges;
+	}
 
-    public String getShortUrl() {
-        return shortUrl;
-    }
+	public String getShortUrl() {
+		return shortUrl;
+	}
 
-    public void setShortUrl(String shortUrl) {
-        this.shortUrl = shortUrl;
-    }
+	public void setShortUrl(String shortUrl) {
+		this.shortUrl = shortUrl;
+	}
 
-    public Card update() {
-        return trelloService.updateCard(this);
-    }
+	public List<PluginData> getPluginData() {
+		return pluginData;
+	}
 
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    public static class CardCheckItem {
+	public void setPluginData(List<PluginData> pluginData) {
+		this.pluginData = pluginData;
+	}
 
-        private String idCheckItem;
-        private String state;
+	public Card update() {
+		return trelloService.updateCard(this);
+	}
 
-        public String getIdCheckItem() {
-            return idCheckItem;
-        }
+	@JsonIgnoreProperties(ignoreUnknown = true)
+	public static class CardCheckItem {
 
-        public void setIdCheckItem(String idCheckItem) {
-            this.idCheckItem = idCheckItem;
-        }
+		private String idCheckItem;
+		private String state;
 
-        public String getState() {
-            return state;
-        }
+		public String getIdCheckItem() {
+			return idCheckItem;
+		}
 
-        public void setState(String state) {
-            this.state = state;
-        }
+		public void setIdCheckItem(String idCheckItem) {
+			this.idCheckItem = idCheckItem;
+		}
 
-    }
+		public String getState() {
+			return state;
+		}
+
+		public void setState(String state) {
+			this.state = state;
+		}
+
+	}
 }
