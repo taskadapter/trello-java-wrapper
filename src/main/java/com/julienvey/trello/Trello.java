@@ -80,6 +80,10 @@ public interface Trello {
 
     List<CheckList> getCardChecklists(String cardId, Argument... args);
 
+    /* Organizations */
+    
+    List<Board> getOrganizationBoards(String organizationId, Argument... args);
+    
     /////////////////
 
     Card createCard(String listId, Card card);
