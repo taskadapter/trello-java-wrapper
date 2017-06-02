@@ -1,8 +1,20 @@
 package com.julienvey.trello;
 
-import com.julienvey.trello.domain.*;
-
 import java.util.List;
+
+import com.julienvey.trello.domain.Action;
+import com.julienvey.trello.domain.Argument;
+import com.julienvey.trello.domain.Attachment;
+import com.julienvey.trello.domain.Board;
+import com.julienvey.trello.domain.Card;
+import com.julienvey.trello.domain.CardWithActions;
+import com.julienvey.trello.domain.CheckItem;
+import com.julienvey.trello.domain.CheckList;
+import com.julienvey.trello.domain.Entity;
+import com.julienvey.trello.domain.Member;
+import com.julienvey.trello.domain.MyPrefs;
+import com.julienvey.trello.domain.Organization;
+import com.julienvey.trello.domain.TList;
 
 public interface Trello {
 
@@ -23,10 +35,10 @@ public interface Trello {
 
     List<Card> getBoardMemberCards(String boardId, String memberId, Argument... args);
 
-    //FIXME Remove this method
+    // FIXME Remove this method
     @Deprecated
-	List<CardWithActions> getBoardMemberActivity(String boardId, String memberId,
-			String actionsFilter, Argument... args);
+    List<CardWithActions> getBoardMemberActivity(String boardId, String memberId,
+            String actionsFilter, Argument... args);
 
     List<Member> getBoardMembersInvited(String boardId, Argument... args);
 
@@ -81,9 +93,11 @@ public interface Trello {
     List<CheckList> getCardChecklists(String cardId, Argument... args);
 
     /* Organizations */
-    
+
     List<Board> getOrganizationBoards(String organizationId, Argument... args);
-    
+
+    List<Member> getOrganizationMembers(String string, Argument... args);
+
     /////////////////
 
     Card createCard(String listId, Card card);
@@ -94,7 +108,7 @@ public interface Trello {
 
     Card updateCard(Card card);
 
-    //FIXME Remove this method
+    // FIXME Remove this method
     @Deprecated
     Member getBasicMemberInformation(String username);
 

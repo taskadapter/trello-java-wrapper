@@ -39,7 +39,8 @@ public class TrelloUrl {
     public static final String GET_LIST_CARDS = "/lists/{listId}/cards?";
 
     public static final String GET_ORGANIZATION_BOARD = "/organizations/{organizationId}/boards?";
-    
+    public static final String GET_ORGANIZATION_MEMBER = "/organizations/{organizationId}/members?";
+
     public static final String GET_CHECK_LIST = "/checklists/{checkListId}?";
     public static final String CREATE_CHECKLIST = "/checklists?";
     public static final String ADD_CHECKITEMS_TO_CHECKLIST = "/checklists/{checkListId}/checkitems?";
@@ -51,8 +52,6 @@ public class TrelloUrl {
 
     public static final String UPDATE_CARD = "/cards/{cardId}?";
 
-
-
     private String baseUrl;
     private Argument[] args = {};
 
@@ -60,11 +59,11 @@ public class TrelloUrl {
         this.baseUrl = baseUrl;
     }
 
-    public static TrelloUrl createUrl(String baseUrl){
+    public static TrelloUrl createUrl(String baseUrl) {
         return new TrelloUrl(baseUrl);
     }
 
-    public TrelloUrl params(Argument... args){
+    public TrelloUrl params(Argument... args) {
         this.args = args;
         return this;
     }
@@ -73,7 +72,7 @@ public class TrelloUrl {
         StringBuilder builder = new StringBuilder(API_URL);
         builder.append(baseUrl);
         builder.append(API_KEY_TOKEN_PARAM);
-        for(Argument arg : args){
+        for (Argument arg : args) {
             builder.append("&");
             builder.append(arg.getArgName());
             builder.append("=");

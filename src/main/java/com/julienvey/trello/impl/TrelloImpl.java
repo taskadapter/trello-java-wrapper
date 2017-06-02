@@ -1,19 +1,69 @@
 package com.julienvey.trello.impl;
 
-import com.julienvey.trello.Trello;
-import com.julienvey.trello.TrelloHttpClient;
-import com.julienvey.trello.domain.*;
-import com.julienvey.trello.impl.domaininternal.Comment;
-import com.julienvey.trello.impl.domaininternal.Label;
-import com.julienvey.trello.impl.http.RestTemplateHttpClient;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import static com.julienvey.trello.impl.TrelloUrl.ADD_CHECKITEMS_TO_CHECKLIST;
+import static com.julienvey.trello.impl.TrelloUrl.ADD_COMMENT_TO_CARD;
+import static com.julienvey.trello.impl.TrelloUrl.ADD_LABEL_TO_CARD;
+import static com.julienvey.trello.impl.TrelloUrl.CREATE_CARD;
+import static com.julienvey.trello.impl.TrelloUrl.CREATE_CHECKLIST;
+import static com.julienvey.trello.impl.TrelloUrl.GET_ACTION;
+import static com.julienvey.trello.impl.TrelloUrl.GET_ACTION_BOARD;
+import static com.julienvey.trello.impl.TrelloUrl.GET_ACTION_CARD;
+import static com.julienvey.trello.impl.TrelloUrl.GET_ACTION_ENTITIES;
+import static com.julienvey.trello.impl.TrelloUrl.GET_ACTION_LIST;
+import static com.julienvey.trello.impl.TrelloUrl.GET_ACTION_MEMBER;
+import static com.julienvey.trello.impl.TrelloUrl.GET_ACTION_MEMBER_CREATOR;
+import static com.julienvey.trello.impl.TrelloUrl.GET_ACTION_ORGANIZATION;
+import static com.julienvey.trello.impl.TrelloUrl.GET_BOARD;
+import static com.julienvey.trello.impl.TrelloUrl.GET_BOARD_ACTIONS;
+import static com.julienvey.trello.impl.TrelloUrl.GET_BOARD_CARD;
+import static com.julienvey.trello.impl.TrelloUrl.GET_BOARD_CARDS;
+import static com.julienvey.trello.impl.TrelloUrl.GET_BOARD_CHECKLISTS;
+import static com.julienvey.trello.impl.TrelloUrl.GET_BOARD_LISTS;
+import static com.julienvey.trello.impl.TrelloUrl.GET_BOARD_MEMBERS;
+import static com.julienvey.trello.impl.TrelloUrl.GET_BOARD_MEMBERS_INVITED;
+import static com.julienvey.trello.impl.TrelloUrl.GET_BOARD_MEMBER_CARDS;
+import static com.julienvey.trello.impl.TrelloUrl.GET_BOARD_MYPREFS;
+import static com.julienvey.trello.impl.TrelloUrl.GET_BOARD_ORGANIZATION;
+import static com.julienvey.trello.impl.TrelloUrl.GET_CARD;
+import static com.julienvey.trello.impl.TrelloUrl.GET_CARD_ACTIONS;
+import static com.julienvey.trello.impl.TrelloUrl.GET_CARD_ATTACHMENT;
+import static com.julienvey.trello.impl.TrelloUrl.GET_CARD_ATTACHMENTS;
+import static com.julienvey.trello.impl.TrelloUrl.GET_CARD_BOARD;
+import static com.julienvey.trello.impl.TrelloUrl.GET_CARD_CHECKLIST;
+import static com.julienvey.trello.impl.TrelloUrl.GET_CHECK_LIST;
+import static com.julienvey.trello.impl.TrelloUrl.GET_LIST;
+import static com.julienvey.trello.impl.TrelloUrl.GET_LIST_CARDS;
+import static com.julienvey.trello.impl.TrelloUrl.GET_MEMBER;
+import static com.julienvey.trello.impl.TrelloUrl.GET_ORGANIZATION_BOARD;
+import static com.julienvey.trello.impl.TrelloUrl.GET_ORGANIZATION_MEMBER;
+import static com.julienvey.trello.impl.TrelloUrl.UPDATE_CARD;
+import static com.julienvey.trello.impl.TrelloUrl.createUrl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.julienvey.trello.impl.TrelloUrl.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.julienvey.trello.Trello;
+import com.julienvey.trello.TrelloHttpClient;
+import com.julienvey.trello.domain.Action;
+import com.julienvey.trello.domain.Argument;
+import com.julienvey.trello.domain.Attachment;
+import com.julienvey.trello.domain.Board;
+import com.julienvey.trello.domain.Card;
+import com.julienvey.trello.domain.CardWithActions;
+import com.julienvey.trello.domain.CheckItem;
+import com.julienvey.trello.domain.CheckList;
+import com.julienvey.trello.domain.Entity;
+import com.julienvey.trello.domain.Member;
+import com.julienvey.trello.domain.MyPrefs;
+import com.julienvey.trello.domain.Organization;
+import com.julienvey.trello.domain.TList;
+import com.julienvey.trello.impl.domaininternal.Comment;
+import com.julienvey.trello.impl.domaininternal.Label;
+import com.julienvey.trello.impl.http.RestTemplateHttpClient;
 
 public class TrelloImpl implements Trello {
 
@@ -111,11 +161,11 @@ public class TrelloImpl implements Trello {
         return cards;
     }
 
-    //FIXME Remove this method
+    // FIXME Remove this method
     @Override
     @Deprecated
     public List<CardWithActions> getBoardMemberActivity(String boardId, String memberId,
-                                                        String actionFilter, Argument... args) {
+            String actionFilter, Argument... args) {
         if (actionFilter == null)
             actionFilter = "all";
         Argument[] argsAndFilter = Arrays.copyOf(args, args.length + 1);
@@ -279,7 +329,7 @@ public class TrelloImpl implements Trello {
         }
         return cards;
     }
-    
+
     /* Organizations */
     @Override
     public List<Board> getOrganizationBoards(String organizationId, Argument... args) {
@@ -288,6 +338,15 @@ public class TrelloImpl implements Trello {
             board.setInternalTrello(this);
         }
         return boards;
+    }
+
+    @Override
+    public List<Member> getOrganizationMembers(String organizationId, Argument... args) {
+        List<Member> members = Arrays.asList(get(createUrl(GET_ORGANIZATION_MEMBER).params(args).asString(), Member[].class, organizationId));
+        for (Member member : members) {
+            member.setInternalTrello(this);
+        }
+        return members;
     }
 
     /* CheckLists */
@@ -323,7 +382,7 @@ public class TrelloImpl implements Trello {
     }
 
     @Override
-    //FIXME Remove this method
+    // FIXME Remove this method
     @Deprecated
     public Member getBasicMemberInformation(String username) {
         Member member = get(createUrl(GET_MEMBER).params(new Argument("fields", "username,fullName")).asString(), Member.class, username);

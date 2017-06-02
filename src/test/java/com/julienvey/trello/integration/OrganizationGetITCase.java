@@ -1,24 +1,24 @@
 package com.julienvey.trello.integration;
 
-import com.julienvey.trello.Trello;
-import com.julienvey.trello.TrelloHttpClient;
-import com.julienvey.trello.domain.*;
-import com.julienvey.trello.impl.TrelloImpl;
-import com.julienvey.trello.impl.http.ApacheHttpClient;
-import com.julienvey.trello.impl.http.AsyncTrelloHttpClient;
-import com.julienvey.trello.impl.http.RestTemplateHttpClient;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import static org.fest.assertions.Assertions.assertThat;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import static com.julienvey.trello.utils.ArgUtils.arg;
-import static org.fest.assertions.Assertions.assertThat;
-import static org.fest.assertions.MapAssert.entry;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+
+import com.julienvey.trello.Trello;
+import com.julienvey.trello.TrelloHttpClient;
+import com.julienvey.trello.domain.Board;
+import com.julienvey.trello.domain.Member;
+import com.julienvey.trello.impl.TrelloImpl;
+import com.julienvey.trello.impl.http.ApacheHttpClient;
+import com.julienvey.trello.impl.http.AsyncTrelloHttpClient;
+import com.julienvey.trello.impl.http.RestTemplateHttpClient;
 
 @RunWith(Parameterized.class)
 public class OrganizationGetITCase {
@@ -32,7 +32,7 @@ public class OrganizationGetITCase {
 
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
-        return Arrays.asList(new Object[][]{{new ApacheHttpClient()}, {new AsyncTrelloHttpClient()}, {new RestTemplateHttpClient()}});
+        return Arrays.asList(new Object[][] { { new ApacheHttpClient() }, { new AsyncTrelloHttpClient() }, { new RestTemplateHttpClient() } });
     }
 
     public OrganizationGetITCase(TrelloHttpClient httpClient) {
@@ -45,12 +45,21 @@ public class OrganizationGetITCase {
     }
 
     @Test
-    public void testGetBoardFetchCard() {
+    public void testGetOrganizationFetchBoard() {
         List<Board> boards = trello.getOrganizationBoards(ORGANIZATION_ID);
-        
-        assertThat(boards).isNotNull();
-        assertThat(boards).hasSize(1);       
 
-    }   
-    
+        assertThat(boards).isNotNull();
+        assertThat(boards).hasSize(1);
+
+    }
+
+    @Test
+    public void testGetOrganizationFetchMember() {
+        List<Member> members = trello.getOrganizationMembers(ORGANIZATION_ID);
+
+        assertThat(members).isNotNull();
+        assertThat(members).hasSize(1);
+
+    }
+
 }
