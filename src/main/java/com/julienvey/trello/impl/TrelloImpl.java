@@ -326,6 +326,11 @@ public class TrelloImpl implements Trello {
     }
 
     @Override
+    public void addUrlAttachmentToCard(String idCard, String url) {
+        postForObject(createUrl(ADD_URL_ATTACHMENT_TO_CARD).asString(), new Attachment(url), Attachment.class, idCard);
+    }
+
+    @Override
     public Card updateCard(Card card) {
         Card put = put(createUrl(UPDATE_CARD).asString(), card, Card.class, card.getId());
         put.setInternalTrello(this);
