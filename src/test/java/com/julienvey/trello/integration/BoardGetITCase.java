@@ -156,7 +156,6 @@ public class BoardGetITCase {
         List<CheckList> checkLists = board.fetchCheckLists();
 
         assertThat(checkLists).hasSize(2);
-        assertThat(checkLists.get(0).getId()).isEqualTo("51990272b1740a191800e5af");
     }
 
     @Test
