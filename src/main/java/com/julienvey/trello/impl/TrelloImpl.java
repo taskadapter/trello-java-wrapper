@@ -18,6 +18,7 @@ import static com.julienvey.trello.impl.TrelloUrl.GET_BOARD_ACTIONS;
 import static com.julienvey.trello.impl.TrelloUrl.GET_BOARD_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.GET_BOARD_CARDS;
 import static com.julienvey.trello.impl.TrelloUrl.GET_BOARD_CHECKLISTS;
+import static com.julienvey.trello.impl.TrelloUrl.GET_BOARD_LABELS;
 import static com.julienvey.trello.impl.TrelloUrl.GET_BOARD_LISTS;
 import static com.julienvey.trello.impl.TrelloUrl.GET_BOARD_MEMBERS;
 import static com.julienvey.trello.impl.TrelloUrl.GET_BOARD_MEMBERS_INVITED;
@@ -128,6 +129,16 @@ public class TrelloImpl implements Trello {
             checkList.setInternalTrello(this);
         }
         return checkLists;
+    }
+
+    @Override
+    public List<com.julienvey.trello.domain.Label> getBoardLabels(String boardId, Argument... args) {
+        List<com.julienvey.trello.domain.Label> labels = Arrays
+                .asList(get(createUrl(GET_BOARD_LABELS).params(args).asString(), com.julienvey.trello.domain.Label[].class, boardId));
+        for (com.julienvey.trello.domain.Label label : labels) {
+            label.setInternalTrello(this);
+        }
+        return labels;
     }
 
     @Override

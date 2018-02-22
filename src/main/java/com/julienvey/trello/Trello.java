@@ -11,6 +11,7 @@ import com.julienvey.trello.domain.CardWithActions;
 import com.julienvey.trello.domain.CheckItem;
 import com.julienvey.trello.domain.CheckList;
 import com.julienvey.trello.domain.Entity;
+import com.julienvey.trello.domain.Label;
 import com.julienvey.trello.domain.Member;
 import com.julienvey.trello.domain.MyPrefs;
 import com.julienvey.trello.domain.Organization;
@@ -30,6 +31,8 @@ public interface Trello {
     List<CheckList> getBoardChecklists(String boardId, Argument... args);
 
     List<TList> getBoardLists(String boardId, Argument... args);
+
+    List<Label> getBoardLabels(String boardId, Argument... args);
 
     List<Member> getBoardMembers(String boardId, Argument... args);
 
