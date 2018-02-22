@@ -14,6 +14,7 @@ public class TrelloUrl {
     public static final String GET_BOARD_CHECKLISTS = "/boards/{boardId}/checklists?";
     public static final String GET_BOARD_MEMBERS = "/boards/{boardId}/members?";
     public static final String GET_BOARD_MEMBER_CARDS = "/boards/{boardId}/members/{memberId}/cards?";
+    public static final String GET_BOARD_LABELS = "/boards/{boardId}/labels?";
     public static final String GET_BOARD_LISTS = "/boards/{boardId}/lists?";
     public static final String GET_BOARD_MEMBERS_INVITED = "/boards/{boardId}/membersInvited?";
     public static final String GET_BOARD_MYPREFS = "/boards/{boardId}/myPrefs?";
@@ -33,8 +34,13 @@ public class TrelloUrl {
     public static final String GET_CARD_ATTACHMENTS = "/cards/{cardId}/attachments?";
     public static final String GET_CARD_ATTACHMENT = "/cards/{cardId}/attachments/{attachmentId}?";
     public static final String GET_CARD_BOARD = "/cards/{cardId}/board?";
+    public static final String GET_CARD_CHECKLIST = "/cards/{cardId}/checklists?";
 
     public static final String GET_LIST = "/lists/{listId}?";
+    public static final String GET_LIST_CARDS = "/lists/{listId}/cards?";
+
+    public static final String GET_ORGANIZATION_BOARD = "/organizations/{organizationId}/boards?";
+    public static final String GET_ORGANIZATION_MEMBER = "/organizations/{organizationId}/members?";
 
     public static final String GET_CHECK_LIST = "/checklists/{checkListId}?";
     public static final String CREATE_CHECKLIST = "/checklists?";
@@ -47,8 +53,6 @@ public class TrelloUrl {
 
     public static final String UPDATE_CARD = "/cards/{cardId}?";
 
-
-
     private String baseUrl;
     private Argument[] args = {};
 
@@ -56,11 +60,11 @@ public class TrelloUrl {
         this.baseUrl = baseUrl;
     }
 
-    public static TrelloUrl createUrl(String baseUrl){
+    public static TrelloUrl createUrl(String baseUrl) {
         return new TrelloUrl(baseUrl);
     }
 
-    public TrelloUrl params(Argument... args){
+    public TrelloUrl params(Argument... args) {
         this.args = args;
         return this;
     }
@@ -69,7 +73,7 @@ public class TrelloUrl {
         StringBuilder builder = new StringBuilder(API_URL);
         builder.append(baseUrl);
         builder.append(API_KEY_TOKEN_PARAM);
-        for(Argument arg : args){
+        for (Argument arg : args) {
             builder.append("&");
             builder.append(arg.getArgName());
             builder.append("=");

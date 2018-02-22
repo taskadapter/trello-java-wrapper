@@ -1,26 +1,27 @@
 package com.julienvey.trello.integration;
 
+import static org.fest.assertions.Assertions.assertThat;
+
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+
 import com.julienvey.trello.Trello;
 import com.julienvey.trello.TrelloHttpClient;
 import com.julienvey.trello.domain.Action;
 import com.julienvey.trello.domain.Attachment;
 import com.julienvey.trello.domain.Board;
 import com.julienvey.trello.domain.Card;
+import com.julienvey.trello.domain.CheckList;
 import com.julienvey.trello.impl.TrelloImpl;
 import com.julienvey.trello.impl.http.ApacheHttpClient;
 import com.julienvey.trello.impl.http.AsyncTrelloHttpClient;
 import com.julienvey.trello.impl.http.RestTemplateHttpClient;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-
-import static org.fest.assertions.Assertions.assertThat;
 
 @RunWith(Parameterized.class)
 public class CardGetITCase {
@@ -34,7 +35,8 @@ public class CardGetITCase {
 
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
-        return Arrays.asList(new Object[][]{{new ApacheHttpClient()}, {new AsyncTrelloHttpClient()}, {new RestTemplateHttpClient()}});
+        return Arrays.asList(new Object[][] { { new ApacheHttpClient() }, { new AsyncTrelloHttpClient() },
+                { new RestTemplateHttpClient() } });
     }
 
     public CardGetITCase(TrelloHttpClient httpClient) {
@@ -71,6 +73,16 @@ public class CardGetITCase {
         assertThat(cardActions).isNotNull();
         assertThat(cardActions).hasSize(1);
         assertThat(cardActions.get(0).getId()).isEqualTo("5199029a7c4f3ca30a00136a");
+    }
+
+    @Test
+    public void testGetCardChecklists() {
+        List<CheckList> cardChecklists = trello.getCardChecklists(CARD_ID);
+
+        assertThat(cardChecklists).isNotNull();
+        assertThat(cardChecklists).hasSize(2);
+        assertThat(cardChecklists.get(0).getId()).isEqualTo("51990272b1740a191800e5af");
+        assertThat(cardChecklists.get(1).getId()).isEqualTo("519902831dc610b17800e3e6");
     }
 
     @Test

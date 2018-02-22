@@ -1,25 +1,37 @@
 package com.julienvey.trello.unit;
 
-import com.julienvey.trello.Trello;
-import com.julienvey.trello.TrelloHttpClient;
-import com.julienvey.trello.domain.*;
-import com.julienvey.trello.impl.TrelloImpl;
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Mockito;
-
-import java.util.*;
-
 import static com.julienvey.trello.utils.ArgUtils.arg;
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.anyVararg;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
+
+import java.util.Arrays;
+import java.util.List;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.Mockito;
+
+import com.julienvey.trello.Trello;
+import com.julienvey.trello.TrelloHttpClient;
+import com.julienvey.trello.domain.Action;
+import com.julienvey.trello.domain.Board;
+import com.julienvey.trello.domain.Card;
+import com.julienvey.trello.domain.CardWithActions;
+import com.julienvey.trello.domain.CheckList;
+import com.julienvey.trello.domain.Label;
+import com.julienvey.trello.domain.Member;
+import com.julienvey.trello.domain.MyPrefs;
+import com.julienvey.trello.domain.Organization;
+import com.julienvey.trello.domain.TList;
+import com.julienvey.trello.impl.TrelloImpl;
 
 public class BoardGetUnitTest {
-
 
     private Trello trello;
 
@@ -33,15 +45,15 @@ public class BoardGetUnitTest {
 
     @Test
     public void testGetBoardSimple() {
-        //Given
+        // Given
         Board mockBoard = new Board();
         mockBoard.setId("idBoard");
         when(httpClient.get(anyString(), any(Class.class), (String[]) anyVararg())).thenReturn(mockBoard);
 
-        //When
+        // When
         Board board = trello.getBoard("idBoard");
 
-        //Then
+        // Then
         assertThat(board).isNotNull();
         assertThat(board.getId()).isEqualTo("idBoard");
 
@@ -52,7 +64,7 @@ public class BoardGetUnitTest {
 
     @Test
     public void testGetBoardWithLists() {
-        //Given
+        // Given
         Board mockBoard = new Board();
         mockBoard.setId("idBoard");
         TList list1 = new TList();
@@ -62,23 +74,23 @@ public class BoardGetUnitTest {
         mockBoard.setLists(Arrays.asList(list1, list2));
         when(httpClient.get(anyString(), any(Class.class), (String[]) anyVararg())).thenReturn(mockBoard);
 
-        //When
+        // When
         Board board = trello.getBoard("idBoard", arg("lists", "all"));
 
-        //Then
+        // Then
         assertThat(board).isNotNull();
         assertThat(board.getId()).isEqualTo("idBoard");
         assertThat(board.getLists()).isNotNull();
         assertThat(board.getLists().size()).isEqualTo(2);
 
         verify(httpClient).get(eq("https://api.trello.com/1/boards/{boardId}?key={applicationKey}&token={userToken}&lists=all"),
-            eq(Board.class), eq("idBoard"), eq(""), eq(""));
+                eq(Board.class), eq("idBoard"), eq(""), eq(""));
         verifyNoMoreInteractions(httpClient);
     }
 
     @Test
     public void testGetBoardActions() {
-        //Given
+        // Given
         Action action1 = new Action();
         action1.setId("idAction1");
         Action action2 = new Action();
@@ -86,12 +98,12 @@ public class BoardGetUnitTest {
         Action action3 = new Action();
         action1.setId("idAction3");
 
-        when(httpClient.get(anyString(), any(Class.class), (String[]) anyVararg())).thenReturn(new Action[]{action1, action2, action3});
+        when(httpClient.get(anyString(), any(Class.class), (String[]) anyVararg())).thenReturn(new Action[] { action1, action2, action3 });
 
-        //When
+        // When
         List<Action> boardActions = trello.getBoardActions("idBoard");
 
-        //Then
+        // Then
         assertThat(boardActions).isNotNull();
         assertThat(boardActions).hasSize(3);
         assertThat(boardActions.get(0).getId()).isEqualTo("idAction3");
@@ -103,7 +115,7 @@ public class BoardGetUnitTest {
 
     @Test
     public void testGetBoardCards() {
-        //Given
+        // Given
         Card action1 = new Card();
         action1.setId("idCard1");
         Card action2 = new Card();
@@ -111,12 +123,12 @@ public class BoardGetUnitTest {
         Card action3 = new Card();
         action1.setId("idCard3");
 
-        when(httpClient.get(anyString(), any(Class.class), (String[]) anyVararg())).thenReturn(new Card[]{action1, action2, action3});
+        when(httpClient.get(anyString(), any(Class.class), (String[]) anyVararg())).thenReturn(new Card[] { action1, action2, action3 });
 
-        //When
+        // When
         List<Card> boardCards = trello.getBoardCards("idBoard");
 
-        //Then
+        // Then
         assertThat(boardCards).isNotNull();
         assertThat(boardCards).hasSize(3);
         assertThat(boardCards.get(0).getId()).isEqualTo("idCard3");
@@ -128,16 +140,16 @@ public class BoardGetUnitTest {
 
     @Test
     public void testGetBoardCard() {
-        //Given
+        // Given
         Card mockCard = new Card();
         mockCard.setId("idCard");
 
         when(httpClient.get(anyString(), any(Class.class), (String[]) anyVararg())).thenReturn(mockCard);
 
-        //When
+        // When
         Card boardCard = trello.getBoardCard("idBoard", "idCard");
 
-        //Then
+        // Then
         assertThat(boardCard).isNotNull();
         assertThat(boardCard.getId()).isEqualTo("idCard");
 
@@ -149,7 +161,7 @@ public class BoardGetUnitTest {
 
     @Test
     public void testGetBoardChecklists() {
-        //Given
+        // Given
         CheckList list1 = new CheckList();
         list1.setId("idList1");
         CheckList list2 = new CheckList();
@@ -157,12 +169,12 @@ public class BoardGetUnitTest {
         CheckList list3 = new CheckList();
         list1.setId("idList3");
 
-        when(httpClient.get(anyString(), any(Class.class), (String[]) anyVararg())).thenReturn(new CheckList[]{list1, list2, list3});
+        when(httpClient.get(anyString(), any(Class.class), (String[]) anyVararg())).thenReturn(new CheckList[] { list1, list2, list3 });
 
-        //When
+        // When
         List<CheckList> boardChecklists = trello.getBoardChecklists("idBoard");
 
-        //Then
+        // Then
         assertThat(boardChecklists).isNotNull();
         assertThat(boardChecklists).hasSize(3);
         assertThat(boardChecklists.get(0).getId()).isEqualTo("idList3");
@@ -173,8 +185,33 @@ public class BoardGetUnitTest {
     }
 
     @Test
+    public void testGetBoardLabels() {
+        // Given
+        Label label1 = new Label();
+        label1.setName("Label1");
+        Label label2 = new Label();
+        label2.setName("Label2");
+        Label label3 = new Label();
+        label3.setName("Label3");
+
+        when(httpClient.get(anyString(), any(Class.class), (String[]) anyVararg())).thenReturn(new Label[] { label1, label2, label3 });
+
+        // When
+        List<Label> boardLabels = trello.getBoardLabels("idBoard");
+
+        // Then
+        assertThat(boardLabels).isNotNull();
+        assertThat(boardLabels).hasSize(3);
+        assertThat(boardLabels.get(0).getName()).isEqualTo("Label1");
+
+        verify(httpClient).get(eq("https://api.trello.com/1/boards/{boardId}/labels?key={applicationKey}&token={userToken}"),
+                eq(Label[].class), eq("idBoard"), eq(""), eq(""));
+        verifyNoMoreInteractions(httpClient);
+    }
+
+    @Test
     public void testGetBoardLists() {
-        //Given
+        // Given
         TList action1 = new TList();
         action1.setId("idList1");
         TList action2 = new TList();
@@ -182,12 +219,12 @@ public class BoardGetUnitTest {
         TList action3 = new TList();
         action1.setId("idList3");
 
-        when(httpClient.get(anyString(), any(Class.class), (String[]) anyVararg())).thenReturn(new TList[]{action1, action2, action3});
+        when(httpClient.get(anyString(), any(Class.class), (String[]) anyVararg())).thenReturn(new TList[] { action1, action2, action3 });
 
-        //When
+        // When
         List<TList> boardLists = trello.getBoardLists("idBoard");
 
-        //Then
+        // Then
         assertThat(boardLists).isNotNull();
         assertThat(boardLists).hasSize(3);
         assertThat(boardLists.get(0).getId()).isEqualTo("idList3");
@@ -199,7 +236,7 @@ public class BoardGetUnitTest {
 
     @Test
     public void testGetBoardMembers() {
-        //Given
+        // Given
         Member member1 = new Member();
         member1.setId("idMember1");
         Member member2 = new Member();
@@ -207,12 +244,12 @@ public class BoardGetUnitTest {
         Member member3 = new Member();
         member1.setId("idMember3");
 
-        when(httpClient.get(anyString(), any(Class.class), (String[]) anyVararg())).thenReturn(new Member[]{member1, member2, member3});
+        when(httpClient.get(anyString(), any(Class.class), (String[]) anyVararg())).thenReturn(new Member[] { member1, member2, member3 });
 
-        //When
+        // When
         List<Member> boardMembers = trello.getBoardMembers("idBoard");
 
-        //Then
+        // Then
         assertThat(boardMembers).isNotNull();
         assertThat(boardMembers).hasSize(3);
         assertThat(boardMembers.get(0).getId()).isEqualTo("idMember3");
@@ -224,7 +261,7 @@ public class BoardGetUnitTest {
 
     @Test
     public void testGetBoardMemberCards() {
-        //Given
+        // Given
         Card action1 = new Card();
         action1.setId("idCard1");
         Card action2 = new Card();
@@ -232,12 +269,12 @@ public class BoardGetUnitTest {
         Card action3 = new Card();
         action1.setId("idCard3");
 
-        when(httpClient.get(anyString(), any(Class.class), (String[]) anyVararg())).thenReturn(new Card[]{action1, action2, action3});
+        when(httpClient.get(anyString(), any(Class.class), (String[]) anyVararg())).thenReturn(new Card[] { action1, action2, action3 });
 
-        //When
+        // When
         List<Card> boardMemberCards = trello.getBoardMemberCards("idBoard", "idMember");
 
-        //Then
+        // Then
         assertThat(boardMemberCards).isNotNull();
         assertThat(boardMemberCards).hasSize(3);
         assertThat(boardMemberCards.get(0).getId()).isEqualTo("idCard3");
@@ -249,7 +286,7 @@ public class BoardGetUnitTest {
 
     @Test
     public void testGetBoardMembersInvited() {
-        //Given
+        // Given
         Member member1 = new Member();
         member1.setId("idMember1");
         Member member2 = new Member();
@@ -257,12 +294,12 @@ public class BoardGetUnitTest {
         Member member3 = new Member();
         member1.setId("idMember3");
 
-        when(httpClient.get(anyString(), any(Class.class), (String[]) anyVararg())).thenReturn(new Member[]{member1, member2, member3});
+        when(httpClient.get(anyString(), any(Class.class), (String[]) anyVararg())).thenReturn(new Member[] { member1, member2, member3 });
 
-        //When
+        // When
         List<Member> boardMembersInvited = trello.getBoardMembersInvited("idBoard");
 
-        //Then
+        // Then
         assertThat(boardMembersInvited).isNotNull();
         assertThat(boardMembersInvited).hasSize(3);
         assertThat(boardMembersInvited.get(0).getId()).isEqualTo("idMember3");
@@ -274,16 +311,16 @@ public class BoardGetUnitTest {
 
     @Test
     public void testGetBoardMyPrefs() {
-        //Given
+        // Given
         MyPrefs myPrefs = new MyPrefs();
         myPrefs.setEmailKey("Key");
 
         when(httpClient.get(anyString(), any(Class.class), (String[]) anyVararg())).thenReturn(myPrefs);
 
-        //When
+        // When
         MyPrefs boardMyMyPrefs = trello.getBoardMyPrefs("idBoard");
 
-        //Then
+        // Then
         assertThat(boardMyMyPrefs).isNotNull();
         assertThat(boardMyMyPrefs.getEmailKey()).isEqualTo("Key");
 
@@ -294,16 +331,16 @@ public class BoardGetUnitTest {
 
     @Test
     public void testGetBoardOrganization() {
-        //Given
+        // Given
         Organization organization = new Organization();
         organization.setId("idOrg");
 
         when(httpClient.get(anyString(), any(Class.class), (String[]) anyVararg())).thenReturn(organization);
 
-        //When
+        // When
         Organization boardOrganization = trello.getBoardOrganization("idBoard");
 
-        //Then
+        // Then
         assertThat(boardOrganization).isNotNull();
         assertThat(boardOrganization.getId()).isEqualTo("idOrg");
 
@@ -314,7 +351,7 @@ public class BoardGetUnitTest {
 
     @Test
     public void testGetBoardMemberActivityComments() {
-        //Given
+        // Given
         CardWithActions action1 = new CardWithActions();
         action1.setId("idCard1");
         CardWithActions action2 = new CardWithActions();
@@ -322,18 +359,19 @@ public class BoardGetUnitTest {
         CardWithActions action3 = new CardWithActions();
         action1.setId("idCard3");
 
-        when(httpClient.get(anyString(), any(Class.class), (String[]) anyVararg())).thenReturn(new CardWithActions[]{action1, action2, action3});
+        when(httpClient.get(anyString(), any(Class.class), (String[]) anyVararg())).thenReturn(new CardWithActions[] { action1, action2, action3 });
 
-        //When
+        // When
         List<CardWithActions> commentActivity = trello.getBoardMemberActivity("idBoard",
                 "memberId", "commentCard");
 
-        //Then
+        // Then
         assertThat(commentActivity).isNotNull();
         assertThat(commentActivity).hasSize(3);
         assertThat(commentActivity.get(0).getId()).isEqualTo("idCard3");
 
-        verify(httpClient).get(eq("https://api.trello.com/1/boards/{boardId}/members/{memberId}/cards?key={applicationKey}&token={userToken}&actions=commentCard"),
+        verify(httpClient).get(
+                eq("https://api.trello.com/1/boards/{boardId}/members/{memberId}/cards?key={applicationKey}&token={userToken}&actions=commentCard"),
                 eq(CardWithActions[].class), eq("idBoard"), eq("memberId"), eq(""), eq(""));
         verifyNoMoreInteractions(httpClient);
     }
