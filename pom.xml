@@ -10,7 +10,7 @@
 
     <groupId>com.taskadapter</groupId>
     <artifactId>trello-java-wrapper</artifactId>
-    <version>0.4-SNAPSHOT</version>
+    <version>0.4</version>
     <packaging>jar</packaging>
 
     <name>Trello Java Wrapper</name>
