@@ -1,0 +1,58 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+
+group = 'com.taskadapter'
+version = '0.4-SNAPSHOT'
+
+description = """Trello Java Wrapper"""
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+tasks.withType(JavaCompile) {
+	options.encoding = 'UTF-8'
+}
+
+configurations.all {
+}
+
+repositories {
+        
+//     maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
+     maven { url "http://repo.maven.apache.org/maven2" }
+}
+dependencies {
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version:'2.2.0'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version:'2.2.0'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version:'2.2.0'
+    compile group: 'ch.qos.logback', name: 'logback-core', version:'1.0.11'
+    compile group: 'ch.qos.logback', name: 'logback-classic', version:'1.0.11'
+    compile group: 'org.slf4j', name: 'slf4j-api', version:'1.7.5'
+    compile group: 'org.springframework', name: 'spring-web', version:'3.2.2.RELEASE'
+    compile group: 'org.apache.httpcomponents', name: 'httpclient', version:'4.2.5'
+    compile group: 'com.ning', name: 'async-http-client', version:'1.7.19'
+    testCompile group: 'org.easytesting', name: 'fest-assert', version:'1.4'
+    testCompile group: 'junit', name: 'junit', version:'4.8.2'
+    testCompile group: 'org.mockito', name: 'mockito-all', version:'1.9.5'
+}
+
+// password can be set in gradle.properties or environment variable (check "build environment" on Jenkins)
+def deployUser = hasProperty("TA_NEXUS_USER") ? TA_NEXUS_USER : ""
+def deployPassword = hasProperty("TA_NEXUS_PASSWORD") ? TA_NEXUS_PASSWORD : ""
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+    repositories {
+        maven {
+            credentials {
+                username deployUser
+                password deployPassword
+            }
+            url "https://dev.taskadapter.com/nexus/repository/maven-${project.version.endsWith('-SNAPSHOT') ? 'snapshots' : 'releases'}/"
+        }
+    }
+}
