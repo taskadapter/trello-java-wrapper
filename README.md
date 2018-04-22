@@ -6,33 +6,27 @@ This project is a Java Wrapper for the [Trello API](https://trello.com/docs/). I
 
 ## Usage
 
-### Maven dependency
+### Gradle dependency
 
-trello-java-wrapper is available on maven central. The current release is 0.3.2
+This version of trello-java-wrapper is not yet available in maven central.
+Gradle dependency declaration:
 
-```xml
-<dependency>
-    <groupId>com.julienvey.trello</groupId>
-    <artifactId>trello-java-wrapper</artifactId>
-    <version>0.3.2</version>
-</dependency>
+```
+dependencies {
+    compile 'com.taskadapter:trello-java-wrapper:0.4<current-version>'
+}
 ```
 
 The wrapper can make use of one of the following HTTP clients: `Spring Web` (default), `Apache Http Components HttpClient`, `Ning async-http-client`. Choose one if you dont' already use one of those. If you use or choose anything but Spring Web, you'll need to instantiate the corresponding `TrelloHttpClient` implementation and pass it to the `TrelloImpl` constructor (see Init section below). The corresponding Maven coordinates are:
 
-```xml
-<dependency>
-    <groupId>org.springframework</groupId>
-    <artifactId>spring-web</artifactId>
-</dependency>
-<dependency>
-    <groupId>org.apache.httpcomponents</groupId>
-    <artifactId>httpclient</artifactId>
-</dependency>
-<dependency>
-    <groupId>com.ning</groupId>
-    <artifactId>async-http-client</artifactId>
-</dependency>
+```
+dependencies {
+    compile 'org.springframework:spring-web'
+    // OR 
+    compile 'org.apache.httpcomponents:httpclient'
+    // OR
+    compile 'com.ning:async-http-client'
+}
 ```
 Failure to do so will most probably cause a `NoClassDefFoundError`.
 
