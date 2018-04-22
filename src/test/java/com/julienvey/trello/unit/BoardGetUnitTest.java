@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import java.util.List;
+import java.util.*;
 
 import static com.julienvey.trello.utils.ArgUtils.arg;
 import static org.fest.assertions.Assertions.assertThat;
@@ -47,6 +47,32 @@ public class BoardGetUnitTest {
 
         verify(httpClient).get(eq("https://api.trello.com/1/boards/{boardId}?key={applicationKey}&token={userToken}"),
                 eq(Board.class), eq("idBoard"), eq(""), eq(""));
+        verifyNoMoreInteractions(httpClient);
+    }
+
+    @Test
+    public void testGetBoardWithLists() {
+        //Given
+        Board mockBoard = new Board();
+        mockBoard.setId("idBoard");
+        TList list1 = new TList();
+        list1.setId("list1");
+        TList list2 = new TList();
+        list2.setId("list2");
+        mockBoard.setLists(Arrays.asList(list1, list2));
+        when(httpClient.get(anyString(), any(Class.class), (String[]) anyVararg())).thenReturn(mockBoard);
+
+        //When
+        Board board = trello.getBoard("idBoard", arg("lists", "all"));
+
+        //Then
+        assertThat(board).isNotNull();
+        assertThat(board.getId()).isEqualTo("idBoard");
+        assertThat(board.getLists()).isNotNull();
+        assertThat(board.getLists().size()).isEqualTo(2);
+
+        verify(httpClient).get(eq("https://api.trello.com/1/boards/{boardId}?key={applicationKey}&token={userToken}&lists=all"),
+            eq(Board.class), eq("idBoard"), eq(""), eq(""));
         verifyNoMoreInteractions(httpClient);
     }
 

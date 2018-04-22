@@ -8,15 +8,33 @@ This project is a Java Wrapper for the [Trello API](https://trello.com/docs/). I
 
 ### Maven dependency
 
-trello-java-wrapper is available on maven central. The current release is 0.3
+trello-java-wrapper is available on maven central. The current release is 0.3.2
 
 ```xml
 <dependency>
     <groupId>com.julienvey.trello</groupId>
     <artifactId>trello-java-wrapper</artifactId>
-    <version>0.3</version>
+    <version>0.3.2</version>
 </dependency>
 ```
+
+The wrapper can make use of one of the following HTTP clients: `Spring Web` (default), `Apache Http Components HttpClient`, `Ning async-http-client`. Choose one if you dont' already use one of those. If you use or choose anything but Spring Web, you'll need to instantiate the corresponding `TrelloHttpClient` implementation and pass it to the `TrelloImpl` constructor (see Init section below). The corresponding Maven coordinates are:
+
+```xml
+<dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-web</artifactId>
+</dependency>
+<dependency>
+    <groupId>org.apache.httpcomponents</groupId>
+    <artifactId>httpclient</artifactId>
+</dependency>
+<dependency>
+    <groupId>com.ning</groupId>
+    <artifactId>async-http-client</artifactId>
+</dependency>
+```
+Failure to do so will most probably cause a `NoClassDefFoundError`.
 
 ### Init
 
@@ -56,7 +74,7 @@ trello-java-wrapper is still a work in progress and has not yet reached version 
 
 If you are missing some fonctionnalities, you can easily contribute and propose a pull request. Each pull request should respect current code conventions and also provide tests for the newly implemented features.
 
-[![Build Status](https://travis-ci.org/julienvey/trello-java-wrapper.png?branch=dev)](https://travis-ci.org/julienvey/trello-java-wrapper)
+![Build Status](https://img.shields.io/travis/bywan/trello-java-wrapper/dev.svg?style=flat-square)
 
 ## Implementation Status
 
@@ -170,7 +188,7 @@ If you are missing some fonctionnalities, you can easily contribute and propose 
 | PUT /1/cards/[card id or shortlink]/subscribed
 | PUT /1/cards/[card id or shortlink]/warnWhenUpcoming
 | POST /1/cards | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
-| POST /1/cards/[card id or shortlink]/actions/comments
+| POST /1/cards/[card id or shortlink]/actions/comments | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
 | POST /1/cards/[card id or shortlink]/attachments
 | POST /1/cards/[card id or shortlink]/checklist/[idChecklist]/checkItem
 | POST /1/cards/[card id or shortlink]/checklist/[idChecklist]/checkItem/[idCheckItem]/convertToCard
@@ -187,7 +205,7 @@ If you are missing some fonctionnalities, you can easily contribute and propose 
 | DELETE /1/cards/[card id or shortlink]/idMembers/[idMember]
 | DELETE /1/cards/[card id or shortlink]/labels/[color]
 | DELETE /1/cards/[card id or shortlink]/membersVoted/[idMember]
-| GET /1/checklists/[idChecklist]
+| GET /1/checklists/[idChecklist] | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
 | GET /1/checklists/[idChecklist]/[field]
 | GET /1/checklists/[idChecklist]/board
 | GET /1/checklists/[idChecklist]/board/[field]

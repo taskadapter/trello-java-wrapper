@@ -3,6 +3,7 @@ package com.julienvey.trello.impl.http;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.julienvey.trello.exception.TrelloHttpException;
+import com.julienvey.trello.impl.TrelloBadRequestException;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -15,6 +16,7 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 
 public class ApacheHttpClient extends AbstractHttpClient {
@@ -97,6 +99,10 @@ public class ApacheHttpClient extends AbstractHttpClient {
 
             HttpEntity httpEntity = httpResponse.getEntity();
             if (httpEntity != null) {
+                if (httpResponse.getStatusLine().getStatusCode() == 400) {
+                    String body = toString(httpEntity.getContent());
+                    throw new TrelloBadRequestException(body);
+                }
                 return this.mapper.readValue(httpEntity.getContent(), objectClass);
             } else {
                 // TODO : error
@@ -107,5 +113,9 @@ public class ApacheHttpClient extends AbstractHttpClient {
         } finally {
             httpRequest.releaseConnection();
         }
+    }
+
+    private static String toString(InputStream stream) {
+        return new java.util.Scanner(stream).useDelimiter("\\A").next();
     }
 }

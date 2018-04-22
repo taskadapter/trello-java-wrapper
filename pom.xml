@@ -8,9 +8,9 @@
         <version>7</version>
     </parent>
 
-    <groupId>com.julienvey.trello</groupId>
+    <groupId>com.taskadapter</groupId>
     <artifactId>trello-java-wrapper</artifactId>
-    <version>0.3.1</version>
+    <version>0.4</version>
     <packaging>jar</packaging>
 
     <name>Trello Java Wrapper</name>

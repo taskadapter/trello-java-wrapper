@@ -2,6 +2,7 @@ package com.julienvey.trello.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +28,7 @@ public class Board extends TrelloEntity {
     private Date dateLastView;
     private String shortLink;
     private List<String> powerUps;
+    private List<TList> lists  = new ArrayList<>();
 
     /* API */
 
@@ -213,6 +215,14 @@ public class Board extends TrelloEntity {
 
     public void setPowerUps(List<String> powerUps) {
         this.powerUps = powerUps;
+    }
+
+    public List<TList> getLists() {
+        return lists;
+    }
+
+    public void setLists(List<TList> lists) {
+        this.lists = lists;
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
