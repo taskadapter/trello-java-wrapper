@@ -3,6 +3,7 @@ package com.julienvey.trello.impl;
 import com.julienvey.trello.Trello;
 import com.julienvey.trello.TrelloHttpClient;
 import com.julienvey.trello.domain.*;
+import com.julienvey.trello.impl.domaininternal.Comment;
 import com.julienvey.trello.impl.domaininternal.Label;
 import com.julienvey.trello.impl.http.RestTemplateHttpClient;
 import org.slf4j.Logger;
@@ -39,6 +40,9 @@ public class TrelloImpl implements Trello {
     public Board getBoard(String boardId, Argument... args) {
         Board board = get(createUrl(GET_BOARD).params(args).asString(), Board.class, boardId);
         board.setInternalTrello(this);
+        for (TList list : board.getLists()) {
+            list.setInternalTrello(this);
+        }
         return board;
     }
 
@@ -258,6 +262,31 @@ public class TrelloImpl implements Trello {
         return tList;
     }
 
+    /* CheckLists */
+
+    @Override
+    public CheckList getCheckList(String checkListId, Argument... args) {
+        CheckList checkList = get(createUrl(GET_CHECK_LIST).params(args).asString(), CheckList.class, checkListId);
+        checkList.setInternalTrello(this);
+        return checkList;
+    }
+
+    @Override
+    public CheckList createCheckList(String cardId, CheckList checkList)
+    {
+        checkList.setIdCard(cardId);
+        CheckList createdCheckList = postForObject(createUrl(CREATE_CHECKLIST).asString(), checkList, CheckList.class);
+        createdCheckList.setInternalTrello(this);
+        return createdCheckList;
+    }
+
+    @Override
+    public void createCheckItem(String checkListId, CheckItem checkItem)
+    {
+        postForLocation(createUrl(ADD_CHECKITEMS_TO_CHECKLIST).asString(), checkItem, checkListId);
+    }
+
+
     /* Others */
 
     @Override
@@ -284,10 +313,16 @@ public class TrelloImpl implements Trello {
         return member;
     }
 
+    @Override
     public void addLabelsToCard(String idCard, String[] labels) {
         for (String label : labels) {
             postForLocation(createUrl(ADD_LABEL_TO_CARD).asString(), new Label(label), idCard);
         }
+    }
+
+    @Override
+    public void addCommentToCard(String idCard, String comment) {
+        postForObject(createUrl(ADD_COMMENT_TO_CARD).asString(), new Comment(comment), Comment.class, idCard);
     }
 
     @Override

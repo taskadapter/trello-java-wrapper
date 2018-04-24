@@ -1,0 +1,115 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+apply plugin: 'signing'
+
+group = 'com.taskadapter'
+version = '0.5-SNAPSHOT'
+
+description = """Trello Java Wrapper"""
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+tasks.withType(JavaCompile) {
+	options.encoding = 'UTF-8'
+}
+
+configurations.all {
+}
+
+repositories {
+     mavenCentral()
+}
+dependencies {
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version:'2.2.0'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version:'2.2.0'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version:'2.2.0'
+    compile group: 'ch.qos.logback', name: 'logback-core', version:'1.0.11'
+    compile group: 'ch.qos.logback', name: 'logback-classic', version:'1.0.11'
+    compile group: 'org.slf4j', name: 'slf4j-api', version:'1.7.5'
+    compile group: 'org.springframework', name: 'spring-web', version:'3.2.2.RELEASE'
+    compile group: 'org.apache.httpcomponents', name: 'httpclient', version:'4.2.5'
+    compile group: 'com.ning', name: 'async-http-client', version:'1.7.19'
+
+    testCompile(
+            [group: 'org.easytesting', name: 'fest-assert', version: '1.4'],
+            [group: 'junit', name: 'junit', version: '4.8.2'],
+            [group: 'org.mockito', name: 'mockito-all', version: '1.9.5']
+    )
+}
+
+task packageSources(type: Jar) {
+    from sourceSets.main.allSource
+    classifier = 'sources'
+}
+task packageJavadoc(type: Jar, dependsOn: 'javadoc') {
+    from javadoc.destinationDir
+    classifier = 'javadoc'
+}
+
+
+ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
+
+// A PGP key is required to sign the artifacts before uploading to OSS Sonatype Maven repository.
+// Put the PGP key info in your <home>/.gradle/gradle.properties file:
+// signing.keyId=...
+// signing.password=...
+// signing.secretKeyRingFile=c:/Users/ask/.gnupg/secring.gpg
+signing {
+    required { isReleaseVersion && gradle.taskGraph.hasTask("uploadArchives") }
+    sign configurations.archives
+}
+
+// password can be set in gradle.properties or environment variable (check "build environment" on Jenkins)
+def ossUserVar = hasProperty("ossUser") ? ossUser : ""
+def ossPasswordVar = hasProperty("ossPassword") ? ossPassword : ""
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: 'https://oss.sonatype.org/service/local/staging/deploy/maven2') {
+                authentication(userName: ossUserVar, password: ossPasswordVar)
+            }
+            snapshotRepository(url: 'https://oss.sonatype.org/content/repositories/snapshots') {
+                authentication(userName: ossUserVar, password: ossPasswordVar)
+            }
+
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            pom.project {
+                name 'Trello Java API'
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        distribution 'repo'
+                    }
+                }
+                url 'https://github.com/taskadapter/trello-java-wrapper'
+                description 'Java API for Trello'
+                developers {
+                    developer {
+                        name 'Alexey Skorokhodov'
+                        email 'alskor@gmail.com'
+                    }
+                }
+                scm {
+                    connection 'scm:git:git://github.com/taskadapter/trello-java-wrapper.git'
+                    tag 'HEAD'
+                    // A publicly browsable repository. For example, via ViewCVS
+                    url 'http://github.com/taskadapter/trello-java-wrapper/tree/master/'
+                }
+
+                issueManagement {
+                    system 'github'
+                    url 'http://github.com/taskadapter/trello-java-wrapper/issues'
+                }
+            }
+        }
+    }
+}
+
+// this section is used by "install" command to publish to local Maven repo
+artifacts {
+    archives packageSources, packageJavadoc
+}
