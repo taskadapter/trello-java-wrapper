@@ -1,8 +1,21 @@
 package com.julienvey.trello;
 
-import com.julienvey.trello.domain.*;
-
 import java.util.List;
+
+import com.julienvey.trello.domain.Action;
+import com.julienvey.trello.domain.Argument;
+import com.julienvey.trello.domain.Attachment;
+import com.julienvey.trello.domain.Board;
+import com.julienvey.trello.domain.Card;
+import com.julienvey.trello.domain.CardWithActions;
+import com.julienvey.trello.domain.CheckItem;
+import com.julienvey.trello.domain.CheckList;
+import com.julienvey.trello.domain.Entity;
+import com.julienvey.trello.domain.Label;
+import com.julienvey.trello.domain.Member;
+import com.julienvey.trello.domain.MyPrefs;
+import com.julienvey.trello.domain.Organization;
+import com.julienvey.trello.domain.TList;
 
 public interface Trello {
 
@@ -18,6 +31,8 @@ public interface Trello {
     List<CheckList> getBoardChecklists(String boardId, Argument... args);
 
     List<TList> getBoardLists(String boardId, Argument... args);
+
+    List<Label> getBoardLabels(String boardId, Argument... args);
 
     List<Member> getBoardMembers(String boardId, Argument... args);
 
@@ -68,6 +83,8 @@ public interface Trello {
 
     TList getList(String listId, Argument... args);
 
+    List<Card> getListCards(String listId, Argument... args);
+
     /* CheckLists */
 
     CheckList getCheckList(String checkListId, Argument... args);
@@ -75,6 +92,14 @@ public interface Trello {
     CheckList createCheckList(String cardId, CheckList checkList);
 
     void createCheckItem(String checkListId, CheckItem checkItem);
+
+    List<CheckList> getCardChecklists(String cardId, Argument... args);
+
+    /* Organizations */
+
+    List<Board> getOrganizationBoards(String organizationId, Argument... args);
+
+    List<Member> getOrganizationMembers(String string, Argument... args);
 
     /////////////////
 
@@ -86,7 +111,7 @@ public interface Trello {
 
     Card updateCard(Card card);
 
-    //FIXME Remove this method
+    // FIXME Remove this method
     @Deprecated
     Member getBasicMemberInformation(String username);
 

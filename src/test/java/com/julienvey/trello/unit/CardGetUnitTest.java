@@ -96,6 +96,28 @@ public class CardGetUnitTest {
     }
 
     @Test
+    public void testGetCardChecklists() {
+        // Given
+        CheckList checklist1 = new CheckList();
+        checklist1.setId("idChecklist1");
+        CheckList checklist2 = new CheckList();
+        checklist2.setId("idChecklist2");
+
+        when(httpClient.get(anyString(), any(Class.class), (String[]) anyVararg())).thenReturn(new CheckList[] { checklist1, checklist2 });
+
+        // When
+        List<CheckList> cardChecklists = trello.getCardChecklists("idCard");
+
+        // Then
+        assertThat(cardChecklists).isNotNull();
+        assertThat(cardChecklists).hasSize(2);
+
+        verify(httpClient).get(eq("https://api.trello.com/1/cards/{cardId}/checklists?key={applicationKey}&token={userToken}"),
+                eq(CheckList[].class), eq("idCard"), eq(""), eq(""));
+        verifyNoMoreInteractions(httpClient);
+    }
+
+    @Test
     public void testGetCardAttachments() {
         //Given
         Attachment action1 = new Attachment();

@@ -95,6 +95,7 @@ Each pull request should respect current code conventions and provide tests for 
 | GET /1/boards/[board_id]/cards/[filter]
 | GET /1/boards/[board_id]/cards/[idCard]  | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
 | GET /1/boards/[board_id]/checklists | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
+| GET /1/boards/[board_id]/labels | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
 | GET /1/boards/[board_id]/lists | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
 | GET /1/boards/[board_id]/lists/[filter]
 | GET /1/boards/[board_id]/members | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
@@ -154,7 +155,7 @@ Each pull request should respect current code conventions and provide tests for 
 | GET /1/cards/[card id or shortlink]/board | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
 | GET /1/cards/[card id or shortlink]/board/[field]
 | GET /1/cards/[card id or shortlink]/checkItemStates
-| GET /1/cards/[card id or shortlink]/checklists
+| GET /1/cards/[card id or shortlink]/checklists | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
 | GET /1/cards/[card id or shortlink]/list
 | GET /1/cards/[card id or shortlink]/list/[field]
 | GET /1/cards/[card id or shortlink]/members
@@ -216,7 +217,7 @@ Each pull request should respect current code conventions and provide tests for 
 | GET /1/lists/[idList]/actions
 | GET /1/lists/[idList]/board
 | GET /1/lists/[idList]/board/[field]
-| GET /1/lists/[idList]/cards
+| GET /1/lists/[idList]/cards | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
 | GET /1/lists/[idList]/cards/[filter]
 | PUT /1/lists/[idList]
 | PUT /1/lists/[idList]/closed
@@ -276,9 +277,9 @@ Each pull request should respect current code conventions and provide tests for 
 | GET /1/organizations/[idOrg or name]
 | GET /1/organizations/[idOrg or name]/[field]
 | GET /1/organizations/[idOrg or name]/actions
-| GET /1/organizations/[idOrg or name]/boards
+| GET /1/organizations/[idOrg or name]/boards | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
 | GET /1/organizations/[idOrg or name]/boards/[filter]
-| GET /1/organizations/[idOrg or name]/members
+| GET /1/organizations/[idOrg or name]/members | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
 | GET /1/organizations/[idOrg or name]/members/[filter]
 | GET /1/organizations/[idOrg or name]/members/[idMember]/cards
 | GET /1/organizations/[idOrg or name]/membersInvited
