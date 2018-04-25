@@ -1,24 +1,34 @@
 package com.julienvey.trello.integration;
 
-import com.julienvey.trello.Trello;
-import com.julienvey.trello.TrelloHttpClient;
-import com.julienvey.trello.domain.*;
-import com.julienvey.trello.impl.TrelloImpl;
-import com.julienvey.trello.impl.http.ApacheHttpClient;
-import com.julienvey.trello.impl.http.AsyncTrelloHttpClient;
-import com.julienvey.trello.impl.http.RestTemplateHttpClient;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
+import static com.julienvey.trello.utils.ArgUtils.arg;
+import static org.fest.assertions.Assertions.assertThat;
+import static org.fest.assertions.MapAssert.entry;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import static com.julienvey.trello.utils.ArgUtils.arg;
-import static org.fest.assertions.Assertions.assertThat;
-import static org.fest.assertions.MapAssert.entry;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+
+import com.julienvey.trello.Trello;
+import com.julienvey.trello.TrelloHttpClient;
+import com.julienvey.trello.domain.Action;
+import com.julienvey.trello.domain.Board;
+import com.julienvey.trello.domain.Card;
+import com.julienvey.trello.domain.CardWithActions;
+import com.julienvey.trello.domain.CheckList;
+import com.julienvey.trello.domain.Label;
+import com.julienvey.trello.domain.Member;
+import com.julienvey.trello.domain.MyPrefs;
+import com.julienvey.trello.domain.Organization;
+import com.julienvey.trello.domain.TList;
+import com.julienvey.trello.impl.TrelloImpl;
+import com.julienvey.trello.impl.http.ApacheHttpClient;
+import com.julienvey.trello.impl.http.AsyncTrelloHttpClient;
+import com.julienvey.trello.impl.http.RestTemplateHttpClient;
 
 @RunWith(Parameterized.class)
 public class BoardGetITCase {
@@ -32,7 +42,7 @@ public class BoardGetITCase {
 
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
-        return Arrays.asList(new Object[][]{{new ApacheHttpClient()}, {new AsyncTrelloHttpClient()}, {new RestTemplateHttpClient()}});
+        return Arrays.asList(new Object[][] { { new ApacheHttpClient() }, { new AsyncTrelloHttpClient() }, { new RestTemplateHttpClient() } });
     }
 
     public BoardGetITCase(TrelloHttpClient httpClient) {
@@ -70,6 +80,15 @@ public class BoardGetITCase {
         Board board = trello.getBoard(BOARD_ID);
         List<TList> lists = board.fetchLists();
 
+        assertThat(lists).hasSize(4);
+    }
+
+    @Test
+    public void testGetBoardWithLists() {
+        Board board = trello.getBoard(BOARD_ID, arg("lists", "all"));
+        List<TList> lists = board.getLists();
+
+        assertThat(lists).isNotNull();
         assertThat(lists).hasSize(4);
     }
 
@@ -146,7 +165,13 @@ public class BoardGetITCase {
         List<CheckList> checkLists = board.fetchCheckLists();
 
         assertThat(checkLists).hasSize(2);
-        assertThat(checkLists.get(0).getId()).isEqualTo("51990272b1740a191800e5af");
+    }
+
+    @Test
+    public void testGetBoardFetchLabels() {
+        List<Label> labels = trello.getBoardLabels(BOARD_ID);
+
+        assertThat(labels).hasSize(6);
     }
 
     @Test
@@ -184,7 +209,7 @@ public class BoardGetITCase {
     }
 
     @Test
-    public void testGetBoardActions(){
+    public void testGetBoardActions() {
         List<Action> boardActions = trello.getBoardActions(BOARD_ID);
 
         assertThat(boardActions).isNotNull();
@@ -193,7 +218,7 @@ public class BoardGetITCase {
     }
 
     @Test
-    public void testGetBoardCards(){
+    public void testGetBoardCards() {
         List<Card> boardCards = trello.getBoardCards(BOARD_ID);
 
         assertThat(boardCards).isNotNull();
@@ -202,14 +227,14 @@ public class BoardGetITCase {
     }
 
     @Test
-    public void testGetBoardCard(){
+    public void testGetBoardCard() {
         Card boardCard = trello.getBoardCard(BOARD_ID, "518bab520967804c03002994");
 
         assertThat(boardCard).isNotNull();
     }
 
     @Test
-    public void testGetBoardChecklists(){
+    public void testGetBoardChecklists() {
         List<CheckList> boardChecklists = trello.getBoardChecklists(BOARD_ID);
 
         assertThat(boardChecklists).isNotNull();
@@ -217,7 +242,7 @@ public class BoardGetITCase {
     }
 
     @Test
-    public void testGetBoardLists(){
+    public void testGetBoardLists() {
         List<TList> boardLists = trello.getBoardLists(BOARD_ID);
 
         assertThat(boardLists).isNotNull();
@@ -226,7 +251,7 @@ public class BoardGetITCase {
     }
 
     @Test
-    public void testGetBoardMembers(){
+    public void testGetBoardMembers() {
         List<Member> boardMembers = trello.getBoardMembers(BOARD_ID, arg("fields", "all"));
 
         assertThat(boardMembers).isNotNull();
@@ -235,7 +260,7 @@ public class BoardGetITCase {
     }
 
     @Test
-    public void testGetBoardMemberCards(){
+    public void testGetBoardMemberCards() {
         List<Card> boardMemberCards = trello.getBoardMemberCards(BOARD_ID, "5187a69eabd0b7305100beaa");
 
         assertThat(boardMemberCards).isNotNull();
@@ -243,7 +268,7 @@ public class BoardGetITCase {
     }
 
     @Test
-    public void testGetBoardMembersInvited(){
+    public void testGetBoardMembersInvited() {
         List<Member> boardMembersInvited = trello.getBoardMembersInvited(BOARD_ID);
 
         assertThat(boardMembersInvited).isNotNull();
@@ -251,33 +276,33 @@ public class BoardGetITCase {
     }
 
     @Test
-    public void testGetBoardMyPrefs(){
+    public void testGetBoardMyPrefs() {
         MyPrefs boardMyMyPrefs = trello.getBoardMyPrefs(BOARD_ID);
 
         assertThat(boardMyMyPrefs).isNotNull();
     }
 
     @Test
-    public void testGetBoardOrganization(){
+    public void testGetBoardOrganization() {
         Organization boardOrganization = trello.getBoardOrganization(BOARD_ID);
 
         assertThat(boardOrganization).isNotNull();
         assertThat(boardOrganization.getId()).isEqualTo("518baaaa815af84031004375");
     }
 
-	@Test
-	public void testGetBoardMemberActivityComments() {
-		List<CardWithActions> commentActivity = trello.getBoardMemberActivity(BOARD_ID,
-				"5187a69eabd0b7305100beaa", "commentCard");
+    @Test
+    public void testGetBoardMemberActivityComments() {
+        List<CardWithActions> commentActivity = trello.getBoardMemberActivity(BOARD_ID,
+                "5187a69eabd0b7305100beaa", "commentCard");
 
-		assertThat(commentActivity).isNotNull();
-		assertThat(commentActivity).hasSize(1);
-		assertThat(commentActivity.get(0).getActions()).isNotNull();
-		assertThat(commentActivity.get(0).getActions()).hasSize(1);
-		assertThat(commentActivity.get(0).getActions().get(0)).isNotNull();
-		assertThat(commentActivity.get(0).getActions().get(0).getData()).isNotNull();
-		assertThat(commentActivity.get(0).getActions().get(0).getData().getText()).isNotNull();
-		assertThat(commentActivity.get(0).getActions().get(0).getData().getText())
-				.isEqualToIgnoringCase("a comment");
-	}
+        assertThat(commentActivity).isNotNull();
+        assertThat(commentActivity).hasSize(1);
+        assertThat(commentActivity.get(0).getActions()).isNotNull();
+        assertThat(commentActivity.get(0).getActions()).hasSize(1);
+        assertThat(commentActivity.get(0).getActions().get(0)).isNotNull();
+        assertThat(commentActivity.get(0).getActions().get(0).getData()).isNotNull();
+        assertThat(commentActivity.get(0).getActions().get(0).getData().getText()).isNotNull();
+        assertThat(commentActivity.get(0).getActions().get(0).getData().getText())
+                .isEqualToIgnoringCase("a comment");
+    }
 }

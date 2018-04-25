@@ -14,24 +14,7 @@ trello-java-wrapper is available on maven central. The current release is 0.3.2
 <dependency>
     <groupId>com.julienvey.trello</groupId>
     <artifactId>trello-java-wrapper</artifactId>
-    <version>0.3.2</version>
-</dependency>
-```
-
-The wrapper can make use of one of the following HTTP clients: `Spring Web` (default), `Apache Http Components HttpClient`, `Ning async-http-client`. Choose one if you dont' already use one of those. If you use or choose anything but Spring Web, you'll need to instantiate the corresponding `TrelloHttpClient` implementation and pass it to the `TrelloImpl` constructor (see Init section below). The corresponding Maven coordinates are:
-
-```xml
-<dependency>
-    <groupId>org.springframework</groupId>
-    <artifactId>spring-web</artifactId>
-</dependency>
-<dependency>
-    <groupId>org.apache.httpcomponents</groupId>
-    <artifactId>httpclient</artifactId>
-</dependency>
-<dependency>
-    <groupId>com.ning</groupId>
-    <artifactId>async-http-client</artifactId>
+    <version>0.3</version>
 </dependency>
 ```
 Failure to do so will most probably cause a `NoClassDefFoundError`.
@@ -105,6 +88,7 @@ If you are missing some fonctionnalities, you can easily contribute and propose 
 | GET /1/boards/[board_id]/cards/[filter]
 | GET /1/boards/[board_id]/cards/[idCard]  | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
 | GET /1/boards/[board_id]/checklists | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
+| GET /1/boards/[board_id]/labels | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
 | GET /1/boards/[board_id]/lists | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
 | GET /1/boards/[board_id]/lists/[filter]
 | GET /1/boards/[board_id]/members | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
@@ -164,7 +148,7 @@ If you are missing some fonctionnalities, you can easily contribute and propose 
 | GET /1/cards/[card id or shortlink]/board | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
 | GET /1/cards/[card id or shortlink]/board/[field]
 | GET /1/cards/[card id or shortlink]/checkItemStates
-| GET /1/cards/[card id or shortlink]/checklists
+| GET /1/cards/[card id or shortlink]/checklists | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
 | GET /1/cards/[card id or shortlink]/list
 | GET /1/cards/[card id or shortlink]/list/[field]
 | GET /1/cards/[card id or shortlink]/members
@@ -226,7 +210,7 @@ If you are missing some fonctionnalities, you can easily contribute and propose 
 | GET /1/lists/[idList]/actions
 | GET /1/lists/[idList]/board
 | GET /1/lists/[idList]/board/[field]
-| GET /1/lists/[idList]/cards
+| GET /1/lists/[idList]/cards | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
 | GET /1/lists/[idList]/cards/[filter]
 | PUT /1/lists/[idList]
 | PUT /1/lists/[idList]/closed
@@ -286,9 +270,9 @@ If you are missing some fonctionnalities, you can easily contribute and propose 
 | GET /1/organizations/[idOrg or name]
 | GET /1/organizations/[idOrg or name]/[field]
 | GET /1/organizations/[idOrg or name]/actions
-| GET /1/organizations/[idOrg or name]/boards
+| GET /1/organizations/[idOrg or name]/boards | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
 | GET /1/organizations/[idOrg or name]/boards/[filter]
-| GET /1/organizations/[idOrg or name]/members
+| GET /1/organizations/[idOrg or name]/members | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
 | GET /1/organizations/[idOrg or name]/members/[filter]
 | GET /1/organizations/[idOrg or name]/members/[idMember]/cards
 | GET /1/organizations/[idOrg or name]/membersInvited
