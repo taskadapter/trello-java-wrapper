@@ -8,12 +8,12 @@ This project is a Java Wrapper for the [Trello API](https://trello.com/docs/). I
 
 ### Gradle dependency
 
-This version of trello-java-wrapper is not yet available in maven central.
+Available in [Maven Central](https://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.taskadapter%22%20AND%20a%3A%22trello-java-wrapper%22).
 Gradle dependency declaration:
 
 ```
 dependencies {
-    compile 'com.taskadapter:trello-java-wrapper:0.4<current-version>'
+    compile 'com.taskadapter:trello-java-wrapper:<current-version>'
 }
 ```
 
