@@ -3,6 +3,7 @@ package com.julienvey.trello.impl;
 import static com.julienvey.trello.impl.TrelloUrl.ADD_CHECKITEMS_TO_CHECKLIST;
 import static com.julienvey.trello.impl.TrelloUrl.ADD_COMMENT_TO_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.ADD_LABEL_TO_CARD;
+import static com.julienvey.trello.impl.TrelloUrl.ADD_URL_ATTACHMENT_TO_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.CREATE_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.CREATE_CHECKLIST;
 import static com.julienvey.trello.impl.TrelloUrl.GET_ACTION;
