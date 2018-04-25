@@ -1,4 +1,4 @@
-package com.julienvey.trello.impl;
+package com.julienvey.trello;
 
 public class TrelloBadRequestException extends RuntimeException {
     public TrelloBadRequestException(String message) {

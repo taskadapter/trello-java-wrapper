@@ -3,7 +3,7 @@ package com.julienvey.trello.impl.http;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.julienvey.trello.exception.TrelloHttpException;
-import com.julienvey.trello.impl.TrelloBadRequestException;
+import com.julienvey.trello.TrelloBadRequestException;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -23,12 +23,7 @@ import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 
-import java.io.IOException;
 import java.io.InputStream;
-import java.net.URI;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.julienvey.trello.exception.TrelloHttpException;
 
 public class ApacheHttpClient extends AbstractHttpClient {
 
