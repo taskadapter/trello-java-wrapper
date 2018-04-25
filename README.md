@@ -180,7 +180,7 @@ Each pull request should respect current code conventions and provide tests for 
 | PUT /1/cards/[card id or shortlink]/warnWhenUpcoming
 | POST /1/cards | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
 | POST /1/cards/[card id or shortlink]/actions/comments | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
-| POST /1/cards/[card id or shortlink]/attachments
+| POST /1/cards/[card id or shortlink]/attachments | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
 | POST /1/cards/[card id or shortlink]/checklist/[idChecklist]/checkItem
 | POST /1/cards/[card id or shortlink]/checklist/[idChecklist]/checkItem/[idCheckItem]/convertToCard
 | POST /1/cards/[card id or shortlink]/checklists

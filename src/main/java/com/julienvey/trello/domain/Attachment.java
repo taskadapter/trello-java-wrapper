@@ -18,6 +18,12 @@ public class Attachment extends TrelloEntity {
     private List<Preview> previews;
     private String url;
 
+    public Attachment() {}
+
+    public Attachment(String url) {
+        this.url = url;
+    }
+
     public int getBytes() {
         return bytes;
     }
