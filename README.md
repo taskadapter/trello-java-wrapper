@@ -33,8 +33,7 @@ dependencies {
 ```
 Optional dependency in case you want to attach files to cards:
 
-compile 'org.apache.httpcomponents:httpclient'
-
+compile 'org.apache.httpcomponents:httpmime'
 
 ```
 Failure to do so will most probably cause a `NoClassDefFoundError`.
