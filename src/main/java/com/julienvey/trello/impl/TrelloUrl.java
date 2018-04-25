@@ -46,10 +46,6 @@ public class TrelloUrl {
     public static final String CREATE_CHECKLIST = "/checklists?";
     public static final String ADD_CHECKITEMS_TO_CHECKLIST = "/checklists/{checkListId}/checkitems?";
 
-    public static final String GET_CHECK_LIST = "/checklists/{checkListId}?";
-    public static final String CREATE_CHECKLIST = "/checklists?";
-    public static final String ADD_CHECKITEMS_TO_CHECKLIST = "/checklists/{checkListId}/checkitems?";
-
     public static final String CREATE_CARD = "/cards?pos=top&";
     public static final String GET_MEMBER = "/members/{username}?";
     public static final String ADD_LABEL_TO_CARD = "/cards/{cardId}/labels?";
