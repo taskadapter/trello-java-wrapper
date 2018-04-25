@@ -109,6 +109,8 @@ public interface Trello {
 
     void addCommentToCard(String idCard, String comment);
 
+    void addUrlAttachmentToCard(String idCard, String url);
+
     Card updateCard(Card card);
 
     // FIXME Remove this method
