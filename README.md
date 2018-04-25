@@ -27,6 +27,14 @@ dependencies {
     // OR
     compile 'com.ning:async-http-client'
 }
+
+```
+
+```
+Optional dependency in case you want to attach files to cards:
+
+compile 'org.apache.httpcomponents:httpmime'
+
 ```
 Failure to do so will most probably cause a `NoClassDefFoundError`.
 
@@ -180,7 +188,7 @@ Each pull request should respect current code conventions and provide tests for 
 | PUT /1/cards/[card id or shortlink]/warnWhenUpcoming
 | POST /1/cards | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
 | POST /1/cards/[card id or shortlink]/actions/comments | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
-| POST /1/cards/[card id or shortlink]/attachments | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png)
+| POST /1/cards/[card id or shortlink]/attachments | ![](http://icdn.pro/images/fr/v/e/verifier-vert-ok-icone-8505-48.png) <br> (Only Apache HTTP)
 | POST /1/cards/[card id or shortlink]/checklist/[idChecklist]/checkItem
 | POST /1/cards/[card id or shortlink]/checklist/[idChecklist]/checkItem/[idCheckItem]/convertToCard
 | POST /1/cards/[card id or shortlink]/checklists

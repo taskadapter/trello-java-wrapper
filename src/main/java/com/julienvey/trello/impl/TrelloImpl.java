@@ -3,7 +3,7 @@ package com.julienvey.trello.impl;
 import static com.julienvey.trello.impl.TrelloUrl.ADD_CHECKITEMS_TO_CHECKLIST;
 import static com.julienvey.trello.impl.TrelloUrl.ADD_COMMENT_TO_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.ADD_LABEL_TO_CARD;
-import static com.julienvey.trello.impl.TrelloUrl.ADD_URL_ATTACHMENT_TO_CARD;
+import static com.julienvey.trello.impl.TrelloUrl.ADD_ATTACHMENT_TO_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.CREATE_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.CREATE_CHECKLIST;
 import static com.julienvey.trello.impl.TrelloUrl.GET_ACTION;
@@ -47,7 +47,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import java.io.File;
 import com.julienvey.trello.Trello;
 import com.julienvey.trello.TrelloHttpClient;
 import com.julienvey.trello.domain.Action;
@@ -65,6 +65,7 @@ import com.julienvey.trello.domain.Organization;
 import com.julienvey.trello.domain.TList;
 import com.julienvey.trello.impl.domaininternal.Comment;
 import com.julienvey.trello.impl.domaininternal.Label;
+import com.julienvey.trello.impl.http.ApacheHttpClient;
 import com.julienvey.trello.impl.http.RestTemplateHttpClient;
 
 public class TrelloImpl implements Trello {
@@ -422,8 +423,13 @@ public class TrelloImpl implements Trello {
     }
 
     @Override
+    public void addAttachmentToCard(String idCard, File file) {
+        postFileForObject(createUrl(ADD_ATTACHMENT_TO_CARD).asString(), file, Attachment.class, idCard);
+    }
+
+    @Override
     public void addUrlAttachmentToCard(String idCard, String url) {
-        postForObject(createUrl(ADD_URL_ATTACHMENT_TO_CARD).asString(), new Attachment(url), Attachment.class, idCard);
+        postForObject(createUrl(ADD_ATTACHMENT_TO_CARD).asString(), new Attachment(url), Attachment.class, idCard);
     }
 
     @Override
@@ -434,6 +440,15 @@ public class TrelloImpl implements Trello {
     }
 
     /* internal methods */
+
+    private <T> T postFileForObject(String url, File file, Class<T> objectClass, String... params) {
+        logger.debug("PostFileForObject request on Trello API at url {} for class {} with params {}", url,
+                objectClass.getCanonicalName(), params);
+        if (!(httpClient instanceof ApacheHttpClient)) {
+            throw new IllegalStateException("postForFile is implemented only on ApacheHttpClient.");
+        }
+        return ((ApacheHttpClient)httpClient).postFileForObject(url, file, objectClass, enrichParams(params));
+    }
 
     private <T> T postForObject(String url, T object, Class<T> objectClass, String... params) {
         logger.debug("PostForObject request on Trello API at url {} for class {} with params {}", url, objectClass.getCanonicalName(), params);
