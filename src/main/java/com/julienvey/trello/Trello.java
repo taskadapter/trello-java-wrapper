@@ -1,5 +1,6 @@
 package com.julienvey.trello;
 
+import java.io.File;
 import java.util.List;
 
 import com.julienvey.trello.domain.Action;
@@ -108,6 +109,8 @@ public interface Trello {
     void addLabelsToCard(String idCard, String[] labels);
 
     void addCommentToCard(String idCard, String comment);
+
+    void addAttachmentToCard(String idCard, File file);
 
     void addUrlAttachmentToCard(String idCard, String url);
 
