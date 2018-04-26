@@ -40,19 +40,17 @@ Failure to do so will most probably cause a `NoClassDefFoundError`.
 
 ### Init
 
-To be able to use the wrapper, you simply need to instantiate the interface `Trello` and provide it with two parameters
-
-* trelloKey : The key of your application
-* trelloAccessToken : the oauth token of the authenticated user on Trello
-
+First, create an instance of `TrelloImpl`:
 ```java
 Trello trelloApi = new TrelloImpl(trelloKey, trelloAccessToken);
 ```
 
+* trelloKey : The key of your application
+* trelloAccessToken : the oauth token of the authenticated user on Trello
+
 ### Usage
 
-Then, simply use the object you just created to access the API
-
+Sample call:
 ```java
 Board board = trelloApi.getBoard(trelloBoardForAddingCardsId);
 ```
