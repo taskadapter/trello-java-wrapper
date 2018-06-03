@@ -122,4 +122,6 @@ public interface Trello {
 
     Member getMemberInformation(String username);
 
+    List<Board> getMemberBoards(String userId, Argument... args);
+
 }

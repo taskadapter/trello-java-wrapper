@@ -34,6 +34,10 @@ public class Member extends TrelloEntity {
     private List<String> trophies;
     private String uploadedAvatarHash;
 
+    public List<Board> getBoards(Argument... args) {
+        return trelloService.getMemberBoards(id, args);
+    }
+
     /* Accessors */
     public String getId() {
         return id;
