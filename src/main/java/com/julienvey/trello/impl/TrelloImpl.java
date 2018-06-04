@@ -36,6 +36,7 @@ import static com.julienvey.trello.impl.TrelloUrl.GET_CHECK_LIST;
 import static com.julienvey.trello.impl.TrelloUrl.GET_LIST;
 import static com.julienvey.trello.impl.TrelloUrl.GET_LIST_CARDS;
 import static com.julienvey.trello.impl.TrelloUrl.GET_MEMBER;
+import static com.julienvey.trello.impl.TrelloUrl.GET_MEMBER_BOARDS;
 import static com.julienvey.trello.impl.TrelloUrl.GET_ORGANIZATION_BOARD;
 import static com.julienvey.trello.impl.TrelloUrl.GET_ORGANIZATION_MEMBER;
 import static com.julienvey.trello.impl.TrelloUrl.UPDATE_CARD;
@@ -408,6 +409,16 @@ public class TrelloImpl implements Trello {
         Member member = get(createUrl(GET_MEMBER).asString(), Member.class, username);
         member.setInternalTrello(this);
         return member;
+    }
+
+    @Override
+    public List<Board> getMemberBoards(String userId, Argument... args) {
+        List<Board> boards = Arrays.asList(get(createUrl(GET_MEMBER_BOARDS).params(args).asString(),
+                Board[].class, userId));
+        for (Board board : boards) {
+            board.setInternalTrello(this);
+        }
+        return boards;
     }
 
     @Override
