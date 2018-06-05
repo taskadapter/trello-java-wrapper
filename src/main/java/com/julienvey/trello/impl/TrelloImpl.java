@@ -46,6 +46,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.julienvey.trello.ListNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.File;
@@ -390,9 +391,31 @@ public class TrelloImpl implements Trello {
     @Override
     public Card createCard(String listId, Card card) {
         card.setIdList(listId);
-        Card createdCard = postForObject(createUrl(CREATE_CARD).asString(), card, Card.class);
-        createdCard.setInternalTrello(this);
-        return createdCard;
+        try {
+            Card createdCard = postForObject(createUrl(CREATE_CARD).asString(), card, Card.class);
+            createdCard.setInternalTrello(this);
+            return createdCard;
+        } catch (ListNotFoundException e) {
+            throw new ListNotFoundException(getListExceptionUserFriendlyMessage(card));
+        }
+    }
+
+    @Override
+    public Card updateCard(Card card) {
+        try {
+            Card put = put(createUrl(UPDATE_CARD).asString(), card, Card.class, card.getId());
+            put.setInternalTrello(this);
+            return put;
+        } catch (ListNotFoundException e) {
+            throw new ListNotFoundException(getListExceptionUserFriendlyMessage(card));
+        }
+    }
+
+    private static String getListExceptionUserFriendlyMessage(Card card) {
+        return "The card cannot be created/updated with the provided idList value: '"
+                + card.getIdList()
+                + "'. A Trello list with this ID does not exist on the requested board (board id "
+                + card.getIdBoard() + ")";
     }
 
     @Override
@@ -441,13 +464,6 @@ public class TrelloImpl implements Trello {
     @Override
     public void addUrlAttachmentToCard(String idCard, String url) {
         postForObject(createUrl(ADD_ATTACHMENT_TO_CARD).asString(), new Attachment(url), Attachment.class, idCard);
-    }
-
-    @Override
-    public Card updateCard(Card card) {
-        Card put = put(createUrl(UPDATE_CARD).asString(), card, Card.class, card.getId());
-        put.setInternalTrello(this);
-        return put;
     }
 
     /* internal methods */

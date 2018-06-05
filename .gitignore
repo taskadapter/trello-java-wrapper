@@ -1,6 +1,7 @@
 /.idea
 *.iml
-bin/
+/bin
+/build
 target
 .classpath
 .project

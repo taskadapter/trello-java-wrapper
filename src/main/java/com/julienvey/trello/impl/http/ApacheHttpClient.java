@@ -2,6 +2,7 @@ package com.julienvey.trello.impl.http;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.julienvey.trello.NotAuthorizedException;
 import com.julienvey.trello.exception.TrelloHttpException;
 import com.julienvey.trello.TrelloBadRequestException;
 import java.io.File;
@@ -123,7 +124,10 @@ public class ApacheHttpClient extends AbstractHttpClient {
             if (httpEntity != null) {
                 if (httpResponse.getStatusLine().getStatusCode() == 400) {
                     String body = toString(httpEntity.getContent());
-                    throw new TrelloBadRequestException(body);
+                    throw TrelloExceptionHandler$.MODULE$.process(body);
+                }
+                if (httpResponse.getStatusLine().getStatusCode() == 401) {
+                    throw new NotAuthorizedException("Not Authorized");
                 }
                 return this.mapper.readValue(httpEntity.getContent(), objectClass);
             } else {

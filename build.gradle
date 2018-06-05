@@ -1,12 +1,20 @@
-apply plugin: 'java'
+apply plugin: 'scala' // it extends Java plugin, so you don't need to apply that one separately
 apply plugin: 'maven'
 apply plugin: 'maven-publish'
 apply plugin: 'signing'
 
 group = 'com.taskadapter'
-version = '0.5'
+version = '0.6-SNAPSHOT'
 
 description = """Trello Java Wrapper"""
+
+// java sources are added to Scala compile phase and removed from Java compile.
+// this solution is fix java->scala dependency issue
+// see  https://discuss.gradle.org/t/how-to-compile-a-java-class-that-depends-on-a-scala-class-in-gradle/6747
+sourceSets.main.scala.srcDir "src/main/java"
+sourceSets.main.java.srcDirs = []
+sourceSets.test.scala.srcDir "src/test/java"
+sourceSets.test.java.srcDirs = []
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
@@ -22,10 +30,13 @@ repositories {
 }
 
 ext {
+    scalaBinaryVersion = '2.12'
     httpClientVersion = '4.2.5'
 }
 
 dependencies {
+    compile "org.scala-lang:scala-library:${scalaBinaryVersion}.2"
+
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version:'2.2.0'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version:'2.2.0'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version:'2.2.0'
@@ -42,7 +53,9 @@ dependencies {
     testCompile(
             [group: 'org.easytesting', name: 'fest-assert', version: '1.4'],
             [group: 'junit', name: 'junit', version: '4.12'],
-            [group: 'org.mockito', name: 'mockito-all', version: '1.9.5']
+            [group: 'org.mockito', name: 'mockito-all', version: '1.9.5'],
+
+            "org.scalatest:scalatest_${scalaBinaryVersion}:3.0.0"
     )
 }
 
