@@ -47,6 +47,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.julienvey.trello.ListNotFoundException;
+import com.julienvey.trello.TrelloBadRequestException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.File;
@@ -395,8 +396,8 @@ public class TrelloImpl implements Trello {
             Card createdCard = postForObject(createUrl(CREATE_CARD).asString(), card, Card.class);
             createdCard.setInternalTrello(this);
             return createdCard;
-        } catch (ListNotFoundException e) {
-            throw new ListNotFoundException(getListExceptionUserFriendlyMessage(card));
+        } catch (TrelloBadRequestException e) {
+            throw decodeException(card, e);
         }
     }
 
@@ -406,16 +407,17 @@ public class TrelloImpl implements Trello {
             Card put = put(createUrl(UPDATE_CARD).asString(), card, Card.class, card.getId());
             put.setInternalTrello(this);
             return put;
-        } catch (ListNotFoundException e) {
-            throw new ListNotFoundException(getListExceptionUserFriendlyMessage(card));
+        } catch (TrelloBadRequestException e) {
+            throw decodeException(card, e);
         }
     }
 
-    private static String getListExceptionUserFriendlyMessage(Card card) {
-        return "The card cannot be created/updated with the provided idList value: '"
-                + card.getIdList()
-                + "'. A Trello list with this ID does not exist on the requested board (board id "
-                + card.getIdBoard() + ")";
+    private static TrelloBadRequestException decodeException(Card card, TrelloBadRequestException e) {
+        if (e.getMessage().contains("invalid value for idList")) {
+            return new ListNotFoundException(card.getIdList());
+        } else {
+            return e;
+        }
     }
 
     @Override

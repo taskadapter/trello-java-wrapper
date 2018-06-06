@@ -124,10 +124,10 @@ public class ApacheHttpClient extends AbstractHttpClient {
             if (httpEntity != null) {
                 if (httpResponse.getStatusLine().getStatusCode() == 400) {
                     String body = toString(httpEntity.getContent());
-                    throw TrelloExceptionHandler$.MODULE$.process(body);
+                    throw new TrelloBadRequestException(body);
                 }
                 if (httpResponse.getStatusLine().getStatusCode() == 401) {
-                    throw new NotAuthorizedException("Not Authorized");
+                    throw new NotAuthorizedException();
                 }
                 return this.mapper.readValue(httpEntity.getContent(), objectClass);
             } else {

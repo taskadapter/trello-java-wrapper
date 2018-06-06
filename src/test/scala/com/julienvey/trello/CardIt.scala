@@ -17,7 +17,7 @@ class CardIt extends FunSpec with Matchers {
       val thrown = intercept[ListNotFoundException] {
         trello.createCard(unknownListId, new Card())
       }
-      thrown.getMessage should include("A Trello list with this ID does not exist")
+      thrown.getMessage should include("Trello list with ID 'someUnknownId' is not found")
     }
 
     it("gets proper exception and a user-friendly error with valid but inaccessible List Id") {
@@ -27,7 +27,7 @@ class CardIt extends FunSpec with Matchers {
         card.setIdBoard("some unknown board id")
         trello.createCard(validListIdFromSomeoneElsesAccount, card)
       }
-      thrown.getMessage should include("Not Authorized")
+      thrown.getMessage should include("Not authorized")
     }
 
     it("creates a card without board id") {
