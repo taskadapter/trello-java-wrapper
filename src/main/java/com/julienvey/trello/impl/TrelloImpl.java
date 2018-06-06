@@ -46,6 +46,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.julienvey.trello.ListNotFoundException;
+import com.julienvey.trello.TrelloBadRequestException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.File;
@@ -390,9 +392,32 @@ public class TrelloImpl implements Trello {
     @Override
     public Card createCard(String listId, Card card) {
         card.setIdList(listId);
-        Card createdCard = postForObject(createUrl(CREATE_CARD).asString(), card, Card.class);
-        createdCard.setInternalTrello(this);
-        return createdCard;
+        try {
+            Card createdCard = postForObject(createUrl(CREATE_CARD).asString(), card, Card.class);
+            createdCard.setInternalTrello(this);
+            return createdCard;
+        } catch (TrelloBadRequestException e) {
+            throw decodeException(card, e);
+        }
+    }
+
+    @Override
+    public Card updateCard(Card card) {
+        try {
+            Card put = put(createUrl(UPDATE_CARD).asString(), card, Card.class, card.getId());
+            put.setInternalTrello(this);
+            return put;
+        } catch (TrelloBadRequestException e) {
+            throw decodeException(card, e);
+        }
+    }
+
+    private static TrelloBadRequestException decodeException(Card card, TrelloBadRequestException e) {
+        if (e.getMessage().contains("invalid value for idList")) {
+            return new ListNotFoundException(card.getIdList());
+        } else {
+            return e;
+        }
     }
 
     @Override
@@ -441,13 +466,6 @@ public class TrelloImpl implements Trello {
     @Override
     public void addUrlAttachmentToCard(String idCard, String url) {
         postForObject(createUrl(ADD_ATTACHMENT_TO_CARD).asString(), new Attachment(url), Attachment.class, idCard);
-    }
-
-    @Override
-    public Card updateCard(Card card) {
-        Card put = put(createUrl(UPDATE_CARD).asString(), card, Card.class, card.getId());
-        put.setInternalTrello(this);
-        return put;
     }
 
     /* internal methods */

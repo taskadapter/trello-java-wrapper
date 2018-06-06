@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import com.julienvey.trello.TrelloConfig;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,7 +27,6 @@ import com.julienvey.trello.impl.http.RestTemplateHttpClient;
 @RunWith(Parameterized.class)
 public class CardGetITCase {
 
-    private static final String TEST_APPLICATION_KEY = "db555c528ce160c33305d2ea51ae1197";
     public static final String CARD_ID = "518bab520967804c03002994";
 
     private Trello trello;
@@ -45,7 +45,7 @@ public class CardGetITCase {
 
     @Before
     public void setUp() {
-        trello = new TrelloImpl(TEST_APPLICATION_KEY, "", httpClient);
+        trello = new TrelloImpl(TrelloConfig.applicationKey(), "", httpClient);
     }
 
     @Test
