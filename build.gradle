@@ -11,8 +11,6 @@ description = """Trello Java Wrapper"""
 // java sources are added to Scala compile phase and removed from Java compile.
 // this solution is fix java->scala dependency issue
 // see  https://discuss.gradle.org/t/how-to-compile-a-java-class-that-depends-on-a-scala-class-in-gradle/6747
-sourceSets.main.scala.srcDir "src/main/java"
-sourceSets.main.java.srcDirs = []
 sourceSets.test.scala.srcDir "src/test/java"
 sourceSets.test.java.srcDirs = []
 
