@@ -2,7 +2,7 @@ Java Wrapper for Trello API
 
 ## Overview
 
-This project is a Java Wrapper for the [Trello API](https://trello.com/docs/). It provides a fluent interface for requesting the API
+This project is a Java Wrapper for the [Trello REST API](https://trello.com/docs/). It provides a fluent interface for requesting the API.
 
 ## Usage
 
@@ -71,6 +71,7 @@ List<TList> lists = trelloApi.getBoard(trelloBoardForAddingCardsId).fetchLists()
 ## Contribute
 
 Each pull request should respect current code conventions and provide tests for the newly implemented features.
+The new test code is implemented using Scala. The prod code is only Java - to avoid adding extra Scala dependency to the lib without providing much value (at the moment).
 
 ## Implementation Status
 
