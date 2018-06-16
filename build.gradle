@@ -4,7 +4,7 @@ apply plugin: 'maven-publish'
 apply plugin: 'signing'
 
 group = 'com.taskadapter'
-version = '0.6'
+version = '0.7-SNAPSHOT'
 
 description = """Trello Java Wrapper"""
 

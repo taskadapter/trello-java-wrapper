@@ -12,7 +12,7 @@ class CardIt extends FunSpec with Matchers {
   val validListIdFromSomeoneElsesAccount = "518baad5b05dbf4703004853"
   val unknownListId = "someUnknownId"
 
-  describe("card API") {
+  describe("create API") {
     it("gets user-friendly error when list id unknown") {
       val thrown = intercept[ListNotFoundException] {
         trello.createCard(unknownListId, new Card())
@@ -38,4 +38,18 @@ class CardIt extends FunSpec with Matchers {
       created.getName shouldBe "card created without board id"
     }
   }
+
+  describe("update API") {
+    it("gets user-friendly exception when updating a deleted card") {
+      val thrown = intercept[NotFoundException] {
+        val card = new Card()
+        card.setId("5b2345c87e570f053e606ebf") // deleted card ID
+        card.setName("deleted card that should not be updated")
+        card.setIdList(TrelloConfig.toDoListId)
+        trello.updateCard(card)
+      }
+      thrown.getMessage should include("not found")
+    }
+  }
+
 }

@@ -3,6 +3,7 @@ package com.julienvey.trello.impl.http;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.julienvey.trello.NotAuthorizedException;
+import com.julienvey.trello.NotFoundException;
 import com.julienvey.trello.exception.TrelloHttpException;
 import com.julienvey.trello.TrelloBadRequestException;
 import java.io.File;
@@ -122,18 +123,26 @@ public class ApacheHttpClient extends AbstractHttpClient {
 
             HttpEntity httpEntity = httpResponse.getEntity();
             if (httpEntity != null) {
+                String body = toString(httpEntity.getContent());
                 if (httpResponse.getStatusLine().getStatusCode() == 400) {
-                    String body = toString(httpEntity.getContent());
                     throw new TrelloBadRequestException(body);
                 }
                 if (httpResponse.getStatusLine().getStatusCode() == 401) {
                     throw new NotAuthorizedException();
                 }
-                return this.mapper.readValue(httpEntity.getContent(), objectClass);
+                if (httpResponse.getStatusLine().getStatusCode() == 404) {
+                    throw new NotFoundException("Resource not found: " + httpRequest.getURI());
+                }
+                try {
+                    return this.mapper.readValue(body, objectClass);
+                } catch (JsonProcessingException e) {
+                    throw new TrelloHttpException("Cannot parse Trello response. Expected to get a json string, but got: " + body);
+                }
             } else {
-                // TODO : error
-                throw new NullPointerException();
+                throw new TrelloHttpException("http entity returned by Trello is null");
             }
+        } catch (TrelloHttpException e) {
+            throw e;
         } catch (IOException e) {
             throw new TrelloHttpException(e);
         } finally {
