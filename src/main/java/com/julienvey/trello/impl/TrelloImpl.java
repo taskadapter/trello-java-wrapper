@@ -47,6 +47,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.julienvey.trello.ListNotFoundException;
+import com.julienvey.trello.NotFoundException;
 import com.julienvey.trello.TrelloBadRequestException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -415,9 +416,11 @@ public class TrelloImpl implements Trello {
     private static TrelloBadRequestException decodeException(Card card, TrelloBadRequestException e) {
         if (e.getMessage().contains("invalid value for idList")) {
             return new ListNotFoundException(card.getIdList());
-        } else {
-            return e;
         }
+        if (e instanceof NotFoundException) {
+            return new NotFoundException("Card with id " + card.getId() + " is not found. It may have been deleted in Trello");
+        }
+        return e;
     }
 
     @Override
