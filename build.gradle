@@ -42,8 +42,11 @@ dependencies {
     compile group: 'ch.qos.logback', name: 'logback-classic', version:'1.0.11'
     compile group: 'org.slf4j', name: 'slf4j-api', version:'1.7.5'
     compile group: 'org.springframework', name: 'spring-web', version:'3.2.2.RELEASE'
-    compile group: 'org.apache.httpcomponents', name: 'httpclient', version: httpClientVersion
-    compile group: 'com.ning', name: 'async-http-client', version:'1.7.19'
+    compileOnly group: 'org.apache.httpcomponents', name: 'httpclient', version: httpClientVersion
+    compileOnly group: 'com.ning', name: 'async-http-client', version:'1.7.19'
+
+    testImplementation group: 'org.apache.httpcomponents', name: 'httpclient', version: httpClientVersion
+    testImplementation group: 'com.ning', name: 'async-http-client', version:'1.7.19'
 
     implementation (
         "org.apache.httpcomponents:httpmime:${httpClientVersion}"
