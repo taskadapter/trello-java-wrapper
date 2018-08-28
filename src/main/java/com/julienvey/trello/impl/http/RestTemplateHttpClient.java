@@ -20,17 +20,16 @@ public class RestTemplateHttpClient implements TrelloHttpClient {
     @Override
     public <T> T postForObject(String url, T object, Class<T> objectClass, String... params) {
         try {
-            return restTemplate.postForObject(url, object, objectClass, params);
+            return restTemplate.postForObject(url, object, objectClass, (Object[]) params);
         } catch (RestClientException e) {
             throw new TrelloHttpException(e);
         }
-
     }
 
     @Override
     public URI postForLocation(String url, Object object, String... params) {
         try {
-            return restTemplate.postForLocation(url, object, params);
+            return restTemplate.postForLocation(url, object, (Object[]) params);
         } catch (RestClientException e) {
             throw new TrelloHttpException(e);
         }
@@ -39,7 +38,7 @@ public class RestTemplateHttpClient implements TrelloHttpClient {
     @Override
     public <T> T get(String url, Class<T> objectClass, String... params) {
         try {
-            return restTemplate.getForObject(url, objectClass, params);
+            return restTemplate.getForObject(url, objectClass, (Object[]) params);
         } catch (RestClientException e) {
             throw new TrelloHttpException(e);
         }
@@ -48,7 +47,8 @@ public class RestTemplateHttpClient implements TrelloHttpClient {
     @Override
     public <T> T putForObject(String url, T object, Class<T> objectClass, String... params) {
         try {
-            return restTemplate.exchange(url, HttpMethod.PUT, new HttpEntity<>(object), objectClass, params).getBody();
+            return restTemplate.exchange(url, HttpMethod.PUT, new HttpEntity<>(object), objectClass, (Object[]) params)
+                    .getBody();
         } catch (RestClientException e) {
             throw new TrelloHttpException(e);
         }
