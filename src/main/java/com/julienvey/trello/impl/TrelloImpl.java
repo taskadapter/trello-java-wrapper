@@ -80,7 +80,13 @@ public class TrelloImpl implements Trello {
 
     private static Logger logger = LoggerFactory.getLogger(TrelloImpl.class);
 
-    // FIXME : remove me
+    /**
+     * Deprecated - use another constructor which accepts an instance of `TrelloHttpClient` instead of creating
+     * one that is tied to Spring Web Framework.
+     *
+     * @see #TrelloImpl(String, String, TrelloHttpClient)
+     */
+    @Deprecated
     public TrelloImpl(String applicationKey, String accessToken) {
         this(applicationKey, accessToken, new RestTemplateHttpClient());
     }

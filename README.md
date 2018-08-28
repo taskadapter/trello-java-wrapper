@@ -17,7 +17,11 @@ dependencies {
 }
 ```
 
-The wrapper can make use of one of the following HTTP clients: `Spring Web` (default), `Apache Http Components HttpClient`, `Ning async-http-client`. Choose one if you dont' already use one of those. If you use or choose anything but Spring Web, you'll need to instantiate the corresponding `TrelloHttpClient` implementation and pass it to the `TrelloImpl` constructor (see Init section below). The corresponding Maven coordinates are:
+The wrapper can make use of one of the following HTTP clients: `Spring Web`, 
+`Apache Http Components HttpClient`, `Ning async-http-client`. 
+Choose one if you dont' already use one of those. 
+You will need to instantiate the corresponding `TrelloHttpClient` implementation and pass it to the `TrelloImpl` 
+constructor (see Init section below). The corresponding Maven dependencies for supported Http libs are:
 
 ```
 dependencies {
@@ -40,13 +44,15 @@ Failure to do so will most probably cause a `NoClassDefFoundError`.
 
 ### Init
 
-First, create an instance of `TrelloImpl`:
+First, create an instance of `TrelloImpl`. This examples uses an http client based on Apache Http library.
+ 
 ```java
-Trello trelloApi = new TrelloImpl(trelloKey, trelloAccessToken);
+Trello trelloApi = new TrelloImpl(trelloKey, trelloAccessToken, new ApacheHttpClient());
 ```
 
 * trelloKey : The key of your application
 * trelloAccessToken : the oauth token of the authenticated user on Trello
+* http client : one of supported http client implementations. See `com.julienvey.trello.impl.http` package.
 
 ### Usage
 
