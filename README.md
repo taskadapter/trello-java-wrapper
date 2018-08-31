@@ -17,22 +17,21 @@ dependencies {
 }
 ```
 
-The wrapper can make use of one of the following HTTP clients: `Spring Web`, 
-`Apache Http Components HttpClient`, `Ning async-http-client`. 
-Choose one if you dont' already use one of those. 
+The wrapper can make use of one of the following HTTP clients: 
+
+- `Spring Web`
+    - Dependency included by default
+- [Apache Http Components HttpClient](https://hc.apache.org/)
+    - Gradle dependency: `compile 'org.apache.httpcomponents:httpclient:VERSION'`
+- [Async Http Client](https://github.com/AsyncHttpClient/async-http-client/)
+    - `compile 'org.asynchttpclient:async-http-client:VERSION`
+- [Ning async-http-client](https://github.com/ning/async-http-client)
+    - The predecessor to the modern Async Http Client above
+    - `compile 'com.ning:async-http-client:VERSION`
+ 
+Choose one if you don't already use one of those. 
 You will need to instantiate the corresponding `TrelloHttpClient` implementation and pass it to the `TrelloImpl` 
-constructor (see Init section below). The corresponding Maven dependencies for supported Http libs are:
-
-```
-dependencies {
-    compile 'org.springframework:spring-web'
-    // OR 
-    compile 'org.apache.httpcomponents:httpclient'
-    // OR
-    compile 'com.ning:async-http-client'
-}
-
-```
+constructor (see Init section below). 
 
 ```
 Optional dependency in case you want to attach files to cards:
