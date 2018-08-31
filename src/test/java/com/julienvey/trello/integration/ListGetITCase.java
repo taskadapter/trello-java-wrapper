@@ -18,6 +18,7 @@ import com.julienvey.trello.domain.TList;
 import com.julienvey.trello.impl.TrelloImpl;
 import com.julienvey.trello.impl.http.ApacheHttpClient;
 import com.julienvey.trello.impl.http.AsyncTrelloHttpClient;
+import com.julienvey.trello.impl.http.AsyncTrelloHttpClient2;
 import com.julienvey.trello.impl.http.RestTemplateHttpClient;
 
 @RunWith(Parameterized.class)
@@ -32,7 +33,8 @@ public class ListGetITCase {
 
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
-        return Arrays.asList(new Object[][] { { new ApacheHttpClient() }, { new AsyncTrelloHttpClient() }, { new RestTemplateHttpClient() } });
+        return Arrays.asList(new Object[][]{{new ApacheHttpClient()}, {new AsyncTrelloHttpClient()},
+                {new RestTemplateHttpClient()}, {new AsyncTrelloHttpClient2()}});
     }
 
     public ListGetITCase(TrelloHttpClient httpClient) {

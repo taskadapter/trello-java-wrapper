@@ -22,6 +22,7 @@ import com.julienvey.trello.domain.CheckList;
 import com.julienvey.trello.impl.TrelloImpl;
 import com.julienvey.trello.impl.http.ApacheHttpClient;
 import com.julienvey.trello.impl.http.AsyncTrelloHttpClient;
+import com.julienvey.trello.impl.http.AsyncTrelloHttpClient2;
 import com.julienvey.trello.impl.http.RestTemplateHttpClient;
 
 @RunWith(Parameterized.class)
@@ -36,7 +37,7 @@ public class CardGetITCase {
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][] { { new ApacheHttpClient() }, { new AsyncTrelloHttpClient() },
-                { new RestTemplateHttpClient() } });
+                { new RestTemplateHttpClient() }, { new AsyncTrelloHttpClient2() } });
     }
 
     public CardGetITCase(TrelloHttpClient httpClient) {
