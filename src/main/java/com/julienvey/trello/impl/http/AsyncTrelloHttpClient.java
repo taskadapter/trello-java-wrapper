@@ -1,6 +1,7 @@
 package com.julienvey.trello.impl.http;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.julienvey.trello.TrelloHttpClient;
 import com.julienvey.trello.exception.TrelloHttpException;
 import com.ning.http.client.AsyncCompletionHandler;
 import com.ning.http.client.AsyncHttpClient;
@@ -11,7 +12,7 @@ import java.net.URI;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
-public class AsyncTrelloHttpClient extends AbstractHttpClient {
+public class AsyncTrelloHttpClient implements TrelloHttpClient {
 
     private AsyncHttpClient asyncHttpClient;
     private ObjectMapper mapper;
@@ -29,7 +30,7 @@ public class AsyncTrelloHttpClient extends AbstractHttpClient {
     public <T> T get(String url, final Class<T> objectClass, String... params) {
         Future<T> f;
         try {
-            f = asyncHttpClient.prepareGet(expandUrl(url, params)).execute(
+            f = asyncHttpClient.prepareGet(UrlExpander.expandUrl(url, params)).execute(
                     new AsyncCompletionHandler<T>() {
 
                         @Override
@@ -53,7 +54,7 @@ public class AsyncTrelloHttpClient extends AbstractHttpClient {
         Future<T> f;
         try {
             byte[] body = this.mapper.writeValueAsBytes(object);
-            f = asyncHttpClient.preparePost(expandUrl(url, params)).setBody(body).execute(
+            f = asyncHttpClient.preparePost(UrlExpander.expandUrl(url, params)).setBody(body).execute(
                     new AsyncCompletionHandler<T>() {
 
                         @Override
@@ -77,7 +78,7 @@ public class AsyncTrelloHttpClient extends AbstractHttpClient {
         Future<URI> f;
         try {
             byte[] body = this.mapper.writeValueAsBytes(object);
-            f = asyncHttpClient.preparePost(expandUrl(url, params)).setBody(body).execute(
+            f = asyncHttpClient.preparePost(UrlExpander.expandUrl(url, params)).setBody(body).execute(
                     new AsyncCompletionHandler<URI>() {
 
                         @Override
@@ -106,7 +107,7 @@ public class AsyncTrelloHttpClient extends AbstractHttpClient {
         Future<T> f;
         try {
             byte[] body = this.mapper.writeValueAsBytes(object);
-            f = asyncHttpClient.preparePut(expandUrl(url, params)).setBody(body).execute(
+            f = asyncHttpClient.preparePut(UrlExpander.expandUrl(url, params)).setBody(body).execute(
                     new AsyncCompletionHandler<T>() {
 
                         @Override

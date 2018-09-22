@@ -1,15 +1,12 @@
 package com.julienvey.trello.impl.http;
 
-import com.julienvey.trello.TrelloHttpClient;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public abstract class AbstractHttpClient implements TrelloHttpClient {
-
+public final class UrlExpander {
     private static final Pattern NAMES_PATTERN = Pattern.compile("\\{([^/]+?)\\}");
 
-    protected String expandUrl(String url, String... params) {
+    public static String expandUrl(String url, String... params) {
         if (url == null) {
             return null;
         }
@@ -30,4 +27,5 @@ public abstract class AbstractHttpClient implements TrelloHttpClient {
         matcher.appendTail(sb);
         return sb.toString();
     }
+
 }

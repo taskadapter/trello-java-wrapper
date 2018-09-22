@@ -3,6 +3,7 @@ package com.julienvey.trello.impl.http;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import com.julienvey.trello.TrelloHttpClient;
 import com.julienvey.trello.exception.TrelloHttpException;
 import java.io.IOException;
 import java.net.URI;
@@ -13,10 +14,12 @@ import org.asynchttpclient.AsyncHttpClient;
 import org.asynchttpclient.DefaultAsyncHttpClient;
 import org.asynchttpclient.Response;
 
+import static com.julienvey.trello.impl.http.UrlExpander.expandUrl;
+
 /**
  * TrelloHttpClient based on the org.asynchttpclient HTTP client, the successor to the ning async http client.
  */
-public class AsyncTrelloHttpClient2 extends AbstractHttpClient {
+public class AsyncTrelloHttpClient2 implements TrelloHttpClient {
 
     private final AsyncHttpClient asyncHttpClient;
     private final ObjectReader reader;

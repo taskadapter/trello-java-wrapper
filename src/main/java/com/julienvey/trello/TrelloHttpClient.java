@@ -3,13 +3,11 @@ package com.julienvey.trello;
 import java.net.URI;
 
 public interface TrelloHttpClient {
-    // TODO add IO exception
+    <T> T get(String url, Class<T> objectClass, String... params);
 
-    public <T> T get(String url, Class<T> objectClass, String... params);
+    <T> T postForObject(String url, T object, Class<T> objectClass, String... params);
 
-    public <T> T postForObject(String url, T object, Class<T> objectClass, String... params);
+    URI postForLocation(String url, Object object, String... params);
 
-    public URI postForLocation(String url, Object object, String... params);
-
-    public <T> T putForObject(String url, T object, Class<T> objectClass, String... params);
+    <T> T putForObject(String url, T object, Class<T> objectClass, String... params);
 }

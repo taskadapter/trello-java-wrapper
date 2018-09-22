@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.julienvey.trello.NotAuthorizedException;
 import com.julienvey.trello.NotFoundException;
+import com.julienvey.trello.TrelloHttpClient;
 import com.julienvey.trello.exception.TrelloHttpException;
 import com.julienvey.trello.TrelloBadRequestException;
 import java.io.File;
@@ -27,7 +28,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.InputStream;
 
-public class ApacheHttpClient extends AbstractHttpClient {
+public class ApacheHttpClient implements TrelloHttpClient {
 
     private DefaultHttpClient httpClient;
     private ObjectMapper mapper;
@@ -43,13 +44,13 @@ public class ApacheHttpClient extends AbstractHttpClient {
 
     @Override
     public <T> T get(String url, Class<T> objectClass, String... params) {
-        HttpGet httpGet = new HttpGet(expandUrl(url, params));
+        HttpGet httpGet = new HttpGet(UrlExpander.expandUrl(url, params));
         return getEntityAndReleaseConnection(objectClass, httpGet);
     }
 
     @Override
     public <T> T postForObject(String url, T object, Class<T> objectClass, String... params) {
-        HttpPost httpPost = new HttpPost(expandUrl(url, params));
+        HttpPost httpPost = new HttpPost(UrlExpander.expandUrl(url, params));
 
         try {
             HttpEntity entity = new ByteArrayEntity(this.mapper.writeValueAsBytes(object), ContentType.APPLICATION_JSON);
@@ -63,7 +64,7 @@ public class ApacheHttpClient extends AbstractHttpClient {
     }
 
     public <T> T postFileForObject(String url, File file, Class<T> objectClass, String... params) {
-        HttpPost httpPost = new HttpPost(expandUrl(url, params));
+        HttpPost httpPost = new HttpPost(UrlExpander.expandUrl(url, params));
 
         MultipartEntity entity = new MultipartEntity();
         entity.addPart("file", new FileBody(file));
@@ -80,7 +81,7 @@ public class ApacheHttpClient extends AbstractHttpClient {
 
     @Override
     public <T> T putForObject(String url, T object, Class<T> objectClass, String... params) {
-        HttpPut put = new HttpPut(expandUrl(url, params));
+        HttpPut put = new HttpPut(UrlExpander.expandUrl(url, params));
         try {
             HttpEntity entity = new ByteArrayEntity(this.mapper.writeValueAsBytes(object), ContentType.APPLICATION_JSON);
             put.setEntity(entity);
@@ -93,7 +94,7 @@ public class ApacheHttpClient extends AbstractHttpClient {
 
     @Override
     public URI postForLocation(String url, Object object, String... params) {
-        HttpPost httpPost = new HttpPost(expandUrl(url, params));
+        HttpPost httpPost = new HttpPost(UrlExpander.expandUrl(url, params));
 
         try {
             HttpEntity entity = new ByteArrayEntity(this.mapper.writeValueAsBytes(object), ContentType.APPLICATION_JSON);
