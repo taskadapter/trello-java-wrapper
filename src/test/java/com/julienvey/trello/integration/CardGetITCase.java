@@ -113,18 +113,4 @@ public class CardGetITCase {
         assertThat(cardBoard).isNotNull();
         assertThat(cardBoard.getId()).isEqualTo("518baad5b05dbf4703004852");
     }
-
-    @Test
-    @Ignore("Not sure how to properly test the mutation of state since there is no way to revert the change currently")
-    public void testAddLabelsToCard() {
-        trello.addLabelsToCard(CARD_ID, new String[]{"test"});
-
-        Card card = trello.getCard(CARD_ID);
-        List<Label> labels = card.getLabels();
-        List<String> labelNames = new ArrayList<>();
-        for (Label label : labels) {
-            labelNames.add(label.getName());
-        }
-        assertThat(labelNames).contains("test");
-    }
 }
