@@ -44,7 +44,7 @@ public interface Trello {
 	List<CardWithActions> getBoardMemberActivity(String boardId, String memberId,
 			String actionsFilter, Argument... args);
 
-    List<Member> getBoardMembersInvited(String boardId, Argument... args);
+    List<Member> getBoardMemberships(String boardId, Argument... args);
 
     MyPrefs getBoardMyPrefs(String boardId);
 

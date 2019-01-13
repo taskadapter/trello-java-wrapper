@@ -22,7 +22,7 @@ import static com.julienvey.trello.impl.TrelloUrl.GET_BOARD_CHECKLISTS;
 import static com.julienvey.trello.impl.TrelloUrl.GET_BOARD_LABELS;
 import static com.julienvey.trello.impl.TrelloUrl.GET_BOARD_LISTS;
 import static com.julienvey.trello.impl.TrelloUrl.GET_BOARD_MEMBERS;
-import static com.julienvey.trello.impl.TrelloUrl.GET_BOARD_MEMBERS_INVITED;
+import static com.julienvey.trello.impl.TrelloUrl.GET_BOARD_MEMBERSHIPS;
 import static com.julienvey.trello.impl.TrelloUrl.GET_BOARD_MEMBER_CARDS;
 import static com.julienvey.trello.impl.TrelloUrl.GET_BOARD_MYPREFS;
 import static com.julienvey.trello.impl.TrelloUrl.GET_BOARD_ORGANIZATION;
@@ -204,8 +204,8 @@ public class TrelloImpl implements Trello {
     }
 
     @Override
-    public List<Member> getBoardMembersInvited(String boardId, Argument... args) {
-        List<Member> members = Arrays.asList(get(createUrl(GET_BOARD_MEMBERS_INVITED).params(args).asString(), Member[].class, boardId));
+    public List<Member> getBoardMemberships(String boardId, Argument... args) {
+        List<Member> members = Arrays.asList(get(createUrl(GET_BOARD_MEMBERSHIPS).params(args).asString(), Member[].class, boardId));
         for (Member member : members) {
             member.setInternalTrello(this);
         }

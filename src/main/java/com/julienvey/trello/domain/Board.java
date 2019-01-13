@@ -60,8 +60,8 @@ public class Board extends TrelloEntity {
         return trelloService.getBoardMemberCards(id, idMember, args);
     }
 
-    public List<Member> fetchMembersInvited(Argument... args) {
-        return trelloService.getBoardMembersInvited(id, args);
+    public List<Member> fetchMemberships(Argument... args) {
+        return trelloService.getBoardMemberships(id, args);
     }
 
     public MyPrefs fetchMyPrefs() {

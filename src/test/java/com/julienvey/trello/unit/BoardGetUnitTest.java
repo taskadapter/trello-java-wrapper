@@ -285,7 +285,7 @@ public class BoardGetUnitTest {
     }
 
     @Test
-    public void testGetBoardMembersInvited() {
+    public void testGetBoardMemberships() {
         // Given
         Member member1 = new Member();
         member1.setId("idMember1");
@@ -297,14 +297,14 @@ public class BoardGetUnitTest {
         when(httpClient.get(anyString(), any(Class.class), (String[]) anyVararg())).thenReturn(new Member[] { member1, member2, member3 });
 
         // When
-        List<Member> boardMembersInvited = trello.getBoardMembersInvited("idBoard");
+        List<Member> boardMembersInvited = trello.getBoardMemberships("idBoard");
 
         // Then
         assertThat(boardMembersInvited).isNotNull();
         assertThat(boardMembersInvited).hasSize(3);
         assertThat(boardMembersInvited.get(0).getId()).isEqualTo("idMember3");
 
-        verify(httpClient).get(eq("https://api.trello.com/1/boards/{boardId}/membersInvited?key={applicationKey}&token={userToken}"),
+        verify(httpClient).get(eq("https://api.trello.com/1/boards/{boardId}/memberships?key={applicationKey}&token={userToken}"),
                 eq(Member[].class), eq("idBoard"), eq(""), eq(""));
         verifyNoMoreInteractions(httpClient);
     }

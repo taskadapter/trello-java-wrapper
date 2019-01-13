@@ -177,14 +177,6 @@ public class BoardGetITCase {
     }
 
     @Test
-    public void testGetBoardFetchMembersInvited() {
-        Board board = trello.getBoard(BOARD_ID);
-        List<Member> members = board.fetchMembersInvited();
-
-        assertThat(members).hasSize(0);
-    }
-
-    @Test
     public void testGetBoardFetchMyPrefs() {
         Board board = trello.getBoard(BOARD_ID);
         MyPrefs myPrefs = board.fetchMyPrefs();
@@ -261,11 +253,11 @@ public class BoardGetITCase {
     }
 
     @Test
-    public void testGetBoardMembersInvited() {
-        List<Member> boardMembersInvited = trello.getBoardMembersInvited(BOARD_ID);
+    public void testGetBoardMemberships() {
+        List<Member> memberships = trello.getBoardMemberships(BOARD_ID);
 
-        assertThat(boardMembersInvited).isNotNull();
-        assertThat(boardMembersInvited).hasSize(0);
+        assertThat(memberships).isNotNull();
+        assertThat(memberships).hasSize(1);
     }
 
     @Test
