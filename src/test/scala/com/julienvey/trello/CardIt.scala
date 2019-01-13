@@ -1,6 +1,9 @@
 package com.julienvey.trello
 
-import com.julienvey.trello.domain.Card
+import com.julienvey.trello.domain.{Card, Label}
+import com.julienvey.trello.integration.CardGetITCase
+import java.util.UUID.randomUUID
+
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.{FunSpec, Matchers}
@@ -49,6 +52,15 @@ class CardIt extends FunSpec with Matchers {
         trello.updateCard(card)
       }
       thrown.getMessage should include("not found")
+    }
+
+    it("assigns label to card") {
+      val cardId = CardGetITCase.CARD_ID
+      val label = randomUUID().toString
+      trello.addLabelsToCard(cardId, Array(label))
+      val card = trello.getCard(cardId)
+      val labels = card.getLabels.toArray(new Array[Label](0)).map(l => l.getName)
+      labels should contain (label)
     }
   }
 

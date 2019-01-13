@@ -2,12 +2,15 @@ package com.julienvey.trello.integration;
 
 import static org.fest.assertions.Assertions.assertThat;
 
+import com.julienvey.trello.domain.Label;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
 import com.julienvey.trello.TrelloConfig;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -110,5 +113,4 @@ public class CardGetITCase {
         assertThat(cardBoard).isNotNull();
         assertThat(cardBoard.getId()).isEqualTo("518baad5b05dbf4703004852");
     }
-
 }

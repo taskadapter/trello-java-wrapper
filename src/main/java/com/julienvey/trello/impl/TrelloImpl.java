@@ -42,6 +42,7 @@ import static com.julienvey.trello.impl.TrelloUrl.GET_ORGANIZATION_MEMBER;
 import static com.julienvey.trello.impl.TrelloUrl.UPDATE_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.createUrl;
 
+import com.julienvey.trello.domain.Label;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -68,7 +69,6 @@ import com.julienvey.trello.domain.MyPrefs;
 import com.julienvey.trello.domain.Organization;
 import com.julienvey.trello.domain.TList;
 import com.julienvey.trello.impl.domaininternal.Comment;
-import com.julienvey.trello.impl.domaininternal.Label;
 import com.julienvey.trello.impl.http.ApacheHttpClient;
 import com.julienvey.trello.impl.http.RestTemplateHttpClient;
 
@@ -144,10 +144,10 @@ public class TrelloImpl implements Trello {
     }
 
     @Override
-    public List<com.julienvey.trello.domain.Label> getBoardLabels(String boardId, Argument... args) {
-        List<com.julienvey.trello.domain.Label> labels = Arrays
-                .asList(get(createUrl(GET_BOARD_LABELS).params(args).asString(), com.julienvey.trello.domain.Label[].class, boardId));
-        for (com.julienvey.trello.domain.Label label : labels) {
+    public List<Label> getBoardLabels(String boardId, Argument... args) {
+        List<Label> labels = Arrays
+                .asList(get(createUrl(GET_BOARD_LABELS).params(args).asString(), Label[].class, boardId));
+        for (Label label : labels) {
             label.setInternalTrello(this);
         }
         return labels;
@@ -457,8 +457,10 @@ public class TrelloImpl implements Trello {
 
     @Override
     public void addLabelsToCard(String idCard, String[] labels) {
-        for (String label : labels) {
-            postForLocation(createUrl(ADD_LABEL_TO_CARD).asString(), new Label(label), idCard);
+        for (String labelName : labels) {
+            Label label = new Label();
+            label.setName(labelName);
+            postForObject(createUrl(ADD_LABEL_TO_CARD).asString(), label, Label.class, idCard);
         }
     }
 
