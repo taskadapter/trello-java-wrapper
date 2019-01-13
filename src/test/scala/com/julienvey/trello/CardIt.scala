@@ -40,6 +40,17 @@ class CardIt extends FunSpec with Matchers {
       val created = trello.createCard(TrelloConfig.toDoListId, card)
       created.getName shouldBe "card created without board id"
     }
+
+    it("assigns label to card") {
+      val card = new Card()
+      card.setName("card that will have a label")
+      val created = trello.createCard(TrelloConfig.toDoListId, card)
+      val label = randomUUID().toString
+      trello.addLabelsToCard(created.getId, Array(label))
+      val loaded = trello.getCard(created.getId)
+      val labels = loaded.getLabels.toArray(new Array[Label](0)).map(l => l.getName)
+      labels should contain (label)
+    }
   }
 
   describe("update API") {
@@ -52,15 +63,6 @@ class CardIt extends FunSpec with Matchers {
         trello.updateCard(card)
       }
       thrown.getMessage should include("not found")
-    }
-
-    it("assigns label to card") {
-      val cardId = CardGetITCase.CARD_ID
-      val label = randomUUID().toString
-      trello.addLabelsToCard(cardId, Array(label))
-      val card = trello.getCard(cardId)
-      val labels = card.getLabels.toArray(new Array[Label](0)).map(l => l.getName)
-      labels should contain (label)
     }
   }
 
