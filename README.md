@@ -113,8 +113,6 @@ The new test code is implemented using Scala. The prod code is only Java - to av
 | GET /1/boards/[board_id]/members | Yes | Yes
 | GET /1/boards/[board_id]/members/[filter]
 | GET /1/boards/[board_id]/members/[idMember]/cards | Yes | Yes | Yes
-| GET /1/boards/[board_id]/membersInvited | Yes | Yes | Yes
-| GET /1/boards/[board_id]/membersInvited/[field]
 | GET /1/boards/[board_id]/memberships
 | GET /1/boards/[board_id]/memberships/[idMembership]
 | GET /1/boards/[board_id]/myPrefs | Yes | Yes | Yes
