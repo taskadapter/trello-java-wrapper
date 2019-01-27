@@ -38,6 +38,10 @@ public class Member extends TrelloEntity {
         return trelloService.getMemberBoards(id, args);
     }
 
+    public List<Card> getCards(Argument... args) {
+        return trelloService.getMemberCards(id, args);
+    }
+
     /* Accessors */
     public String getId() {
         return id;

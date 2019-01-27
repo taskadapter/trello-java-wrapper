@@ -1,12 +1,13 @@
 package com.julienvey.trello
 
-import com.julienvey.trello.domain.{Card, Label}
-import com.julienvey.trello.integration.CardGetITCase
 import java.util.UUID.randomUUID
 
+import com.julienvey.trello.domain.{Card, Label, Member}
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.{FunSpec, Matchers}
+
+import scala.collection.JavaConverters._
 
 @RunWith(classOf[JUnitRunner])
 class CardIt extends FunSpec with Matchers {
@@ -63,6 +64,29 @@ class CardIt extends FunSpec with Matchers {
         trello.updateCard(card)
       }
       thrown.getMessage should include("not found")
+    }
+
+    it("add, get, delete member full cycle") {
+      val cardId = "5c4d89b5bd5a2640f5fcb32c"
+      val idExtractor: Member => String = member => member.getId
+
+      trello.addMemberToCard(cardId, TrelloConfig.memberId).asScala
+        .map(idExtractor) should contain (TrelloConfig.memberId)
+
+      trello.getCardMembers(cardId).asScala
+        .map(idExtractor) should contain (TrelloConfig.memberId)
+
+      trello.getMemberCards(TrelloConfig.memberId).asScala
+          .map(card => card.getId) should contain (cardId)
+
+      trello.removeMemberFromCard(cardId, TrelloConfig.memberId).asScala
+        .map(idExtractor) shouldNot contain (TrelloConfig.memberId)
+
+      trello.getCardMembers(cardId).asScala
+        .map(idExtractor) shouldNot contain (TrelloConfig.memberId)
+
+      trello.getMemberCards(TrelloConfig.memberId).asScala
+        .map(card => card.getId) shouldNot contain (cardId)
     }
   }
 
