@@ -80,6 +80,8 @@ public interface Trello {
 
     Board getCardBoard(String cardId, Argument... args);
 
+    List<Member> getCardMembers(String cardId, Argument... args);
+
     /* Lists */
 
     TList getList(String listId, Argument... args);
@@ -124,4 +126,5 @@ public interface Trello {
 
     List<Board> getMemberBoards(String userId, Argument... args);
 
+    List<Action> getMemberActions(String userId, Argument... args);
 }

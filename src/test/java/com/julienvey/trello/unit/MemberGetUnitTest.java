@@ -2,6 +2,7 @@ package com.julienvey.trello.unit;
 
 import com.julienvey.trello.Trello;
 import com.julienvey.trello.TrelloHttpClient;
+import com.julienvey.trello.domain.Action;
 import com.julienvey.trello.domain.Board;
 import com.julienvey.trello.impl.TrelloImpl;
 import org.junit.Before;
@@ -57,4 +58,27 @@ public class MemberGetUnitTest {
         verifyNoMoreInteractions(httpClient);
     }
 
+    @Test
+    public void testGetMemberActions() {
+        // Given
+        Action action1 = new Action();
+        action1.setId("1");
+        Action action2 = new Action();
+        action2.setId("2");
+
+        when(httpClient.get(anyString(), any(Class.class), (String[]) anyVararg())).thenReturn(new Action[] { action1, action2 });
+
+        // When
+        List<Action> memberActions = trello.getMemberActions("idMember");
+
+        // Then
+        assertThat(memberActions)
+                .isNotNull()
+                .hasSize(2)
+                .containsExactly(action1, action2);
+
+        verify(httpClient).get(eq("https://api.trello.com/1/members/{userId}/actions?key={applicationKey}&token={userToken}"),
+                eq(Action[].class), eq("idMember"), eq(""), eq(""));
+        verifyNoMoreInteractions(httpClient);
+    }
 }

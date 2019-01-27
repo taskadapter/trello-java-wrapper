@@ -4,6 +4,7 @@ import static com.julienvey.trello.impl.TrelloUrl.ADD_CHECKITEMS_TO_CHECKLIST;
 import static com.julienvey.trello.impl.TrelloUrl.ADD_COMMENT_TO_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.ADD_LABEL_TO_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.ADD_ATTACHMENT_TO_CARD;
+import static com.julienvey.trello.impl.TrelloUrl.ADD_MEMBER_TO_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.CREATE_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.CREATE_CHECKLIST;
 import static com.julienvey.trello.impl.TrelloUrl.GET_ACTION;
@@ -36,6 +37,7 @@ import static com.julienvey.trello.impl.TrelloUrl.GET_CHECK_LIST;
 import static com.julienvey.trello.impl.TrelloUrl.GET_LIST;
 import static com.julienvey.trello.impl.TrelloUrl.GET_LIST_CARDS;
 import static com.julienvey.trello.impl.TrelloUrl.GET_MEMBER;
+import static com.julienvey.trello.impl.TrelloUrl.GET_MEMBER_ACTIONS;
 import static com.julienvey.trello.impl.TrelloUrl.GET_MEMBER_BOARDS;
 import static com.julienvey.trello.impl.TrelloUrl.GET_ORGANIZATION_BOARD;
 import static com.julienvey.trello.impl.TrelloUrl.GET_ORGANIZATION_MEMBER;
@@ -71,6 +73,7 @@ import com.julienvey.trello.domain.TList;
 import com.julienvey.trello.impl.domaininternal.Comment;
 import com.julienvey.trello.impl.http.ApacheHttpClient;
 import com.julienvey.trello.impl.http.RestTemplateHttpClient;
+import com.julienvey.trello.utils.ArgUtils;
 
 public class TrelloImpl implements Trello {
 
@@ -327,6 +330,11 @@ public class TrelloImpl implements Trello {
     }
 
     @Override
+    public List<Member> getCardMembers(String cardId, Argument... args) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public List<CheckList> getCardChecklists(String cardId, Argument... args) {
         List<CheckList> checkLists = Arrays.asList(get(createUrl(GET_CARD_CHECKLIST).params(args).asString(), CheckList[].class, cardId));
         for (CheckList checklist : checkLists) {
@@ -453,6 +461,17 @@ public class TrelloImpl implements Trello {
             board.setInternalTrello(this);
         }
         return boards;
+    }
+
+    @Override
+    public List<Action> getMemberActions(String userId, Argument... args) {
+        List<Action> actions = Arrays.asList(get(createUrl(GET_MEMBER_ACTIONS).params(args).asString(), Action[].class, userId));
+
+        for (Action action : actions) {
+            action.setInternalTrello(this);
+        }
+
+        return actions;
     }
 
     @Override
