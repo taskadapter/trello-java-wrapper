@@ -4,7 +4,6 @@ import static com.julienvey.trello.impl.TrelloUrl.ADD_CHECKITEMS_TO_CHECKLIST;
 import static com.julienvey.trello.impl.TrelloUrl.ADD_COMMENT_TO_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.ADD_LABEL_TO_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.ADD_ATTACHMENT_TO_CARD;
-import static com.julienvey.trello.impl.TrelloUrl.ADD_MEMBER_TO_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.CREATE_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.CREATE_CHECKLIST;
 import static com.julienvey.trello.impl.TrelloUrl.GET_ACTION;
@@ -327,11 +326,6 @@ public class TrelloImpl implements Trello {
         Board board = get(createUrl(GET_CARD_BOARD).params(args).asString(), Board.class, cardId);
         board.setInternalTrello(this);
         return board;
-    }
-
-    @Override
-    public List<Member> getCardMembers(String cardId, Argument... args) {
-        throw new UnsupportedOperationException();
     }
 
     @Override
