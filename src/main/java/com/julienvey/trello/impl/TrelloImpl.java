@@ -36,6 +36,7 @@ import static com.julienvey.trello.impl.TrelloUrl.GET_CHECK_LIST;
 import static com.julienvey.trello.impl.TrelloUrl.GET_LIST;
 import static com.julienvey.trello.impl.TrelloUrl.GET_LIST_CARDS;
 import static com.julienvey.trello.impl.TrelloUrl.GET_MEMBER;
+import static com.julienvey.trello.impl.TrelloUrl.GET_MEMBER_ACTIONS;
 import static com.julienvey.trello.impl.TrelloUrl.GET_MEMBER_BOARDS;
 import static com.julienvey.trello.impl.TrelloUrl.GET_ORGANIZATION_BOARD;
 import static com.julienvey.trello.impl.TrelloUrl.GET_ORGANIZATION_MEMBER;
@@ -71,6 +72,7 @@ import com.julienvey.trello.domain.TList;
 import com.julienvey.trello.impl.domaininternal.Comment;
 import com.julienvey.trello.impl.http.ApacheHttpClient;
 import com.julienvey.trello.impl.http.RestTemplateHttpClient;
+import com.julienvey.trello.utils.ArgUtils;
 
 public class TrelloImpl implements Trello {
 
@@ -453,6 +455,17 @@ public class TrelloImpl implements Trello {
             board.setInternalTrello(this);
         }
         return boards;
+    }
+
+    @Override
+    public List<Action> getMemberActions(String userId, Argument... args) {
+        List<Action> actions = Arrays.asList(get(createUrl(GET_MEMBER_ACTIONS).params(args).asString(), Action[].class, userId));
+
+        for (Action action : actions) {
+            action.setInternalTrello(this);
+        }
+
+        return actions;
     }
 
     @Override

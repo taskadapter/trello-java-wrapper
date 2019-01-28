@@ -239,8 +239,8 @@ The new test code is implemented using Scala. The prod code is only Java - to av
 | POST /1/lists/[idList]/cards
 | GET /1/members/[idMember or username] | Yes
 | GET /1/members/[idMember or username]/[field]
-| GET /1/members/[idMember or username]/actions
-| GET /1/members/[idMember or username]/boards
+| GET /1/members/[idMember or username]/actions | Yes | Yes | Yes
+| GET /1/members/[idMember or username]/boards | Yes | Yes | Yes
 | GET /1/members/[idMember or username]/boards/[filter]
 | GET /1/members/[idMember or username]/boardsInvited
 | GET /1/members/[idMember or username]/boardsInvited/[field]

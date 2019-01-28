@@ -124,4 +124,5 @@ public interface Trello {
 
     List<Board> getMemberBoards(String userId, Argument... args);
 
+    List<Action> getMemberActions(String userId, Argument... args);
 }

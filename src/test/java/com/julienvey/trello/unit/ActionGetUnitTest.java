@@ -150,7 +150,7 @@ public class ActionGetUnitTest {
     }
 
     @Test
-    public void testGetActionMembeCreator() {
+    public void testGetActionMemberCreator() {
         //Given
         Member mockMember = new Member();
         mockMember.setId("idMember");
