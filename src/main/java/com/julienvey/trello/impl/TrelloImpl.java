@@ -78,6 +78,7 @@ import com.julienvey.trello.domain.TList;
 import com.julienvey.trello.domain.TrelloEntity;
 import com.julienvey.trello.impl.domaininternal.Comment;
 import com.julienvey.trello.impl.http.ApacheHttpClient;
+import com.julienvey.trello.impl.http.JDKTrelloHttpClient;
 import com.julienvey.trello.impl.http.RestTemplateHttpClient;
 
 public class TrelloImpl implements Trello {
@@ -96,7 +97,7 @@ public class TrelloImpl implements Trello {
      */
     @Deprecated
     public TrelloImpl(String applicationKey, String accessToken) {
-        this(applicationKey, accessToken, new RestTemplateHttpClient());
+        this(applicationKey, accessToken, new JDKTrelloHttpClient());
     }
 
     public TrelloImpl(String applicationKey, String accessToken, TrelloHttpClient httpClient) {

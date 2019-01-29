@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 
+import com.julienvey.trello.utils.IOUtils;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -130,7 +131,7 @@ public class ApacheHttpClient implements TrelloHttpClient {
 
             HttpEntity httpEntity = httpResponse.getEntity();
             if (httpEntity != null) {
-                String body = toString(httpEntity.getContent());
+                String body = IOUtils.toString(httpEntity.getContent());
                 if (httpResponse.getStatusLine().getStatusCode() == 400) {
                     throw new TrelloBadRequestException(body);
                 }
@@ -155,9 +156,5 @@ public class ApacheHttpClient implements TrelloHttpClient {
         } finally {
             httpRequest.releaseConnection();
         }
-    }
-
-    private static String toString(InputStream stream) {
-        return new java.util.Scanner(stream).useDelimiter("\\A").next();
     }
 }

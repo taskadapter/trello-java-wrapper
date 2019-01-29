@@ -19,15 +19,18 @@ dependencies {
 
 The wrapper can make use of one of the following HTTP clients: 
 
+- [HttpURLConnection](https://docs.oracle.com/javase/8/docs/api/java/net/HttpURLConnection.html) (default)
+- [OKHttp](https://github.com/square/okhttp)
+    - `compile 'com.squareup.okhttp3:okhttp:VERSION'`
 - `Spring Web`
-    - Dependency included by default
+    - `compile 'org.springframework:spring-web:VERSION'`
 - [Apache Http Components HttpClient](https://hc.apache.org/)
-    - Gradle dependency: `compile 'org.apache.httpcomponents:httpclient:VERSION'`
+    - `compile 'org.apache.httpcomponents:httpclient:VERSION'`
 - [Async Http Client](https://github.com/AsyncHttpClient/async-http-client/)
-    - `compile 'org.asynchttpclient:async-http-client:VERSION`
+    - `compile 'org.asynchttpclient:async-http-client:VERSION'`
 - [Ning async-http-client](https://github.com/ning/async-http-client)
     - The predecessor to the modern Async Http Client above
-    - `compile 'com.ning:async-http-client:VERSION`
+    - `compile 'com.ning:async-http-client:VERSION'`
  
 Choose one if you don't already use one of those. 
 You will need to instantiate the corresponding `TrelloHttpClient` implementation and pass it to the `TrelloImpl` 
