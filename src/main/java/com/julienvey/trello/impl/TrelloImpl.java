@@ -209,9 +209,6 @@ public class TrelloImpl implements Trello {
     public List<Member> getBoardMemberships(String boardId, Argument... args) {
         List<Member> members = Arrays.asList(get(createUrl(GET_BOARD_MEMBERSHIPS).params(args).asString(), Member[].class, boardId));
         members.forEach(m -> m.setInternalTrello(this));
-        for (Member member : members) {
-            member.setInternalTrello(this);
-        }
         return members;
     }
 
