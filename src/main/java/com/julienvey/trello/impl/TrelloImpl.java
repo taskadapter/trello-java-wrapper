@@ -48,9 +48,8 @@ import static com.julienvey.trello.impl.TrelloUrl.UPDATE_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.createUrl;
 
 import com.julienvey.trello.domain.Label;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+
+import java.util.*;
 
 import com.julienvey.trello.ListNotFoundException;
 import com.julienvey.trello.NotFoundException;
@@ -60,7 +59,6 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import com.julienvey.trello.Trello;
 import com.julienvey.trello.TrelloHttpClient;
@@ -79,7 +77,6 @@ import com.julienvey.trello.domain.Organization;
 import com.julienvey.trello.domain.TList;
 import com.julienvey.trello.domain.TrelloEntity;
 import com.julienvey.trello.impl.domaininternal.Comment;
-import com.julienvey.trello.impl.domaininternal.StringValueHolder;
 import com.julienvey.trello.impl.http.ApacheHttpClient;
 import com.julienvey.trello.impl.http.RestTemplateHttpClient;
 
@@ -429,7 +426,9 @@ public class TrelloImpl implements Trello {
 
     @Override
     public List<Member> addMemberToCard(String idCard, String userId) {
-        return asList(() -> postForObject(createUrl(ADD_MEMBER_TO_CARD).asString(), new StringValueHolder(userId), Member[].class, idCard));
+        Map<String, String> body = new HashMap<>();
+        body.put("value", userId);
+        return asList(() -> postForObject(createUrl(ADD_MEMBER_TO_CARD).asString(), body, Member[].class, idCard));
     }
 
     @Override
