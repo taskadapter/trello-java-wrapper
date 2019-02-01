@@ -28,9 +28,8 @@ public class AsyncTrelloHttpClient implements TrelloHttpClient {
 
     @Override
     public <T> T get(String url, final Class<T> objectClass, String... params) {
-        Future<T> f;
         try {
-            f = asyncHttpClient.prepareGet(UrlExpander.expandUrl(url, params)).execute(
+            Future<T> f = asyncHttpClient.prepareGet(UrlExpander.expandUrl(url, params)).execute(
                     new AsyncCompletionHandler<T>() {
 
                         @Override
@@ -51,10 +50,9 @@ public class AsyncTrelloHttpClient implements TrelloHttpClient {
 
     @Override
     public <T> T postForObject(String url, Object object, final Class<T> objectClass, String... params) {
-        Future<T> f;
         try {
             byte[] body = this.mapper.writeValueAsBytes(object);
-            f = asyncHttpClient.preparePost(UrlExpander.expandUrl(url, params))
+            Future<T> f = asyncHttpClient.preparePost(UrlExpander.expandUrl(url, params))
                     .setHeader("Content-Type", "application/json")
                     .setBody(body).execute(new AsyncCompletionHandler<T>() {
                         @Override
@@ -75,10 +73,9 @@ public class AsyncTrelloHttpClient implements TrelloHttpClient {
 
     @Override
     public URI postForLocation(String url, Object object, String... params) {
-        Future<URI> f;
         try {
             byte[] body = this.mapper.writeValueAsBytes(object);
-            f = asyncHttpClient.preparePost(UrlExpander.expandUrl(url, params)).setBody(body).execute(
+            Future<URI> f = asyncHttpClient.preparePost(UrlExpander.expandUrl(url, params)).setBody(body).execute(
                     new AsyncCompletionHandler<URI>() {
 
                         @Override
@@ -104,10 +101,9 @@ public class AsyncTrelloHttpClient implements TrelloHttpClient {
 
     @Override
     public <T> T putForObject(String url, T object, final Class<T> objectClass, String... params) {
-        Future<T> f;
         try {
             byte[] body = this.mapper.writeValueAsBytes(object);
-            f = asyncHttpClient.preparePut(UrlExpander.expandUrl(url, params)).setBody(body).execute(
+            Future<T> f = asyncHttpClient.preparePut(UrlExpander.expandUrl(url, params)).setBody(body).execute(
                     new AsyncCompletionHandler<T>() {
 
                         @Override
@@ -128,9 +124,8 @@ public class AsyncTrelloHttpClient implements TrelloHttpClient {
 
     @Override
     public <T> T delete(String url, final Class<T> responseType, String... params) {
-        Future<T> f;
         try {
-            f = asyncHttpClient.prepareDelete(UrlExpander.expandUrl(url, params)).execute(
+            Future<T> f = asyncHttpClient.prepareDelete(UrlExpander.expandUrl(url, params)).execute(
                     new AsyncCompletionHandler<T>() {
 
                         @Override

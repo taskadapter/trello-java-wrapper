@@ -5,10 +5,12 @@ import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.julienvey.trello.TrelloHttpClient;
 import com.julienvey.trello.exception.TrelloHttpException;
+
 import java.io.IOException;
 import java.net.URI;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+
 import org.asynchttpclient.AsyncCompletionHandler;
 import org.asynchttpclient.AsyncHttpClient;
 import org.asynchttpclient.DefaultAsyncHttpClient;
@@ -41,9 +43,8 @@ public class AsyncTrelloHttpClient2 implements TrelloHttpClient {
 
     @Override
     public <T> T get(String url, final Class<T> objectClass, String... params) {
-        Future<T> f;
         try {
-            f = asyncHttpClient.prepareGet(expandUrl(url, params)).execute(
+            Future<T> f = asyncHttpClient.prepareGet(expandUrl(url, params)).execute(
                     new AsyncCompletionHandler<T>() {
 
                         @Override
@@ -64,23 +65,22 @@ public class AsyncTrelloHttpClient2 implements TrelloHttpClient {
 
     @Override
     public <T> T postForObject(String url, Object object, final Class<T> objectClass, String... params) {
-        Future<T> f;
         try {
             byte[] body = this.writer.writeValueAsBytes(object);
-            f = asyncHttpClient.preparePost(expandUrl(url, params)).setBody(body)
+            Future<T> f = asyncHttpClient.preparePost(expandUrl(url, params)).setBody(body)
                     .setHeader("Content-Type", "application/json").execute(
-                    new AsyncCompletionHandler<T>() {
+                            new AsyncCompletionHandler<T>() {
 
-                        @Override
-                        public T onCompleted(Response response) throws Exception {
-                            return reader.forType(objectClass).readValue(response.getResponseBody());
-                        }
+                                @Override
+                                public T onCompleted(Response response) throws Exception {
+                                    return reader.forType(objectClass).readValue(response.getResponseBody());
+                                }
 
-                        @Override
-                        public void onThrowable(Throwable t) {
-                            throw new TrelloHttpException(t);
-                        }
-                    });
+                                @Override
+                                public void onThrowable(Throwable t) {
+                                    throw new TrelloHttpException(t);
+                                }
+                            });
             return f.get();
         } catch (IOException | InterruptedException | ExecutionException e) {
             throw new TrelloHttpException(e);
@@ -89,10 +89,9 @@ public class AsyncTrelloHttpClient2 implements TrelloHttpClient {
 
     @Override
     public URI postForLocation(String url, Object object, String... params) {
-        Future<URI> f;
         try {
             byte[] body = this.writer.writeValueAsBytes(object);
-            f = asyncHttpClient.preparePost(expandUrl(url, params)).setBody(body).execute(
+            Future<URI> f = asyncHttpClient.preparePost(expandUrl(url, params)).setBody(body).execute(
                     new AsyncCompletionHandler<URI>() {
 
                         @Override
@@ -118,10 +117,9 @@ public class AsyncTrelloHttpClient2 implements TrelloHttpClient {
 
     @Override
     public <T> T putForObject(String url, T object, final Class<T> objectClass, String... params) {
-        Future<T> f;
         try {
             byte[] body = this.writer.writeValueAsBytes(object);
-            f = asyncHttpClient.preparePut(expandUrl(url, params)).setBody(body).execute(
+            Future<T> f = asyncHttpClient.preparePut(expandUrl(url, params)).setBody(body).execute(
                     new AsyncCompletionHandler<T>() {
 
                         @Override
@@ -142,9 +140,8 @@ public class AsyncTrelloHttpClient2 implements TrelloHttpClient {
 
     @Override
     public <T> T delete(String url, final Class<T> responseType, String... params) {
-        Future<T> f;
         try {
-            f = asyncHttpClient.prepareDelete(expandUrl(url, params)).execute(
+            Future<T> f = asyncHttpClient.prepareDelete(expandUrl(url, params)).execute(
                     new AsyncCompletionHandler<T>() {
 
                         @Override
