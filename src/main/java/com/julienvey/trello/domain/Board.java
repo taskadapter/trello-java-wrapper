@@ -1,6 +1,7 @@
 package com.julienvey.trello.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.julienvey.trello.Trello;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -223,6 +224,12 @@ public class Board extends TrelloEntity {
 
     public void setLists(List<TList> lists) {
         this.lists = lists;
+    }
+
+    @Override
+    public void setInternalTrello(Trello trelloService) {
+        this.trelloService = trelloService;
+        getLists().forEach(list -> list.setInternalTrello(trelloService));
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)

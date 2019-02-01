@@ -4,6 +4,7 @@ import static com.julienvey.trello.impl.TrelloUrl.ADD_CHECKITEMS_TO_CHECKLIST;
 import static com.julienvey.trello.impl.TrelloUrl.ADD_COMMENT_TO_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.ADD_LABEL_TO_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.ADD_ATTACHMENT_TO_CARD;
+import static com.julienvey.trello.impl.TrelloUrl.ADD_MEMBER_TO_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.CREATE_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.CREATE_CHECKLIST;
 import static com.julienvey.trello.impl.TrelloUrl.GET_ACTION;
@@ -32,21 +33,23 @@ import static com.julienvey.trello.impl.TrelloUrl.GET_CARD_ATTACHMENT;
 import static com.julienvey.trello.impl.TrelloUrl.GET_CARD_ATTACHMENTS;
 import static com.julienvey.trello.impl.TrelloUrl.GET_CARD_BOARD;
 import static com.julienvey.trello.impl.TrelloUrl.GET_CARD_CHECKLIST;
+import static com.julienvey.trello.impl.TrelloUrl.GET_CARD_MEMBERS;
 import static com.julienvey.trello.impl.TrelloUrl.GET_CHECK_LIST;
 import static com.julienvey.trello.impl.TrelloUrl.GET_LIST;
 import static com.julienvey.trello.impl.TrelloUrl.GET_LIST_CARDS;
 import static com.julienvey.trello.impl.TrelloUrl.GET_MEMBER;
 import static com.julienvey.trello.impl.TrelloUrl.GET_MEMBER_ACTIONS;
 import static com.julienvey.trello.impl.TrelloUrl.GET_MEMBER_BOARDS;
+import static com.julienvey.trello.impl.TrelloUrl.GET_MEMBER_CARDS;
 import static com.julienvey.trello.impl.TrelloUrl.GET_ORGANIZATION_BOARD;
 import static com.julienvey.trello.impl.TrelloUrl.GET_ORGANIZATION_MEMBER;
+import static com.julienvey.trello.impl.TrelloUrl.REMOVE_MEMBER_FROM_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.UPDATE_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.createUrl;
 
 import com.julienvey.trello.domain.Label;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+
+import java.util.*;
 
 import com.julienvey.trello.ListNotFoundException;
 import com.julienvey.trello.NotFoundException;
@@ -54,6 +57,9 @@ import com.julienvey.trello.TrelloBadRequestException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.File;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
+
 import com.julienvey.trello.Trello;
 import com.julienvey.trello.TrelloHttpClient;
 import com.julienvey.trello.domain.Action;
@@ -69,10 +75,10 @@ import com.julienvey.trello.domain.Member;
 import com.julienvey.trello.domain.MyPrefs;
 import com.julienvey.trello.domain.Organization;
 import com.julienvey.trello.domain.TList;
+import com.julienvey.trello.domain.TrelloEntity;
 import com.julienvey.trello.impl.domaininternal.Comment;
 import com.julienvey.trello.impl.http.ApacheHttpClient;
 import com.julienvey.trello.impl.http.RestTemplateHttpClient;
-import com.julienvey.trello.utils.ArgUtils;
 
 public class TrelloImpl implements Trello {
 
@@ -105,28 +111,17 @@ public class TrelloImpl implements Trello {
     public Board getBoard(String boardId, Argument... args) {
         Board board = get(createUrl(GET_BOARD).params(args).asString(), Board.class, boardId);
         board.setInternalTrello(this);
-        for (TList list : board.getLists()) {
-            list.setInternalTrello(this);
-        }
         return board;
     }
 
     @Override
     public List<Action> getBoardActions(String boardId, Argument... args) {
-        List<Action> actions = Arrays.asList(get(createUrl(GET_BOARD_ACTIONS).params(args).asString(), Action[].class, boardId));
-        for (Action action : actions) {
-            action.setInternalTrello(this);
-        }
-        return actions;
+        return asList(() -> get(createUrl(GET_BOARD_ACTIONS).params(args).asString(), Action[].class, boardId));
     }
 
     @Override
     public List<Card> getBoardCards(String boardId, Argument... args) {
-        List<Card> cards = Arrays.asList(get(createUrl(GET_BOARD_CARDS).params(args).asString(), Card[].class, boardId));
-        for (Card card : cards) {
-            card.setInternalTrello(this);
-        }
-        return cards;
+        return asList(() -> get(createUrl(GET_BOARD_CARDS).params(args).asString(), Card[].class, boardId));
     }
 
     @Override
@@ -138,52 +133,27 @@ public class TrelloImpl implements Trello {
 
     @Override
     public List<CheckList> getBoardChecklists(String boardId, Argument... args) {
-        List<CheckList> checkLists = Arrays.asList(get(createUrl(GET_BOARD_CHECKLISTS).params(args).asString(), CheckList[].class, boardId));
-        for (CheckList checkList : checkLists) {
-            checkList.setInternalTrello(this);
-        }
-        return checkLists;
+        return asList(() -> get(createUrl(GET_BOARD_CHECKLISTS).params(args).asString(), CheckList[].class, boardId));
     }
 
     @Override
     public List<Label> getBoardLabels(String boardId, Argument... args) {
-        List<Label> labels = Arrays
-                .asList(get(createUrl(GET_BOARD_LABELS).params(args).asString(), Label[].class, boardId));
-        for (Label label : labels) {
-            label.setInternalTrello(this);
-        }
-        return labels;
+        return asList(() -> get(createUrl(GET_BOARD_LABELS).params(args).asString(), Label[].class, boardId));
     }
 
     @Override
     public List<TList> getBoardLists(String boardId, Argument... args) {
-        List<TList> tLists = Arrays.asList(get(createUrl(GET_BOARD_LISTS).params(args).asString(), TList[].class, boardId));
-        for (TList list : tLists) {
-            list.setInternalTrello(this);
-
-            for (Card card : list.getCards()) {
-                card.setInternalTrello(this);
-            }
-        }
-        return tLists;
+        return asList(() -> get(createUrl(GET_BOARD_LISTS).params(args).asString(), TList[].class, boardId));
     }
 
     @Override
     public List<Member> getBoardMembers(String boardId, Argument... args) {
-        List<Member> members = Arrays.asList(get(createUrl(GET_BOARD_MEMBERS).params(args).asString(), Member[].class, boardId));
-        for (Member member : members) {
-            member.setInternalTrello(this);
-        }
-        return members;
+        return asList(() -> get(createUrl(GET_BOARD_MEMBERS).params(args).asString(), Member[].class, boardId));
     }
 
     @Override
     public List<Card> getBoardMemberCards(String boardId, String memberId, Argument... args) {
-        List<Card> cards = Arrays.asList(get(createUrl(GET_BOARD_MEMBER_CARDS).params(args).asString(), Card[].class, boardId, memberId));
-        for (Card card : cards) {
-            card.setInternalTrello(this);
-        }
-        return cards;
+        return asList(() -> get(createUrl(GET_BOARD_MEMBER_CARDS).params(args).asString(), Card[].class, boardId, memberId));
     }
 
     // FIXME Remove this method
@@ -196,20 +166,13 @@ public class TrelloImpl implements Trello {
         Argument[] argsAndFilter = Arrays.copyOf(args, args.length + 1);
         argsAndFilter[args.length] = new Argument("actions", actionFilter);
 
-        List<CardWithActions> cards = Arrays.asList(get(
-                createUrl(GET_BOARD_MEMBER_CARDS).params(argsAndFilter).asString(),
+        return asList(() -> get(createUrl(GET_BOARD_MEMBER_CARDS).params(argsAndFilter).asString(),
                 CardWithActions[].class, boardId, memberId));
-        for (Card card : cards) {
-            card.setInternalTrello(this);
-        }
-        return cards;
     }
 
     @Override
     public List<Member> getBoardMemberships(String boardId, Argument... args) {
-        List<Member> members = Arrays.asList(get(createUrl(GET_BOARD_MEMBERSHIPS).params(args).asString(), Member[].class, boardId));
-        members.forEach(m -> m.setInternalTrello(this));
-        return members;
+        return asList(() -> get(createUrl(GET_BOARD_MEMBERSHIPS).params(args).asString(), Member[].class, boardId));
     }
 
     @Override
@@ -251,11 +214,7 @@ public class TrelloImpl implements Trello {
 
     @Override
     public List<Entity> getActionEntities(String actionId) {
-        List<Entity> entities = Arrays.asList(get(createUrl(GET_ACTION_ENTITIES).asString(), Entity[].class, actionId));
-        for (Entity entity : entities) {
-            entity.setInternalTrello(this);
-        }
-        return entities;
+        return asList(() -> get(createUrl(GET_ACTION_ENTITIES).asString(), Entity[].class, actionId));
     }
 
     @Override
@@ -295,21 +254,18 @@ public class TrelloImpl implements Trello {
 
     @Override
     public List<Action> getCardActions(String cardId, Argument... args) {
-        List<Action> actions = Arrays.asList(get(createUrl(GET_CARD_ACTIONS).params(args).asString(), Action[].class, cardId));
-        for (Action action : actions) {
-            action.setInternalTrello(this);
-        }
-        return actions;
+        return asList(() -> get(createUrl(GET_CARD_ACTIONS).params(args).asString(), Action[].class, cardId));
     }
 
     @Override
     public List<Attachment> getCardAttachments(String cardId, Argument... args) {
-        List<Attachment> attachments = Arrays.asList(get(createUrl(GET_CARD_ATTACHMENTS).params(args).asString(), Attachment[].class, cardId));
-        for (Attachment attachment : attachments) {
-            attachment.setInternalTrello(this);
-        }
-        return attachments;
+        return asList(() -> get(createUrl(GET_CARD_ATTACHMENTS).params(args).asString(), Attachment[].class, cardId));
 
+    }
+
+    @Override
+    public List<Member> getCardMembers(String cardId, Argument... args) {
+        return asList(() -> get(createUrl(GET_CARD_MEMBERS).params(args).asString(), Member[].class, cardId));
     }
 
     @Override
@@ -328,11 +284,7 @@ public class TrelloImpl implements Trello {
 
     @Override
     public List<CheckList> getCardChecklists(String cardId, Argument... args) {
-        List<CheckList> checkLists = Arrays.asList(get(createUrl(GET_CARD_CHECKLIST).params(args).asString(), CheckList[].class, cardId));
-        for (CheckList checklist : checkLists) {
-            checklist.setInternalTrello(this);
-        }
-        return checkLists;
+        return asList(() -> get(createUrl(GET_CARD_CHECKLIST).params(args).asString(), CheckList[].class, cardId));
     }
 
     /* Lists */
@@ -346,30 +298,18 @@ public class TrelloImpl implements Trello {
 
     @Override
     public List<Card> getListCards(String listId, Argument... args) {
-        List<Card> cards = Arrays.asList(get(createUrl(GET_LIST_CARDS).params(args).asString(), Card[].class, listId));
-        for (Card card : cards) {
-            card.setInternalTrello(this);
-        }
-        return cards;
+        return asList(() -> get(createUrl(GET_LIST_CARDS).params(args).asString(), Card[].class, listId));
     }
 
     /* Organizations */
     @Override
     public List<Board> getOrganizationBoards(String organizationId, Argument... args) {
-        List<Board> boards = Arrays.asList(get(createUrl(GET_ORGANIZATION_BOARD).params(args).asString(), Board[].class, organizationId));
-        for (Board board : boards) {
-            board.setInternalTrello(this);
-        }
-        return boards;
+        return asList(() -> get(createUrl(GET_ORGANIZATION_BOARD).params(args).asString(), Board[].class, organizationId));
     }
 
     @Override
     public List<Member> getOrganizationMembers(String organizationId, Argument... args) {
-        List<Member> members = Arrays.asList(get(createUrl(GET_ORGANIZATION_MEMBER).params(args).asString(), Member[].class, organizationId));
-        for (Member member : members) {
-            member.setInternalTrello(this);
-        }
-        return members;
+        return asList(() -> get(createUrl(GET_ORGANIZATION_MEMBER).params(args).asString(), Member[].class, organizationId));
     }
 
     /* CheckLists */
@@ -447,23 +387,17 @@ public class TrelloImpl implements Trello {
 
     @Override
     public List<Board> getMemberBoards(String userId, Argument... args) {
-        List<Board> boards = Arrays.asList(get(createUrl(GET_MEMBER_BOARDS).params(args).asString(),
-                Board[].class, userId));
-        for (Board board : boards) {
-            board.setInternalTrello(this);
-        }
-        return boards;
+        return asList(() -> get(createUrl(GET_MEMBER_BOARDS).params(args).asString(), Board[].class, userId));
+    }
+
+    @Override
+    public List<Card> getMemberCards(String userId, Argument... args) {
+        return asList(() -> get(createUrl(GET_MEMBER_CARDS).params(args).asString(), Card[].class, userId));
     }
 
     @Override
     public List<Action> getMemberActions(String userId, Argument... args) {
-        List<Action> actions = Arrays.asList(get(createUrl(GET_MEMBER_ACTIONS).params(args).asString(), Action[].class, userId));
-
-        for (Action action : actions) {
-            action.setInternalTrello(this);
-        }
-
-        return actions;
+        return asList(() -> get(createUrl(GET_MEMBER_ACTIONS).params(args).asString(), Action[].class, userId));
     }
 
     @Override
@@ -490,6 +424,18 @@ public class TrelloImpl implements Trello {
         postForObject(createUrl(ADD_ATTACHMENT_TO_CARD).asString(), new Attachment(url), Attachment.class, idCard);
     }
 
+    @Override
+    public List<Member> addMemberToCard(String idCard, String userId) {
+        Map<String, String> body = new HashMap<>();
+        body.put("value", userId);
+        return asList(() -> postForObject(createUrl(ADD_MEMBER_TO_CARD).asString(), body, Member[].class, idCard));
+    }
+
+    @Override
+    public List<Member> removeMemberFromCard(String idCard, String userId) {
+        return asList(() -> delete(createUrl(REMOVE_MEMBER_FROM_CARD).asString(), Member[].class, idCard, userId));
+    }
+
     /* internal methods */
 
     private <T> T postFileForObject(String url, File file, Class<T> objectClass, String... params) {
@@ -501,7 +447,7 @@ public class TrelloImpl implements Trello {
         return ((ApacheHttpClient)httpClient).postFileForObject(url, file, objectClass, enrichParams(params));
     }
 
-    private <T> T postForObject(String url, T object, Class<T> objectClass, String... params) {
+    private <T> T postForObject(String url, Object object, Class<T> objectClass, String... params) {
         logger.debug("PostForObject request on Trello API at url {} for class {} with params {}", url, objectClass.getCanonicalName(), params);
         return httpClient.postForObject(url, object, objectClass, enrichParams(params));
     }
@@ -521,10 +467,21 @@ public class TrelloImpl implements Trello {
         return httpClient.putForObject(url, object, objectClass, enrichParams(params));
     }
 
+    private <T> T delete(String url, Class<T> responseType, String... params) {
+        logger.debug("Delete request on Trello API at url {} for class {} with params {}", url, responseType.getClass().getCanonicalName(), params);
+        return httpClient.delete(url, responseType, enrichParams(params));
+    }
+
     private String[] enrichParams(String[] params) {
         List<String> paramList = new ArrayList<>(Arrays.asList(params));
         paramList.add(applicationKey);
         paramList.add(accessToken);
         return paramList.toArray(new String[paramList.size()]);
+    }
+
+    private <T extends TrelloEntity> List<T> asList(Supplier<T[]> responseSupplier) {
+        return Arrays.stream(responseSupplier.get())
+                .peek(t -> t.setInternalTrello(this))
+                .collect(Collectors.toList());
     }
 }

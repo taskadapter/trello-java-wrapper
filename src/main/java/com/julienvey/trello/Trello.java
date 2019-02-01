@@ -76,6 +76,8 @@ public interface Trello {
 
     List<Attachment> getCardAttachments(String cardId, Argument... args);
 
+    List<Member> getCardMembers(String cardId, Argument... args);
+
     Attachment getCardAttachment(String cardId, String attachmentId, Argument... args);
 
     Board getCardBoard(String cardId, Argument... args);
@@ -114,6 +116,10 @@ public interface Trello {
 
     void addUrlAttachmentToCard(String idCard, String url);
 
+    List<Member> addMemberToCard(String idCard, String userId);
+
+    List<Member> removeMemberFromCard(String idCard, String userId);
+
     Card updateCard(Card card);
 
     // FIXME Remove this method
@@ -123,6 +129,8 @@ public interface Trello {
     Member getMemberInformation(String username);
 
     List<Board> getMemberBoards(String userId, Argument... args);
+
+    List<Card> getMemberCards(String userId, Argument... args);
 
     List<Action> getMemberActions(String userId, Argument... args);
 }

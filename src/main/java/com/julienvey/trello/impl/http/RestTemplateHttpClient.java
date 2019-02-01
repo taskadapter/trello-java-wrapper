@@ -10,6 +10,7 @@ import org.springframework.web.client.RestTemplate;
 import java.net.URI;
 
 public class RestTemplateHttpClient implements TrelloHttpClient {
+    private static final HttpEntity<?> EMPTY_BODY = null;
 
     private RestTemplate restTemplate;
 
@@ -18,7 +19,7 @@ public class RestTemplateHttpClient implements TrelloHttpClient {
     }
 
     @Override
-    public <T> T postForObject(String url, T object, Class<T> objectClass, String... params) {
+    public <T> T postForObject(String url, Object object, Class<T> objectClass, String... params) {
         try {
             return restTemplate.postForObject(url, object, objectClass, (Object[]) params);
         } catch (RestClientException e) {
@@ -48,6 +49,16 @@ public class RestTemplateHttpClient implements TrelloHttpClient {
     public <T> T putForObject(String url, T object, Class<T> objectClass, String... params) {
         try {
             return restTemplate.exchange(url, HttpMethod.PUT, new HttpEntity<>(object), objectClass, (Object[]) params)
+                    .getBody();
+        } catch (RestClientException e) {
+            throw new TrelloHttpException(e);
+        }
+    }
+
+    @Override
+    public <T> T delete(String url, Class<T> responseType, String... params) {
+        try {
+            return restTemplate.exchange(url, HttpMethod.DELETE, EMPTY_BODY, responseType, (Object[]) params)
                     .getBody();
         } catch (RestClientException e) {
             throw new TrelloHttpException(e);

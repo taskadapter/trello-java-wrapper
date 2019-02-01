@@ -15,6 +15,7 @@ import java.net.URI;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
@@ -49,7 +50,7 @@ public class ApacheHttpClient implements TrelloHttpClient {
     }
 
     @Override
-    public <T> T postForObject(String url, T object, Class<T> objectClass, String... params) {
+    public <T> T postForObject(String url, Object object, Class<T> objectClass, String... params) {
         HttpPost httpPost = new HttpPost(UrlExpander.expandUrl(url, params));
 
         try {
@@ -90,6 +91,11 @@ public class ApacheHttpClient implements TrelloHttpClient {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public <T> T delete(String url, Class<T> responseType, String... params) {
+        return getEntityAndReleaseConnection(responseType, new HttpDelete(UrlExpander.expandUrl(url, params)));
     }
 
     @Override

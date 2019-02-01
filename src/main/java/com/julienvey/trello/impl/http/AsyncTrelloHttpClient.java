@@ -50,13 +50,13 @@ public class AsyncTrelloHttpClient implements TrelloHttpClient {
     }
 
     @Override
-    public <T> T postForObject(String url, T object, final Class<T> objectClass, String... params) {
+    public <T> T postForObject(String url, Object object, final Class<T> objectClass, String... params) {
         Future<T> f;
         try {
             byte[] body = this.mapper.writeValueAsBytes(object);
-            f = asyncHttpClient.preparePost(UrlExpander.expandUrl(url, params)).setBody(body).execute(
-                    new AsyncCompletionHandler<T>() {
-
+            f = asyncHttpClient.preparePost(UrlExpander.expandUrl(url, params))
+                    .setHeader("Content-Type", "application/json")
+                    .setBody(body).execute(new AsyncCompletionHandler<T>() {
                         @Override
                         public T onCompleted(Response response) throws Exception {
                             return mapper.readValue(response.getResponseBody(), objectClass);
@@ -113,6 +113,29 @@ public class AsyncTrelloHttpClient implements TrelloHttpClient {
                         @Override
                         public T onCompleted(Response response) throws Exception {
                             return mapper.readValue(response.getResponseBody(), objectClass);
+                        }
+
+                        @Override
+                        public void onThrowable(Throwable t) {
+                            throw new TrelloHttpException(t);
+                        }
+                    });
+            return f.get();
+        } catch (IOException | InterruptedException | ExecutionException e) {
+            throw new TrelloHttpException(e);
+        }
+    }
+
+    @Override
+    public <T> T delete(String url, final Class<T> responseType, String... params) {
+        Future<T> f;
+        try {
+            f = asyncHttpClient.prepareDelete(UrlExpander.expandUrl(url, params)).execute(
+                    new AsyncCompletionHandler<T>() {
+
+                        @Override
+                        public T onCompleted(Response response) throws Exception {
+                            return mapper.readValue(response.getResponseBody(), responseType);
                         }
 
                         @Override

@@ -63,11 +63,12 @@ public class AsyncTrelloHttpClient2 implements TrelloHttpClient {
     }
 
     @Override
-    public <T> T postForObject(String url, T object, final Class<T> objectClass, String... params) {
+    public <T> T postForObject(String url, Object object, final Class<T> objectClass, String... params) {
         Future<T> f;
         try {
             byte[] body = this.writer.writeValueAsBytes(object);
-            f = asyncHttpClient.preparePost(expandUrl(url, params)).setBody(body).execute(
+            f = asyncHttpClient.preparePost(expandUrl(url, params)).setBody(body)
+                    .setHeader("Content-Type", "application/json").execute(
                     new AsyncCompletionHandler<T>() {
 
                         @Override
@@ -135,6 +136,29 @@ public class AsyncTrelloHttpClient2 implements TrelloHttpClient {
                     });
             return f.get();
         } catch (IOException | InterruptedException | ExecutionException e) {
+            throw new TrelloHttpException(e);
+        }
+    }
+
+    @Override
+    public <T> T delete(String url, final Class<T> responseType, String... params) {
+        Future<T> f;
+        try {
+            f = asyncHttpClient.prepareDelete(expandUrl(url, params)).execute(
+                    new AsyncCompletionHandler<T>() {
+
+                        @Override
+                        public T onCompleted(Response response) throws Exception {
+                            return reader.forType(responseType).readValue(response.getResponseBody());
+                        }
+
+                        @Override
+                        public void onThrowable(Throwable t) {
+                            throw new TrelloHttpException(t);
+                        }
+                    });
+            return f.get();
+        } catch (InterruptedException | ExecutionException e) {
             throw new TrelloHttpException(e);
         }
     }

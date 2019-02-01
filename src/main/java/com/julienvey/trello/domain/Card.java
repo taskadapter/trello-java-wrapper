@@ -44,6 +44,10 @@ public class Card extends TrelloEntity {
         return trelloService.getCardActions(id, filters);
     }
 
+    public List<Member> fetchMembers(Argument... args) {
+        return trelloService.getCardMembers(id, args);
+    }
+
     /* Accessors */
     public String getId() {
         return id;

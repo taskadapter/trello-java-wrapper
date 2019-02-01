@@ -1,6 +1,7 @@
 package com.julienvey.trello.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.julienvey.trello.Trello;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,5 +77,11 @@ public class TList extends TrelloEntity {
 
     public void setSubscribed(boolean subscribed) {
         this.subscribed = subscribed;
+    }
+
+    @Override
+    public void setInternalTrello(Trello trelloService) {
+        this.trelloService = trelloService;
+        cards.forEach(card -> card.setInternalTrello(trelloService));
     }
 }
