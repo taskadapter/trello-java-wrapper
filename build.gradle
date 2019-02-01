@@ -47,11 +47,10 @@ dependencies {
     compileOnly group: 'org.asynchttpclient', name: 'async-http-client', version:'2.5.2'
     compileOnly group: 'com.squareup.okhttp3', name: 'okhttp', version: okhttpVersion
 
-
     testImplementation group: 'org.apache.httpcomponents', name: 'httpclient', version: httpClientVersion
     testImplementation group: 'com.ning', name: 'async-http-client', version:'1.7.19'
     testImplementation group: 'org.asynchttpclient', name: 'async-http-client', version:'2.5.2'
-    testImplementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '3.12.1'
+    testImplementation group: 'com.squareup.okhttp3', name: 'okhttp', version: okhttpVersion
 
     implementation (
         "org.apache.httpcomponents:httpmime:${httpClientVersion}"
