@@ -45,20 +45,20 @@ public class ApacheHttpClient implements TrelloHttpClient {
     }
 
     @Override
-    public <T> T get(String url, Class<T> objectClass, String... params) {
+    public <T> T get(String url, Class<T> responseType, String... params) {
         HttpGet httpGet = new HttpGet(UrlExpander.expandUrl(url, params));
-        return getEntityAndReleaseConnection(objectClass, httpGet);
+        return getEntityAndReleaseConnection(responseType, httpGet);
     }
 
     @Override
-    public <T> T postForObject(String url, Object object, Class<T> objectClass, String... params) {
+    public <T> T postForObject(String url, Object body, Class<T> responseType, String... params) {
         HttpPost httpPost = new HttpPost(UrlExpander.expandUrl(url, params));
 
         try {
-            HttpEntity entity = new ByteArrayEntity(this.mapper.writeValueAsBytes(object), ContentType.APPLICATION_JSON);
+            HttpEntity entity = new ByteArrayEntity(this.mapper.writeValueAsBytes(body), ContentType.APPLICATION_JSON);
             httpPost.setEntity(entity);
 
-            return getEntityAndReleaseConnection(objectClass, httpPost);
+            return getEntityAndReleaseConnection(responseType, httpPost);
         } catch (JsonProcessingException e) {
             // TODO : custom exception
             throw new RuntimeException(e);
@@ -82,13 +82,13 @@ public class ApacheHttpClient implements TrelloHttpClient {
     }
 
     @Override
-    public <T> T putForObject(String url, T object, Class<T> objectClass, String... params) {
+    public <T> T putForObject(String url, T body, Class<T> responseType, String... params) {
         HttpPut put = new HttpPut(UrlExpander.expandUrl(url, params));
         try {
-            HttpEntity entity = new ByteArrayEntity(this.mapper.writeValueAsBytes(object), ContentType.APPLICATION_JSON);
+            HttpEntity entity = new ByteArrayEntity(this.mapper.writeValueAsBytes(body), ContentType.APPLICATION_JSON);
             put.setEntity(entity);
 
-            return getEntityAndReleaseConnection(objectClass, put);
+            return getEntityAndReleaseConnection(responseType, put);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
@@ -100,11 +100,11 @@ public class ApacheHttpClient implements TrelloHttpClient {
     }
 
     @Override
-    public URI postForLocation(String url, Object object, String... params) {
+    public URI postForLocation(String url, Object body, String... params) {
         HttpPost httpPost = new HttpPost(UrlExpander.expandUrl(url, params));
 
         try {
-            HttpEntity entity = new ByteArrayEntity(this.mapper.writeValueAsBytes(object), ContentType.APPLICATION_JSON);
+            HttpEntity entity = new ByteArrayEntity(this.mapper.writeValueAsBytes(body), ContentType.APPLICATION_JSON);
             httpPost.setEntity(entity);
             HttpResponse httpResponse = this.httpClient.execute(httpPost);
 

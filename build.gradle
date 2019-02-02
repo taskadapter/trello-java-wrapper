@@ -33,6 +33,7 @@ ext {
     httpClientVersion = '4.2.5'
     jacksonVersion = '2.9.6'
     okhttpVersion = '3.12.1'
+    springWebVersion = '3.2.2.RELEASE'
 }
 
 dependencies {
@@ -41,12 +42,14 @@ dependencies {
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version:jacksonVersion
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version:jacksonVersion
     compile group: 'org.slf4j', name: 'slf4j-api', version:'1.7.5'
-    compileOnly group: 'org.springframework', name: 'spring-web', version:'3.2.2.RELEASE'
+
+    compileOnly group: 'org.springframework', name: 'spring-web', version: springWebVersion
     compileOnly group: 'org.apache.httpcomponents', name: 'httpclient', version: httpClientVersion
     compileOnly group: 'com.ning', name: 'async-http-client', version:'1.7.19'
     compileOnly group: 'org.asynchttpclient', name: 'async-http-client', version:'2.5.2'
     compileOnly group: 'com.squareup.okhttp3', name: 'okhttp', version: okhttpVersion
 
+    testImplementation group: 'org.springframework', name: 'spring-web', version: springWebVersion
     testImplementation group: 'org.apache.httpcomponents', name: 'httpclient', version: httpClientVersion
     testImplementation group: 'com.ning', name: 'async-http-client', version:'1.7.19'
     testImplementation group: 'org.asynchttpclient', name: 'async-http-client', version:'2.5.2'
