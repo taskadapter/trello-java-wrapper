@@ -9,7 +9,7 @@ public interface TrelloHttpClient {
 
     URI postForLocation(String url, Object object, String... params);
 
-    <T> T putForObject(String url, T object, Class<T> objectClass, String... params);
+    <T> T putForObject(String url, Object object, Class<T> objectClass, String... params);
 
     <T> T delete(String url, Class<T> responseType, String... params);
 }

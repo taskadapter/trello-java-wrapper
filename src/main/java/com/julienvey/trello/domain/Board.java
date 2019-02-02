@@ -73,6 +73,14 @@ public class Board extends TrelloEntity {
         return trelloService.getBoardOrganization(id, args);
     }
 
+    public AddMemberToBoardResult addMember(String email, MemberType type, String fullName) {
+        return trelloService.addMemberToBoard(id, email, type, fullName);
+    }
+
+    public AddMemberToBoardResult addMember(String memberId, MemberType type) {
+        return trelloService.addMemberToBoard(id, memberId, type);
+    }
+
     /* Accessors */
     public String getId() {
         return id;

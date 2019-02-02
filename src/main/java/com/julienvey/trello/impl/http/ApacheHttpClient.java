@@ -81,7 +81,7 @@ public class ApacheHttpClient implements TrelloHttpClient {
     }
 
     @Override
-    public <T> T putForObject(String url, T object, Class<T> objectClass, String... params) {
+    public <T> T putForObject(String url, Object object, Class<T> objectClass, String... params) {
         HttpPut put = new HttpPut(UrlExpander.expandUrl(url, params));
         try {
             HttpEntity entity = new ByteArrayEntity(this.mapper.writeValueAsBytes(object), ContentType.APPLICATION_JSON);
@@ -135,7 +135,7 @@ public class ApacheHttpClient implements TrelloHttpClient {
                     throw new TrelloBadRequestException(body);
                 }
                 if (httpResponse.getStatusLine().getStatusCode() == 401) {
-                    throw new NotAuthorizedException();
+                    throw new NotAuthorizedException(body);
                 }
                 if (httpResponse.getStatusLine().getStatusCode() == 404) {
                     throw new NotFoundException("Resource not found: " + httpRequest.getURI());

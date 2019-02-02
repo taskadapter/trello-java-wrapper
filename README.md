@@ -128,8 +128,8 @@ The new test code is implemented using Scala. The prod code is only Java - to av
 | PUT /1/boards/[board_id]/labelNames/purple
 | PUT /1/boards/[board_id]/labelNames/red
 | PUT /1/boards/[board_id]/labelNames/yellow
-| PUT /1/boards/[board_id]/members
-| PUT /1/boards/[board_id]/members/[idMember]
+| PUT /1/boards/[board_id]/members | Yes | No | Yes
+| PUT /1/boards/[board_id]/members/[idMember] | Yes | No | Yes
 | PUT /1/boards/[board_id]/memberships/[idMembership]
 | PUT /1/boards/[board_id]/myPrefs/emailPosition
 | PUT /1/boards/[board_id]/myPrefs/idEmailList
@@ -155,7 +155,7 @@ The new test code is implemented using Scala. The prod code is only Java - to av
 | POST /1/boards/[board_id]/lists
 | POST /1/boards/[board_id]/markAsViewed
 | POST /1/boards/[board_id]/powerUps
-| DELETE /1/boards/[board_id]/members/[idMember]
+| DELETE /1/boards/[board_id]/members/[idMember] | Yes | No | Yes
 | DELETE /1/boards/[board_id]/powerUps/[powerUp]
 | GET /1/cards/[card id or shortlink] | Yes | Yes | Yes
 | GET /1/cards/[card id or shortlink]/[field]

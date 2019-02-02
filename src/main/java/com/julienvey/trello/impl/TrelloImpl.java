@@ -4,6 +4,8 @@ import static com.julienvey.trello.impl.TrelloUrl.ADD_CHECKITEMS_TO_CHECKLIST;
 import static com.julienvey.trello.impl.TrelloUrl.ADD_COMMENT_TO_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.ADD_LABEL_TO_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.ADD_ATTACHMENT_TO_CARD;
+import static com.julienvey.trello.impl.TrelloUrl.ADD_MEMBER_TO_BOARD;
+import static com.julienvey.trello.impl.TrelloUrl.ADD_MEMBER_TO_BOARD_BY_ID;
 import static com.julienvey.trello.impl.TrelloUrl.ADD_MEMBER_TO_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.CREATE_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.CREATE_CHECKLIST;
@@ -44,9 +46,12 @@ import static com.julienvey.trello.impl.TrelloUrl.GET_MEMBER_CARDS;
 import static com.julienvey.trello.impl.TrelloUrl.GET_ORGANIZATION_BOARD;
 import static com.julienvey.trello.impl.TrelloUrl.GET_ORGANIZATION_MEMBER;
 import static com.julienvey.trello.impl.TrelloUrl.REMOVE_MEMBER_FROM_CARD;
+import static com.julienvey.trello.impl.TrelloUrl.REMOVE_MEMBER_FROM_BOARD;
 import static com.julienvey.trello.impl.TrelloUrl.UPDATE_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.createUrl;
 
+import com.julienvey.trello.NotAuthorizedException;
+import com.julienvey.trello.domain.AddMemberToBoardResult;
 import com.julienvey.trello.domain.Label;
 
 import java.util.*;
@@ -72,6 +77,7 @@ import com.julienvey.trello.domain.CheckItem;
 import com.julienvey.trello.domain.CheckList;
 import com.julienvey.trello.domain.Entity;
 import com.julienvey.trello.domain.Member;
+import com.julienvey.trello.domain.MemberType;
 import com.julienvey.trello.domain.MyPrefs;
 import com.julienvey.trello.domain.Organization;
 import com.julienvey.trello.domain.TList;
@@ -154,6 +160,59 @@ public class TrelloImpl implements Trello {
     @Override
     public List<Card> getBoardMemberCards(String boardId, String memberId, Argument... args) {
         return asList(() -> get(createUrl(GET_BOARD_MEMBER_CARDS).params(args).asString(), Card[].class, boardId, memberId));
+    }
+
+    @Override
+    public AddMemberToBoardResult addMemberToBoard(String boardId, String email, MemberType type, String fullName) {
+        Objects.requireNonNull(boardId);
+        Objects.requireNonNull(email);
+
+        Map<String, String> body = new HashMap<>(3);
+        body.put("fullName", fullName);
+        body.put("email", email);
+        body.put("type", Optional.ofNullable(type).orElse(MemberType.NORMAL).value());
+
+        AddMemberToBoardResult result = put(createUrl(ADD_MEMBER_TO_BOARD).asString(), body,
+                AddMemberToBoardResult.class, boardId);
+        result.setInternalTrello(this);
+
+        return result;
+    }
+
+    @Override
+    public AddMemberToBoardResult addMemberToBoard(String boardId, String memberId, MemberType type) {
+        Objects.requireNonNull(boardId);
+        Objects.requireNonNull(memberId);
+
+        Map<String, String> body = Collections.singletonMap("type", Optional.ofNullable(type).orElse(MemberType.NORMAL).value());
+
+        AddMemberToBoardResult result = put(createUrl(ADD_MEMBER_TO_BOARD_BY_ID).asString(), body,
+                AddMemberToBoardResult.class, boardId, memberId);
+        result.setInternalTrello(this);
+
+        return result;
+    }
+
+    @Override
+    public Board removeMemberFromBoard(String boardId, String memberId) {
+        Objects.requireNonNull(boardId);
+        Objects.requireNonNull(memberId);
+
+        try {
+            Board board = delete(createUrl(REMOVE_MEMBER_FROM_BOARD).asString(), Board.class, boardId, memberId);
+            board.setInternalTrello(this);
+            return board;
+        } catch (TrelloBadRequestException e) {
+            // Trello API uses very strange way to report this kind of problems.
+            // we should rethrow proper exception
+            if ("membership not found".equalsIgnoreCase(e.getMessage())) {
+                throw new NotFoundException(String.format("User with member id %s is not member of %s board.",
+                        memberId, boardId));
+            } else if ("Invalid id or name".equalsIgnoreCase(e.getMessage())) {
+                throw new NotFoundException(String.format("User with memberId or username %s is not found.", memberId));
+            }
+            throw e;
+        }
     }
 
     // FIXME Remove this method
@@ -462,7 +521,7 @@ public class TrelloImpl implements Trello {
         return httpClient.get(url, objectClass, enrichParams(params));
     }
 
-    private <T> T put(String url, T object, Class<T> objectClass, String... params) {
+    private <T> T put(String url, Object object, Class<T> objectClass, String... params) {
         logger.debug("Put request on Trello API at url {} for class {} with params {}", url, object.getClass().getCanonicalName(), params);
         return httpClient.putForObject(url, object, objectClass, enrichParams(params));
     }

@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.List;
 
 import com.julienvey.trello.domain.Action;
+import com.julienvey.trello.domain.AddMemberToBoardResult;
 import com.julienvey.trello.domain.Argument;
 import com.julienvey.trello.domain.Attachment;
 import com.julienvey.trello.domain.Board;
@@ -14,6 +15,7 @@ import com.julienvey.trello.domain.CheckList;
 import com.julienvey.trello.domain.Entity;
 import com.julienvey.trello.domain.Label;
 import com.julienvey.trello.domain.Member;
+import com.julienvey.trello.domain.MemberType;
 import com.julienvey.trello.domain.MyPrefs;
 import com.julienvey.trello.domain.Organization;
 import com.julienvey.trello.domain.TList;
@@ -38,6 +40,39 @@ public interface Trello {
     List<Member> getBoardMembers(String boardId, Argument... args);
 
     List<Card> getBoardMemberCards(String boardId, String memberId, Argument... args);
+
+    /**
+     * Adds member with {@code email} email address to board with id {@code boardId}. The member will receive
+     * permissions according {@code type}.
+     *
+     * @param boardId  The id of the board.
+     * @param email    The email address of a user to add as a member of the board.
+     * @param type     Determines what type of member the user being added should be of the board. Valid values: admin,
+     *                 normal, observer. When {@code type} is {@code null} the {@code normal} type will be used.
+     * @param fullName The full name of the user to as a member of the board. Must have a length of at least 1 and
+     */
+    AddMemberToBoardResult addMemberToBoard(String boardId, String email, MemberType type, String fullName);
+
+    /**
+     * Adds member with {@code memberId} board with id {@code boardId}. The member will receive permissions according
+     * {@code type}.
+     *
+     * @param boardId  The id of the board.
+     * @param memberId The id of the member to add to the board.
+     * @param type     Determines what type of member the user being added should be of the board. Valid values: admin,
+     *                 normal, observer. When {@code type} is {@code null} the {@code normal} type will be used.
+     */
+    AddMemberToBoardResult addMemberToBoard(String boardId, String memberId, MemberType type);
+
+    /**
+     * Removes member with {@code memberId} board with id {@code boardId}.
+     *
+     * @param boardId  The id of the board.
+     * @param memberId The id of the member to add to the board.
+     *
+     * @throws NotFoundException When user with {@code memberId} does not exists or not a member of this board.
+     */
+    Board removeMemberFromBoard(String boardId, String memberId);
 
     //FIXME Remove this method
     @Deprecated
