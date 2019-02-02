@@ -19,7 +19,8 @@ dependencies {
 
 The wrapper can make use of one of the following HTTP clients: 
 
-- [HttpURLConnection](https://docs.oracle.com/javase/8/docs/api/java/net/HttpURLConnection.html) (default)
+- JDKTrelloHttpClient
+    - pure JDK http client, no other dependencies
 - [OKHttp](https://github.com/square/okhttp)
     - `compile 'com.squareup.okhttp3:okhttp:VERSION'`
 - `Spring Web`
