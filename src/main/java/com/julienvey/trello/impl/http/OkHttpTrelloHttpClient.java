@@ -2,6 +2,7 @@ package com.julienvey.trello.impl.http;
 
 import static com.julienvey.trello.impl.http.UrlExpander.expandUrl;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URI;
@@ -17,6 +18,7 @@ import com.julienvey.trello.TrelloHttpClient;
 import com.julienvey.trello.exception.TrelloHttpException;
 
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request.Builder;
 import okhttp3.RequestBody;
@@ -31,6 +33,7 @@ import okhttp3.ResponseBody;
 public class OkHttpTrelloHttpClient implements TrelloHttpClient {
     private static final byte[] EMPTY_BYTE_ARRAY = new byte[0];
     private static final MediaType APPLICATION_JSON = MediaType.parse("application/json");
+    private static final MediaType APPLICATION_OCTET_STREAM = MediaType.parse("application/octet-stream");
     private final OkHttpClient httpClient;
     private final ObjectMapper objectMapper;
 
@@ -123,6 +126,24 @@ public class OkHttpTrelloHttpClient implements TrelloHttpClient {
                 .build())
                 .execute()) {
 
+            return readResponse(responseType, response);
+        } catch (IOException e) {
+            throw new TrelloHttpException(e);
+        }
+    }
+
+    public <T> T postFileForObject(String url, File file, Class<T> responseType, String... params) {
+        RequestBody requestBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("file", file.getName(), RequestBody.create(APPLICATION_OCTET_STREAM, file))
+                .addFormDataPart("filename", file.getName())
+                .build();
+
+        try (Response response = httpClient.newCall(new Builder()
+                .url(expandUrl(url, params))
+                .post(requestBody)
+                .build())
+                .execute()) {
             return readResponse(responseType, response);
         } catch (IOException e) {
             throw new TrelloHttpException(e);
