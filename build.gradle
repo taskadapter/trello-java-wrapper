@@ -31,7 +31,8 @@ ext {
     scalaBinaryVersion = '2.12'
     scalaFullVersion = '2.12.2'
     httpClientVersion = '4.2.5'
-    jacksonVersion = '2.9.6'
+    jacksonVersion = '2.9.8'
+    slf4jVersion = '1.7.25'
 }
 
 dependencies {
@@ -39,7 +40,7 @@ dependencies {
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version:jacksonVersion
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version:jacksonVersion
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version:jacksonVersion
-    compile group: 'org.slf4j', name: 'slf4j-api', version:'1.7.5'
+    compile group: 'org.slf4j', name: 'slf4j-api', version: slf4jVersion
     compile group: 'org.springframework', name: 'spring-web', version:'3.2.2.RELEASE'
     compileOnly group: 'org.apache.httpcomponents', name: 'httpclient', version: httpClientVersion
     compileOnly group: 'com.ning', name: 'async-http-client', version:'1.7.19'
