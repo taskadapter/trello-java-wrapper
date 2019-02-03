@@ -7,6 +7,7 @@ import static com.julienvey.trello.impl.TrelloUrl.ADD_ATTACHMENT_TO_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.ADD_MEMBER_TO_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.CREATE_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.CREATE_CHECKLIST;
+import static com.julienvey.trello.impl.TrelloUrl.DELETE_ATTACHMENT;
 import static com.julienvey.trello.impl.TrelloUrl.GET_ACTION;
 import static com.julienvey.trello.impl.TrelloUrl.GET_ACTION_BOARD;
 import static com.julienvey.trello.impl.TrelloUrl.GET_ACTION_CARD;
@@ -46,6 +47,7 @@ import static com.julienvey.trello.impl.TrelloUrl.GET_ORGANIZATION_MEMBER;
 import static com.julienvey.trello.impl.TrelloUrl.REMOVE_MEMBER_FROM_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.UPDATE_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.createUrl;
+import static com.julienvey.trello.impl.TrelloUrl.createUrlWithNoArgs;
 
 import com.julienvey.trello.domain.Label;
 
@@ -422,6 +424,11 @@ public class TrelloImpl implements Trello {
     @Override
     public void addUrlAttachmentToCard(String idCard, String url) {
         postForObject(createUrl(ADD_ATTACHMENT_TO_CARD).asString(), new Attachment(url), Attachment.class, idCard);
+    }
+
+    @Override
+    public void deleteAttachment(String idCard, String attachmentId) {
+        delete(createUrlWithNoArgs(DELETE_ATTACHMENT), Map.class, idCard, attachmentId);
     }
 
     @Override

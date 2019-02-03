@@ -116,6 +116,13 @@ public interface Trello {
 
     void addUrlAttachmentToCard(String idCard, String url);
 
+    /**
+     *
+     * @param idCard The id of the card.
+     * @param attachmentId The id of the attachment to delete.
+     */
+    void deleteAttachment(String idCard, String attachmentId);
+
     List<Member> addMemberToCard(String idCard, String userId);
 
     List<Member> removeMemberFromCard(String idCard, String userId);

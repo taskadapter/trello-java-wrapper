@@ -57,6 +57,7 @@ public class TrelloUrl {
     public static final String ADD_LABEL_TO_CARD = "/cards/{cardId}/labels?";
     public static final String ADD_COMMENT_TO_CARD = "/cards/{cardId}/actions/comments?";
     public static final String ADD_ATTACHMENT_TO_CARD = "/cards/{cardId}/attachments?";
+    public static final String DELETE_ATTACHMENT = "/cards/{cardId}/attachments/{attachmentId}?";
     public static final String UPDATE_CARD = "/cards/{cardId}?";
 
     private String baseUrl;
@@ -68,6 +69,10 @@ public class TrelloUrl {
 
     public static TrelloUrl createUrl(String baseUrl) {
         return new TrelloUrl(baseUrl);
+    }
+
+    public static String createUrlWithNoArgs(String baseUrl) {
+        return API_URL + baseUrl + API_KEY_TOKEN_PARAM;
     }
 
     public TrelloUrl params(Argument... args) {

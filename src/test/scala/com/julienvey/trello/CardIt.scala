@@ -1,5 +1,6 @@
 package com.julienvey.trello
 
+import java.io.File
 import java.util.UUID.randomUUID
 
 import com.julienvey.trello.domain.{Card, Label, Member}
@@ -90,4 +91,29 @@ class CardIt extends FunSpec with Matchers {
     }
   }
 
+  describe("Attachment API") {
+    it("add attachment to card") {
+      val cardId = "5c4d89b5bd5a2640f5fcb32c"
+      val attachmentFile = new File(Thread.currentThread().getContextClassLoader.getResource("1.jpg").toURI)
+
+      val beforeAdd = trello.getCardAttachments(cardId).asScala.map(attachment => attachment.getId)
+
+      trello.addAttachmentToCard(cardId, attachmentFile)
+      val attachmentIdsAfterUpdate = trello.getCardAttachments(cardId).asScala.map(attachment => attachment.getId)
+
+      attachmentIdsAfterUpdate should have length (beforeAdd.size + 1)
+
+      val attachmentId = attachmentIdsAfterUpdate.filterNot(beforeAdd.contains(_)).toList.head
+
+      trello.deleteAttachment(cardId, attachmentId)
+      val afterDelete = trello.getCardAttachments(cardId)
+
+      afterDelete should have length beforeAdd.size
+    }
+
+    it("delete attachment with wrong id") {
+      val cardId = "5c4d89b5bd5a2640f5fcb32c"
+      val thrown = the [NotFoundException] thrownBy trello.deleteAttachment(cardId, "5c56febb4e84e50254c2c54d")
+    }
+  }
 }
