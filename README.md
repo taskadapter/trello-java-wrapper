@@ -19,15 +19,19 @@ dependencies {
 
 The wrapper can make use of one of the following HTTP clients: 
 
+- JDKTrelloHttpClient
+    - pure JDK http client, no other dependencies
+- [OKHttp](https://github.com/square/okhttp)
+    - `compile 'com.squareup.okhttp3:okhttp:VERSION'`
 - `Spring Web`
-    - Dependency included by default
+    - `compile 'org.springframework:spring-web:VERSION'`
 - [Apache Http Components HttpClient](https://hc.apache.org/)
-    - Gradle dependency: `compile 'org.apache.httpcomponents:httpclient:VERSION'`
+    - `compile 'org.apache.httpcomponents:httpclient:VERSION'`
 - [Async Http Client](https://github.com/AsyncHttpClient/async-http-client/)
-    - `compile 'org.asynchttpclient:async-http-client:VERSION`
+    - `compile 'org.asynchttpclient:async-http-client:VERSION'`
 - [Ning async-http-client](https://github.com/ning/async-http-client)
     - The predecessor to the modern Async Http Client above
-    - `compile 'com.ning:async-http-client:VERSION`
+    - `compile 'com.ning:async-http-client:VERSION'`
  
 Choose one if you don't already use one of those. 
 You will need to instantiate the corresponding `TrelloHttpClient` implementation and pass it to the `TrelloImpl` 
@@ -190,7 +194,7 @@ The new test code is implemented using Scala. The prod code is only Java - to av
 | PUT /1/cards/[card id or shortlink]/warnWhenUpcoming
 | POST /1/cards | Yes
 | POST /1/cards/[card id or shortlink]/actions/comments | Yes
-| POST /1/cards/[card id or shortlink]/attachments | Yes <br> (Only Apache HTTP)
+| POST /1/cards/[card id or shortlink]/attachments | Yes <br> (Only Apache HTTP and OkHttp)
 | POST /1/cards/[card id or shortlink]/checklist/[idChecklist]/checkItem
 | POST /1/cards/[card id or shortlink]/checklist/[idChecklist]/checkItem/[idCheckItem]/convertToCard
 | POST /1/cards/[card id or shortlink]/checklists

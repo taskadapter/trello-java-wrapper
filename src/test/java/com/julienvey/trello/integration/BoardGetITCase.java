@@ -8,6 +8,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.julienvey.trello.impl.http.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,10 +28,6 @@ import com.julienvey.trello.domain.MyPrefs;
 import com.julienvey.trello.domain.Organization;
 import com.julienvey.trello.domain.TList;
 import com.julienvey.trello.impl.TrelloImpl;
-import com.julienvey.trello.impl.http.ApacheHttpClient;
-import com.julienvey.trello.impl.http.AsyncTrelloHttpClient;
-import com.julienvey.trello.impl.http.AsyncTrelloHttpClient2;
-import com.julienvey.trello.impl.http.RestTemplateHttpClient;
 
 @RunWith(Parameterized.class)
 public class BoardGetITCase {
@@ -42,9 +40,8 @@ public class BoardGetITCase {
     private TrelloHttpClient httpClient;
 
     @Parameterized.Parameters
-    public static Collection<Object[]> data() {
-        return Arrays.asList(new Object[][]{{new ApacheHttpClient()}, {new AsyncTrelloHttpClient()},
-                {new RestTemplateHttpClient()}, {new AsyncTrelloHttpClient2()}});
+    public static List<TrelloHttpClient> data() {
+        return TrelloHttpClients.all();
     }
 
     public BoardGetITCase(TrelloHttpClient httpClient) {

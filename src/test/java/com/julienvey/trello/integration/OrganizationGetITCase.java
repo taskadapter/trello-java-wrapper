@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import com.julienvey.trello.impl.http.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,10 +17,6 @@ import com.julienvey.trello.TrelloHttpClient;
 import com.julienvey.trello.domain.Board;
 import com.julienvey.trello.domain.Member;
 import com.julienvey.trello.impl.TrelloImpl;
-import com.julienvey.trello.impl.http.ApacheHttpClient;
-import com.julienvey.trello.impl.http.AsyncTrelloHttpClient;
-import com.julienvey.trello.impl.http.AsyncTrelloHttpClient2;
-import com.julienvey.trello.impl.http.RestTemplateHttpClient;
 
 @RunWith(Parameterized.class)
 public class OrganizationGetITCase {
@@ -32,9 +29,8 @@ public class OrganizationGetITCase {
     private TrelloHttpClient httpClient;
 
     @Parameterized.Parameters
-    public static Collection<Object[]> data() {
-        return Arrays.asList(new Object[][]{{new ApacheHttpClient()}, {new AsyncTrelloHttpClient()},
-                {new RestTemplateHttpClient()}, {new AsyncTrelloHttpClient2()}});
+    public static List<TrelloHttpClient> data() {
+        return TrelloHttpClients.all();
     }
 
     public OrganizationGetITCase(TrelloHttpClient httpClient) {

@@ -27,14 +27,14 @@ public class AsyncTrelloHttpClient implements TrelloHttpClient {
     }
 
     @Override
-    public <T> T get(String url, final Class<T> objectClass, String... params) {
+    public <T> T get(String url, final Class<T> responseType, String... params) {
         try {
             Future<T> f = asyncHttpClient.prepareGet(UrlExpander.expandUrl(url, params)).execute(
                     new AsyncCompletionHandler<T>() {
 
                         @Override
                         public T onCompleted(Response response) throws Exception {
-                            return mapper.readValue(response.getResponseBody(), objectClass);
+                            return mapper.readValue(response.getResponseBody(), responseType);
                         }
 
                         @Override
@@ -49,7 +49,7 @@ public class AsyncTrelloHttpClient implements TrelloHttpClient {
     }
 
     @Override
-    public <T> T postForObject(String url, Object object, final Class<T> objectClass, String... params) {
+    public <T> T postForObject(String url, Object object, final Class<T> responseType, String... params) {
         try {
             byte[] body = this.mapper.writeValueAsBytes(object);
             Future<T> f = asyncHttpClient.preparePost(UrlExpander.expandUrl(url, params))
@@ -57,7 +57,7 @@ public class AsyncTrelloHttpClient implements TrelloHttpClient {
                     .setBody(body).execute(new AsyncCompletionHandler<T>() {
                         @Override
                         public T onCompleted(Response response) throws Exception {
-                            return mapper.readValue(response.getResponseBody(), objectClass);
+                            return mapper.readValue(response.getResponseBody(), responseType);
                         }
 
                         @Override
@@ -100,7 +100,7 @@ public class AsyncTrelloHttpClient implements TrelloHttpClient {
     }
 
     @Override
-    public <T> T putForObject(String url, T object, final Class<T> objectClass, String... params) {
+    public <T> T putForObject(String url, T object, final Class<T> responseType, String... params) {
         try {
             byte[] body = this.mapper.writeValueAsBytes(object);
             Future<T> f = asyncHttpClient.preparePut(UrlExpander.expandUrl(url, params)).setBody(body).execute(
@@ -108,7 +108,7 @@ public class AsyncTrelloHttpClient implements TrelloHttpClient {
 
                         @Override
                         public T onCompleted(Response response) throws Exception {
-                            return mapper.readValue(response.getResponseBody(), objectClass);
+                            return mapper.readValue(response.getResponseBody(), responseType);
                         }
 
                         @Override

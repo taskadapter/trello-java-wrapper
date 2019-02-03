@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 
+import com.julienvey.trello.utils.IOUtils;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -44,26 +45,27 @@ public class ApacheHttpClient implements TrelloHttpClient {
     }
 
     @Override
-    public <T> T get(String url, Class<T> objectClass, String... params) {
+    public <T> T get(String url, Class<T> responseType, String... params) {
         HttpGet httpGet = new HttpGet(UrlExpander.expandUrl(url, params));
-        return getEntityAndReleaseConnection(objectClass, httpGet);
+        return getEntityAndReleaseConnection(responseType, httpGet);
     }
 
     @Override
-    public <T> T postForObject(String url, Object object, Class<T> objectClass, String... params) {
+    public <T> T postForObject(String url, Object body, Class<T> responseType, String... params) {
         HttpPost httpPost = new HttpPost(UrlExpander.expandUrl(url, params));
 
         try {
-            HttpEntity entity = new ByteArrayEntity(this.mapper.writeValueAsBytes(object), ContentType.APPLICATION_JSON);
+            HttpEntity entity = new ByteArrayEntity(this.mapper.writeValueAsBytes(body), ContentType.APPLICATION_JSON);
             httpPost.setEntity(entity);
 
-            return getEntityAndReleaseConnection(objectClass, httpPost);
+            return getEntityAndReleaseConnection(responseType, httpPost);
         } catch (JsonProcessingException e) {
             // TODO : custom exception
             throw new RuntimeException(e);
         }
     }
 
+    @Override
     public <T> T postFileForObject(String url, File file, Class<T> objectClass, String... params) {
         HttpPost httpPost = new HttpPost(UrlExpander.expandUrl(url, params));
 
@@ -81,13 +83,13 @@ public class ApacheHttpClient implements TrelloHttpClient {
     }
 
     @Override
-    public <T> T putForObject(String url, T object, Class<T> objectClass, String... params) {
+    public <T> T putForObject(String url, T body, Class<T> responseType, String... params) {
         HttpPut put = new HttpPut(UrlExpander.expandUrl(url, params));
         try {
-            HttpEntity entity = new ByteArrayEntity(this.mapper.writeValueAsBytes(object), ContentType.APPLICATION_JSON);
+            HttpEntity entity = new ByteArrayEntity(this.mapper.writeValueAsBytes(body), ContentType.APPLICATION_JSON);
             put.setEntity(entity);
 
-            return getEntityAndReleaseConnection(objectClass, put);
+            return getEntityAndReleaseConnection(responseType, put);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
@@ -99,11 +101,11 @@ public class ApacheHttpClient implements TrelloHttpClient {
     }
 
     @Override
-    public URI postForLocation(String url, Object object, String... params) {
+    public URI postForLocation(String url, Object body, String... params) {
         HttpPost httpPost = new HttpPost(UrlExpander.expandUrl(url, params));
 
         try {
-            HttpEntity entity = new ByteArrayEntity(this.mapper.writeValueAsBytes(object), ContentType.APPLICATION_JSON);
+            HttpEntity entity = new ByteArrayEntity(this.mapper.writeValueAsBytes(body), ContentType.APPLICATION_JSON);
             httpPost.setEntity(entity);
             HttpResponse httpResponse = this.httpClient.execute(httpPost);
 
@@ -130,7 +132,7 @@ public class ApacheHttpClient implements TrelloHttpClient {
 
             HttpEntity httpEntity = httpResponse.getEntity();
             if (httpEntity != null) {
-                String body = toString(httpEntity.getContent());
+                String body = IOUtils.toString(httpEntity.getContent());
                 if (httpResponse.getStatusLine().getStatusCode() == 400) {
                     throw new TrelloBadRequestException(body);
                 }
@@ -155,9 +157,5 @@ public class ApacheHttpClient implements TrelloHttpClient {
         } finally {
             httpRequest.releaseConnection();
         }
-    }
-
-    private static String toString(InputStream stream) {
-        return new java.util.Scanner(stream).useDelimiter("\\A").next();
     }
 }
