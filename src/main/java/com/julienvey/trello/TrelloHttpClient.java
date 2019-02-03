@@ -1,5 +1,6 @@
 package com.julienvey.trello;
 
+import java.io.File;
 import java.net.URI;
 
 import com.julienvey.trello.exception.TrelloHttpException;
@@ -20,6 +21,10 @@ import com.julienvey.trello.impl.http.RestTemplateHttpClient;
  * Implementors can use wrapping exceptions like {@link NotFoundException}, {@link NotAuthorizedException} etc. If there
  * is no specific exception for particular case {@link TrelloHttpException} should be rethrown. It is very recommended
  * to embed native exception as cause, to provide more details about exception occurred.
+ * <p>
+ * The Trello API does support {@code gzip} response compression when user send the {@code Accept-Encoding: gzip}, so
+ * implementor should at least consider (although many modern HTTP clients handles {@code gzip}
+ * compression/decompression transparently) to send appropriate header and subsequently decompress bodies.
  * <p>
  * The most basic implementation is {@link JDKTrelloHttpClient}, it is default implementation for this interface and
  * does not require any additional dependencies.
@@ -106,4 +111,24 @@ public interface TrelloHttpClient {
      * @return The converted response.
      */
     <T> T delete(String url, Class<T> responseType, String... params);
+
+    /**
+     * Performs HTTP {@code POST} request and converts response. The {@code file} should be transmitted using {@code
+     * multipart/form-data}.
+     * <p>
+     * This is optional method.
+     * <p>
+     * The template variables in {@code url} are expanded using the given {@code params}, if any.
+     *
+     * @param url          The URL to make request to.
+     * @param file         The file to upload.
+     * @param responseType The response object class object.
+     * @param params       The URL query part or path parameters that should be expanded.
+     * @param <T>          The response object type.
+     *
+     * @return The converted response.
+     */
+    default <T> T postFileForObject(String url, File file, Class<T> responseType, String... params) {
+        throw new UnsupportedOperationException("Uploading files is not supported by default!");
+    }
 }

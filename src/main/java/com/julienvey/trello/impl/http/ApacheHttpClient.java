@@ -65,6 +65,7 @@ public class ApacheHttpClient implements TrelloHttpClient {
         }
     }
 
+    @Override
     public <T> T postFileForObject(String url, File file, Class<T> objectClass, String... params) {
         HttpPost httpPost = new HttpPost(UrlExpander.expandUrl(url, params));
 

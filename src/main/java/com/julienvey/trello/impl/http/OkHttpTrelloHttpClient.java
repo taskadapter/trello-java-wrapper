@@ -4,6 +4,7 @@ import static com.julienvey.trello.impl.http.UrlExpander.expandUrl;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.util.Objects;
@@ -24,6 +25,8 @@ import okhttp3.Request.Builder;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+import okio.GzipSource;
+import okio.Okio;
 
 /**
  * The {@code TrelloHttpClient} backed by {@link OkHttpClient}.
@@ -32,7 +35,7 @@ import okhttp3.ResponseBody;
  */
 public class OkHttpTrelloHttpClient implements TrelloHttpClient {
     private static final byte[] EMPTY_BYTE_ARRAY = new byte[0];
-    private static final MediaType APPLICATION_JSON = MediaType.parse("application/json");
+    private static final MediaType APPLICATION_JSON = MediaType.parse("application/json; charset=utf-8");
     private static final MediaType APPLICATION_OCTET_STREAM = MediaType.parse("application/octet-stream");
     private final OkHttpClient httpClient;
     private final ObjectMapper objectMapper;
@@ -57,11 +60,16 @@ public class OkHttpTrelloHttpClient implements TrelloHttpClient {
         this(new OkHttpClient(), new ObjectMapper());
     }
 
+    private static Builder requestBuilder(String url, String[] params) {
+        return new Builder()
+                .header("Accept", APPLICATION_JSON.toString())
+                .url(expandUrl(url, params));
+    }
+
     @Override
     public <T> T get(String url, Class<T> responseType, String... params) {
-        try (Response response = httpClient.newCall(new Builder()
+        try (Response response = httpClient.newCall(requestBuilder(url, params)
                 .get()
-                .url(expandUrl(url, params))
                 .build())
                 .execute()) {
 
@@ -73,9 +81,8 @@ public class OkHttpTrelloHttpClient implements TrelloHttpClient {
 
     @Override
     public <T> T postForObject(String url, Object body, Class<T> responseType, String... params) {
-        try (Response response = httpClient.newCall(new Builder()
+        try (Response response = httpClient.newCall(requestBuilder(url, params)
                 .post(requestBody(body))
-                .url(expandUrl(url, params))
                 .build())
                 .execute()) {
 
@@ -87,9 +94,8 @@ public class OkHttpTrelloHttpClient implements TrelloHttpClient {
 
     @Override
     public URI postForLocation(String url, Object body, String... params) {
-        try (Response response = httpClient.newCall(new Builder()
+        try (Response response = httpClient.newCall(requestBuilder(url, params)
                 .post(requestBody(body))
-                .url(expandUrl(url, params))
                 .build())
                 .execute()) {
 
@@ -106,9 +112,8 @@ public class OkHttpTrelloHttpClient implements TrelloHttpClient {
 
     @Override
     public <T> T putForObject(String url, T body, Class<T> responseType, String... params) {
-        try (Response response = httpClient.newCall(new Builder()
+        try (Response response = httpClient.newCall(requestBuilder(url, params)
                 .put(requestBody(body))
-                .url(expandUrl(url, params))
                 .build())
                 .execute()) {
 
@@ -120,9 +125,8 @@ public class OkHttpTrelloHttpClient implements TrelloHttpClient {
 
     @Override
     public <T> T delete(String url, Class<T> responseType, String... params) {
-        try (Response response = httpClient.newCall(new Builder()
+        try (Response response = httpClient.newCall(requestBuilder(url, params)
                 .delete()
-                .url(expandUrl(url, params))
                 .build())
                 .execute()) {
 
@@ -132,11 +136,11 @@ public class OkHttpTrelloHttpClient implements TrelloHttpClient {
         }
     }
 
+    @Override
     public <T> T postFileForObject(String url, File file, Class<T> responseType, String... params) {
         RequestBody requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
                 .addFormDataPart("file", file.getName(), RequestBody.create(APPLICATION_OCTET_STREAM, file))
-                .addFormDataPart("filename", file.getName())
                 .build();
 
         try (Response response = httpClient.newCall(new Builder()
@@ -152,12 +156,13 @@ public class OkHttpTrelloHttpClient implements TrelloHttpClient {
 
     private <T> T readResponse(Class<T> responseType, Response response) throws IOException {
         checkStatusCode(response);
-        ResponseBody body = Optional.ofNullable(response.body()).orElseThrow(() -> new IllegalStateException("Cannot read response body because it is null."));
+        ResponseBody body = Optional.ofNullable(response.body())
+                .orElseThrow(() -> new IllegalStateException("Cannot read response body because it is null."));
 
         try {
             return objectMapper.readValue(body.byteStream(), responseType);
         } catch (JsonProcessingException e) {
-            throw new TrelloHttpException("Cannot parse Trello response. Expected to get a json string, but got: " + body.string());
+            throw new TrelloHttpException("Cannot parse Trello response.", e);
         }
     }
 
