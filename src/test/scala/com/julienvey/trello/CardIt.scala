@@ -32,7 +32,7 @@ class CardIt extends FunSpec with Matchers {
         card.setIdBoard("some unknown board id")
         trello.createCard(validListIdFromSomeoneElsesAccount, card)
       }
-      thrown.getMessage should include("Not authorized")
+      thrown.getMessage should include("unauthorized card permission requested")
     }
 
     it("creates a card without board id") {

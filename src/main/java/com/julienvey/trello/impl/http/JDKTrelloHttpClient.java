@@ -104,7 +104,7 @@ public class JDKTrelloHttpClient implements TrelloHttpClient {
     }
 
     @Override
-    public <T> T putForObject(String url, T body, Class<T> responseType, String... params) {
+    public <T> T putForObject(String url, Object body, Class<T> responseType, String... params) {
         try {
             HttpURLConnection conn = openConnection(url, params, "PUT");
             writeRequest(body, conn);

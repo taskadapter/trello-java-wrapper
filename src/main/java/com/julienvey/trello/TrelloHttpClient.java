@@ -96,7 +96,7 @@ public interface TrelloHttpClient {
      *
      * @return The converted response.
      */
-    <T> T putForObject(String url, T body, Class<T> responseType, String... params);
+    <T> T putForObject(String url, Object body, Class<T> responseType, String... params);
 
     /**
      * Performs HTTP {@code DELETE} request and converts response.

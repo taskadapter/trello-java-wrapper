@@ -111,7 +111,7 @@ public class OkHttpTrelloHttpClient implements TrelloHttpClient {
     }
 
     @Override
-    public <T> T putForObject(String url, T body, Class<T> responseType, String... params) {
+    public <T> T putForObject(String url, Object body, Class<T> responseType, String... params) {
         try (Response response = httpClient.newCall(requestBuilder(url, params)
                 .put(requestBody(body))
                 .build())
