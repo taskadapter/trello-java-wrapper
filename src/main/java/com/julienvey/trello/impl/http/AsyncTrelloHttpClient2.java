@@ -116,7 +116,7 @@ public class AsyncTrelloHttpClient2 implements TrelloHttpClient {
     }
 
     @Override
-    public <T> T putForObject(String url, T object, final Class<T> responseType, String... params) {
+    public <T> T putForObject(String url, Object object, final Class<T> responseType, String... params) {
         try {
             byte[] body = this.writer.writeValueAsBytes(object);
             Future<T> f = asyncHttpClient.preparePut(expandUrl(url, params)).setBody(body).execute(
