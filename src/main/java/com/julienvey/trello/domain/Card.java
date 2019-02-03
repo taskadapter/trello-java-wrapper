@@ -48,6 +48,10 @@ public class Card extends TrelloEntity {
         return trelloService.getCardMembers(id, args);
     }
 
+    public void deleteAttachment(String attachmentId) {
+        trelloService.deleteAttachment(id, attachmentId);
+    }
+
     /* Accessors */
     public String getId() {
         return id;
