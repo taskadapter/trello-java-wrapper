@@ -79,8 +79,7 @@ import com.julienvey.trello.domain.Organization;
 import com.julienvey.trello.domain.TList;
 import com.julienvey.trello.domain.TrelloEntity;
 import com.julienvey.trello.impl.domaininternal.Comment;
-import com.julienvey.trello.impl.http.ApacheHttpClient;
-import com.julienvey.trello.impl.http.RestTemplateHttpClient;
+import com.julienvey.trello.impl.http.JDKTrelloHttpClient;
 
 public class TrelloImpl implements Trello {
 
@@ -98,7 +97,7 @@ public class TrelloImpl implements Trello {
      */
     @Deprecated
     public TrelloImpl(String applicationKey, String accessToken) {
-        this(applicationKey, accessToken, new RestTemplateHttpClient());
+        this(applicationKey, accessToken, new JDKTrelloHttpClient());
     }
 
     public TrelloImpl(String applicationKey, String accessToken, TrelloHttpClient httpClient) {
@@ -448,10 +447,8 @@ public class TrelloImpl implements Trello {
     private <T> T postFileForObject(String url, File file, Class<T> objectClass, String... params) {
         logger.debug("PostFileForObject request on Trello API at url {} for class {} with params {}", url,
                 objectClass.getCanonicalName(), params);
-        if (!(httpClient instanceof ApacheHttpClient)) {
-            throw new IllegalStateException("postForFile is implemented only on ApacheHttpClient.");
-        }
-        return ((ApacheHttpClient)httpClient).postFileForObject(url, file, objectClass, enrichParams(params));
+
+        return httpClient.postFileForObject(url, file, objectClass, enrichParams(params));
     }
 
     private <T> T postForObject(String url, Object object, Class<T> objectClass, String... params) {

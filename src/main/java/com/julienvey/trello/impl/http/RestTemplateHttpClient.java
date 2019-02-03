@@ -19,36 +19,36 @@ public class RestTemplateHttpClient implements TrelloHttpClient {
     }
 
     @Override
-    public <T> T postForObject(String url, Object object, Class<T> objectClass, String... params) {
+    public <T> T postForObject(String url, Object body, Class<T> responseType, String... params) {
         try {
-            return restTemplate.postForObject(url, object, objectClass, (Object[]) params);
+            return restTemplate.postForObject(url, body, responseType, (Object[]) params);
         } catch (RestClientException e) {
             throw new TrelloHttpException(e);
         }
     }
 
     @Override
-    public URI postForLocation(String url, Object object, String... params) {
+    public URI postForLocation(String url, Object body, String... params) {
         try {
-            return restTemplate.postForLocation(url, object, (Object[]) params);
+            return restTemplate.postForLocation(url, body, (Object[]) params);
         } catch (RestClientException e) {
             throw new TrelloHttpException(e);
         }
     }
 
     @Override
-    public <T> T get(String url, Class<T> objectClass, String... params) {
+    public <T> T get(String url, Class<T> responseType, String... params) {
         try {
-            return restTemplate.getForObject(url, objectClass, (Object[]) params);
+            return restTemplate.getForObject(url, responseType, (Object[]) params);
         } catch (RestClientException e) {
             throw new TrelloHttpException(e);
         }
     }
 
     @Override
-    public <T> T putForObject(String url, T object, Class<T> objectClass, String... params) {
+    public <T> T putForObject(String url, T body, Class<T> responseType, String... params) {
         try {
-            return restTemplate.exchange(url, HttpMethod.PUT, new HttpEntity<>(object), objectClass, (Object[]) params)
+            return restTemplate.exchange(url, HttpMethod.PUT, new HttpEntity<>(body), responseType, (Object[]) params)
                     .getBody();
         } catch (RestClientException e) {
             throw new TrelloHttpException(e);
