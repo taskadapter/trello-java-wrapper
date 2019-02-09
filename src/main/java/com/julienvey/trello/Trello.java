@@ -19,6 +19,7 @@ import com.julienvey.trello.domain.MemberType;
 import com.julienvey.trello.domain.MyPrefs;
 import com.julienvey.trello.domain.Organization;
 import com.julienvey.trello.domain.TList;
+import com.julienvey.trello.impl.domaininternal.Comment;
 
 public interface Trello {
 
@@ -146,6 +147,17 @@ public interface Trello {
     void addLabelsToCard(String idCard, String[] labels);
 
     void addCommentToCard(String idCard, String comment);
+
+    /**
+     * Update an existing comment. Note that only the original author of a comment can update it.
+     *
+     * @param idCard          The id of the card.
+     * @param commentActionId The comment action id.
+     * @param text            The new text for the comment.
+     *
+     * @return The updated action.
+     */
+    Action updateComment(String idCard, String commentActionId, String text);
 
     void addAttachmentToCard(String idCard, File file);
 
