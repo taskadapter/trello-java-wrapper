@@ -80,8 +80,10 @@ public class TList extends TrelloEntity {
     }
 
     @Override
-    public void setInternalTrello(Trello trelloService) {
+    @SuppressWarnings("unchecked")
+    public TList setInternalTrello(Trello trelloService) {
         this.trelloService = trelloService;
         cards.forEach(card -> card.setInternalTrello(trelloService));
+        return this;
     }
 }

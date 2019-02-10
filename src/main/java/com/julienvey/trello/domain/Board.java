@@ -235,9 +235,11 @@ public class Board extends TrelloEntity {
     }
 
     @Override
-    public void setInternalTrello(Trello trelloService) {
+    @SuppressWarnings("unchecked")
+    public Board setInternalTrello(Trello trelloService) {
         this.trelloService = trelloService;
         getLists().forEach(list -> list.setInternalTrello(trelloService));
+        return this;
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
