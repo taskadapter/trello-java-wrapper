@@ -1,9 +1,9 @@
 package com.julienvey.trello.impl;
 
+import static com.julienvey.trello.impl.TrelloUrl.ADD_ATTACHMENT_TO_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.ADD_CHECKITEMS_TO_CHECKLIST;
 import static com.julienvey.trello.impl.TrelloUrl.ADD_COMMENT_TO_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.ADD_LABEL_TO_CARD;
-import static com.julienvey.trello.impl.TrelloUrl.ADD_ATTACHMENT_TO_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.ADD_MEMBER_TO_BOARD;
 import static com.julienvey.trello.impl.TrelloUrl.ADD_MEMBER_TO_BOARD_BY_ID;
 import static com.julienvey.trello.impl.TrelloUrl.ADD_MEMBER_TO_CARD;
@@ -46,30 +46,35 @@ import static com.julienvey.trello.impl.TrelloUrl.GET_MEMBER_BOARDS;
 import static com.julienvey.trello.impl.TrelloUrl.GET_MEMBER_CARDS;
 import static com.julienvey.trello.impl.TrelloUrl.GET_ORGANIZATION_BOARD;
 import static com.julienvey.trello.impl.TrelloUrl.GET_ORGANIZATION_MEMBER;
-import static com.julienvey.trello.impl.TrelloUrl.REMOVE_MEMBER_FROM_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.REMOVE_MEMBER_FROM_BOARD;
+import static com.julienvey.trello.impl.TrelloUrl.REMOVE_MEMBER_FROM_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.UPDATE_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.createUrl;
 import static com.julienvey.trello.impl.TrelloUrl.createUrlWithNoArgs;
 
-import com.julienvey.trello.NotAuthorizedException;
-import com.julienvey.trello.domain.AddMemberToBoardResult;
-import com.julienvey.trello.domain.Label;
-
-import java.util.*;
-
-import com.julienvey.trello.ListNotFoundException;
-import com.julienvey.trello.NotFoundException;
-import com.julienvey.trello.TrelloBadRequestException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.julienvey.trello.ListNotFoundException;
+import com.julienvey.trello.NotFoundException;
 import com.julienvey.trello.Trello;
+import com.julienvey.trello.TrelloBadRequestException;
+import com.julienvey.trello.TrelloCredentialsProvider;
 import com.julienvey.trello.TrelloHttpClient;
 import com.julienvey.trello.domain.Action;
+import com.julienvey.trello.domain.AddMemberToBoardResult;
 import com.julienvey.trello.domain.Argument;
 import com.julienvey.trello.domain.Attachment;
 import com.julienvey.trello.domain.Board;
@@ -78,20 +83,21 @@ import com.julienvey.trello.domain.CardWithActions;
 import com.julienvey.trello.domain.CheckItem;
 import com.julienvey.trello.domain.CheckList;
 import com.julienvey.trello.domain.Entity;
+import com.julienvey.trello.domain.Label;
 import com.julienvey.trello.domain.Member;
 import com.julienvey.trello.domain.MemberType;
 import com.julienvey.trello.domain.MyPrefs;
 import com.julienvey.trello.domain.Organization;
 import com.julienvey.trello.domain.TList;
 import com.julienvey.trello.domain.TrelloEntity;
+import com.julienvey.trello.impl.credentials.SimpleCredentialsProvider;
 import com.julienvey.trello.impl.domaininternal.Comment;
 import com.julienvey.trello.impl.http.JDKTrelloHttpClient;
 
 public class TrelloImpl implements Trello {
 
-    private TrelloHttpClient httpClient;
-    private String applicationKey;
-    private String accessToken;
+    private final TrelloHttpClient httpClient;
+    private final TrelloCredentialsProvider credentials;
 
     private static Logger logger = LoggerFactory.getLogger(TrelloImpl.class);
 
@@ -107,9 +113,12 @@ public class TrelloImpl implements Trello {
     }
 
     public TrelloImpl(String applicationKey, String accessToken, TrelloHttpClient httpClient) {
-        this.applicationKey = applicationKey;
-        this.accessToken = accessToken;
-        this.httpClient = httpClient;
+        this(new SimpleCredentialsProvider(applicationKey, accessToken), httpClient);
+    }
+
+    public TrelloImpl(TrelloCredentialsProvider credentialsProvider, TrelloHttpClient httpClient) {
+        this.credentials = Objects.requireNonNull(credentialsProvider);
+        this.httpClient = Objects.requireNonNull(httpClient);
     }
 
     /* Boards */
@@ -537,8 +546,8 @@ public class TrelloImpl implements Trello {
 
     private String[] enrichParams(String[] params) {
         List<String> paramList = new ArrayList<>(Arrays.asList(params));
-        paramList.add(applicationKey);
-        paramList.add(accessToken);
+        paramList.add(credentials.applicationKey());
+        paramList.add(credentials.accessToken());
         return paramList.toArray(new String[paramList.size()]);
     }
 

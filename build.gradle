@@ -35,6 +35,8 @@ ext {
     springWebVersion = '3.2.2.RELEASE'
     jacksonVersion = '2.9.8'
     slf4jVersion = '1.7.25'
+    assertJVersion = '3.11.1'
+    systemRulesVersion = '1.19.0'
 }
 
 dependencies {
@@ -64,7 +66,9 @@ dependencies {
             [group: 'org.mockito', name: 'mockito-all', version: '1.9.5'],
 
             "org.scala-lang:scala-library:${scalaFullVersion}",
-            "org.scalatest:scalatest_${scalaBinaryVersion}:3.0.0"
+            "org.scalatest:scalatest_${scalaBinaryVersion}:3.0.0",
+            "org.assertj:assertj-core:${assertJVersion}",
+            "com.github.stefanbirkner:system-rules:${systemRulesVersion}"
     )
 }
 
