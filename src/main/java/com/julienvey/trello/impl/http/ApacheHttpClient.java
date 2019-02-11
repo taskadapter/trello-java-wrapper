@@ -1,21 +1,14 @@
 package com.julienvey.trello.impl.http;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.julienvey.trello.NotAuthorizedException;
-import com.julienvey.trello.NotFoundException;
-import com.julienvey.trello.TrelloHttpClient;
-import com.julienvey.trello.exception.TrelloHttpException;
-import com.julienvey.trello.TrelloBadRequestException;
 import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URI;
+import java.util.Objects;
 
-import com.julienvey.trello.utils.IOUtils;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -23,24 +16,31 @@ import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.ContentType;
-import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.StringBody;
-import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 
-import java.io.InputStream;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.julienvey.trello.NotAuthorizedException;
+import com.julienvey.trello.NotFoundException;
+import com.julienvey.trello.TrelloBadRequestException;
+import com.julienvey.trello.TrelloHttpClient;
+import com.julienvey.trello.exception.TrelloHttpException;
+import com.julienvey.trello.utils.IOUtils;
 
 public class ApacheHttpClient implements TrelloHttpClient {
 
-    private DefaultHttpClient httpClient;
-    private ObjectMapper mapper;
+    private final HttpClient httpClient;
+    private final ObjectMapper mapper;
 
     public ApacheHttpClient() {
-        this(new DefaultHttpClient());
+        this(HttpClientBuilder.create().build());
     }
 
-    public ApacheHttpClient(DefaultHttpClient httpClient) {
-        this.httpClient = httpClient;
+    public ApacheHttpClient(HttpClient httpClient) {
+        this.httpClient = Objects.requireNonNull(httpClient);
         this.mapper = new ObjectMapper();
     }
 
@@ -69,13 +69,10 @@ public class ApacheHttpClient implements TrelloHttpClient {
     public <T> T postFileForObject(String url, File file, Class<T> objectClass, String... params) {
         HttpPost httpPost = new HttpPost(UrlExpander.expandUrl(url, params));
 
-        MultipartEntity entity = new MultipartEntity();
-        entity.addPart("file", new FileBody(file));
-        try {
-            entity.addPart("filename", new StringBody(file.getName()));
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
-        }
+        HttpEntity entity = MultipartEntityBuilder.create()
+                .addPart("file", new FileBody(file))
+                .addPart("filename", new StringBody(file.getName(), ContentType.TEXT_PLAIN))
+                .build();
 
         httpPost.setEntity(entity);
 
