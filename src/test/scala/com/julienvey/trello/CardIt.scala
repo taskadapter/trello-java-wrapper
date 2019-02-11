@@ -1,9 +1,12 @@
 package com.julienvey.trello
 
 import java.io.File
+import java.time.LocalDateTime
+import java.util.UUID
 import java.util.UUID.randomUUID
 
 import com.julienvey.trello.domain.{Card, Label, Member}
+import com.julienvey.trello.utils.ArgUtils.arg
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.{FunSpec, Matchers}
@@ -51,7 +54,7 @@ class CardIt extends FunSpec with Matchers {
       trello.addLabelsToCard(created.getId, Array(label))
       val loaded = trello.getCard(created.getId)
       val labels = loaded.getLabels.toArray(new Array[Label](0)).map(l => l.getName)
-      labels should contain (label)
+      labels should contain(label)
     }
   }
 
@@ -72,22 +75,22 @@ class CardIt extends FunSpec with Matchers {
       val idExtractor: Member => String = member => member.getId
 
       trello.addMemberToCard(cardId, TrelloConfig.memberId).asScala
-        .map(idExtractor) should contain (TrelloConfig.memberId)
+        .map(idExtractor) should contain(TrelloConfig.memberId)
 
       trello.getCardMembers(cardId).asScala
-        .map(idExtractor) should contain (TrelloConfig.memberId)
+        .map(idExtractor) should contain(TrelloConfig.memberId)
 
       trello.getMemberCards(TrelloConfig.memberId).asScala
-          .map(card => card.getId) should contain (cardId)
+        .map(card => card.getId) should contain(cardId)
 
       trello.removeMemberFromCard(cardId, TrelloConfig.memberId).asScala
-        .map(idExtractor) shouldNot contain (TrelloConfig.memberId)
+        .map(idExtractor) shouldNot contain(TrelloConfig.memberId)
 
       trello.getCardMembers(cardId).asScala
-        .map(idExtractor) shouldNot contain (TrelloConfig.memberId)
+        .map(idExtractor) shouldNot contain(TrelloConfig.memberId)
 
       trello.getMemberCards(TrelloConfig.memberId).asScala
-        .map(card => card.getId) shouldNot contain (cardId)
+        .map(card => card.getId) shouldNot contain(cardId)
     }
   }
 
@@ -114,6 +117,43 @@ class CardIt extends FunSpec with Matchers {
     it("delete attachment with wrong id") {
       val cardId = "5c4d89b5bd5a2640f5fcb32c"
       val thrown = the [NotFoundException] thrownBy trello.deleteAttachment(cardId, "5c56febb4e84e50254c2c54d")
+    }
+  }
+
+  describe("Comment API") {
+    it("Add comment to card") {
+      val card = new Card()
+      card.setName("Card with comment")
+
+      val cardId = trello.createCard(TrelloConfig.doingListId, card).getId
+      val comment = LocalDateTime.now().toString
+
+      trello.addCommentToCard(cardId, comment)
+      val actions = trello.getCardActions(cardId, arg("limit", "1"), arg("filter", "commentCard")).asScala
+
+      actions should have length 1
+      actions.head.getData.getText should be(comment)
+    }
+
+    it("Update existing comment") {
+      val card = new Card()
+      card.setName("Card with existing comment")
+      val cardId = trello.createCard(TrelloConfig.doingListId, card).getId
+
+      trello.addCommentToCard(cardId, "comment")
+      val actionId = trello.getCardActions(cardId).asScala.head.getId
+      val newComment = UUID.randomUUID().toString
+
+      val comment = trello.updateComment(cardId, actionId, newComment)
+
+      comment.getData.getText should be(newComment)
+    }
+
+    it("Update existing comment created by other user") {
+      val cardId = "5c4d89b5bd5a2640f5fcb32c"
+      val actionId = "5c5ecdc6f642c77012bb41c1"
+
+      the [NotAuthorizedException] thrownBy trello.updateComment(cardId, actionId, "does't matter")
     }
   }
 }

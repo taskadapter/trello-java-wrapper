@@ -49,6 +49,7 @@ import static com.julienvey.trello.impl.TrelloUrl.GET_ORGANIZATION_MEMBER;
 import static com.julienvey.trello.impl.TrelloUrl.REMOVE_MEMBER_FROM_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.REMOVE_MEMBER_FROM_BOARD;
 import static com.julienvey.trello.impl.TrelloUrl.UPDATE_CARD;
+import static com.julienvey.trello.impl.TrelloUrl.UPDATE_CARD_COMMENT;
 import static com.julienvey.trello.impl.TrelloUrl.createUrl;
 import static com.julienvey.trello.impl.TrelloUrl.createUrlWithNoArgs;
 
@@ -472,6 +473,11 @@ public class TrelloImpl implements Trello {
     @Override
     public void addCommentToCard(String idCard, String comment) {
         postForObject(createUrl(ADD_COMMENT_TO_CARD).asString(), new Comment(comment), Comment.class, idCard);
+    }
+
+    @Override
+    public Action updateComment(String idCard, String commentActionId, String text) {
+        return put(createUrlWithNoArgs(UPDATE_CARD_COMMENT), new Comment(text), Action.class, idCard, commentActionId);
     }
 
     @Override
