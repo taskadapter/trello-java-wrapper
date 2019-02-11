@@ -122,7 +122,10 @@ class CardIt extends FunSpec with Matchers {
 
   describe("Comment API") {
     it("Add comment to card") {
-      val cardId = "5c4d89b5bd5a2640f5fcb32c"
+      val card = new Card()
+      card.setName("Card with comment")
+
+      val cardId = trello.createCard(TrelloConfig.doingListId, card).getId
       val comment = LocalDateTime.now().toString
 
       trello.addCommentToCard(cardId, comment)
@@ -133,8 +136,12 @@ class CardIt extends FunSpec with Matchers {
     }
 
     it("Update existing comment") {
-      val cardId = "5c4d89b5bd5a2640f5fcb32c"
-      val actionId = "5c4dacb791e1e11e9a6ba568"
+      val card = new Card()
+      card.setName("Card with existing comment")
+      val cardId = trello.createCard(TrelloConfig.doingListId, card).getId
+
+      trello.addCommentToCard(cardId, "comment")
+      val actionId = trello.getCardActions(cardId).asScala.head.getId
       val newComment = UUID.randomUUID().toString
 
       val comment = trello.updateComment(cardId, actionId, newComment)
