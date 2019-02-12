@@ -10,12 +10,15 @@ class LabelIt extends FunSpec with Matchers {
   val trello = TrelloTestFactory.trello
 
   it("get label by id") {
-    val labelId = "5c4d89b69de7494566ac61d1"
-    val expectedName = "cdaafa8f-cc3f-4426-86ac-2774a9c7b5ee"
+    val labelId = trello.createLabel(new Label()
+      .setColor("green")
+      .setIdBoard(TrelloConfig.boardId)
+      .setName("New Label"))
+      .getId
 
     val label = trello.getLabel(labelId)
 
-    label.getName should be(expectedName)
+    label.getName should be("New Label")
   }
 
   it("create and delete label") {
@@ -51,9 +54,9 @@ class LabelIt extends FunSpec with Matchers {
 
   it("update label") {
     val label = new Label()
-    label.setColor("green")
-    label.setIdBoard(TrelloConfig.boardId)
-    label.setName("New Label")
+      .setColor("green")
+      .setIdBoard(TrelloConfig.boardId)
+      .setName("New Label")
 
     val created = trello.createLabel(label)
     created.setColor("red")
@@ -69,10 +72,10 @@ class LabelIt extends FunSpec with Matchers {
 
   it("CRUD using fluent API") {
     val label = new Label()
-    label.setInternalTrello(trello)
-    label.setColor("blue")
-    label.setIdBoard(TrelloConfig.boardId)
-    label.setName("New Label")
+      .setInternalTrello(trello)
+      .setColor("blue")
+      .setIdBoard(TrelloConfig.boardId)
+      .setName("New Label")
 
     label.create() should be theSameInstanceAs label
     label.getId should not be null
