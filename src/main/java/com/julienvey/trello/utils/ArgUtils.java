@@ -42,6 +42,7 @@ public class ArgUtils {
      *                 new Argument("name4", "value4")
      *         );
      * </code>
+     * </pre>
      *
      * @param nameValuePairs The name value pairs.
      * @throws IllegalArgumentException When {@code nameValuePairs} is odd.

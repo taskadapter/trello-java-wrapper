@@ -77,6 +77,18 @@ task packageJavadoc(type: Jar, dependsOn: 'javadoc') {
     classifier = 'javadoc'
 }
 
+// turn off strict Javadoc checks in Java8 that break the build.
+// http://blog.joda.org/2014/02/turning-off-doclint-in-jdk-8-javadoc.html
+// minor Javadoc issues are not important enough to justify breaking the build.
+// adding Captain-Obvious-style garbage javadoc for params just to satisfy this build check is not useful. 
+if (JavaVersion.current().isJava8Compatible()) {
+    allprojects {
+        tasks.withType(Javadoc) {
+            options.addStringOption('Xdoclint:none', '-quiet')
+        }
+    }
+}
+
 
 ext.isReleaseVersion = !version.endsWith("SNAPSHOT")
 
