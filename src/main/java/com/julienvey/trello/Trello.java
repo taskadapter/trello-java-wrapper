@@ -77,8 +77,8 @@ public interface Trello {
 
     //FIXME Remove this method
     @Deprecated
-	List<CardWithActions> getBoardMemberActivity(String boardId, String memberId,
-			String actionsFilter, Argument... args);
+    List<CardWithActions> getBoardMemberActivity(String boardId, String memberId,
+                                                 String actionsFilter, Argument... args);
 
     List<Member> getBoardMemberships(String boardId, Argument... args);
 
@@ -140,6 +140,63 @@ public interface Trello {
 
     List<Member> getOrganizationMembers(String string, Argument... args);
 
+    /* Labels */
+
+    /**
+     * Get information about a label by id.
+     *
+     * @param labelId The label id.
+     *
+     * @return The label.
+     */
+    Label getLabel(String labelId, Argument... args);
+
+    /**
+     * Create a new label on a board.
+     * <p>
+     * The color valid values are: yellow, purple, blue, red, green, orange, black, sky, pink, lime, null. Label name
+     * and board id is required.
+     * <p>
+     * Usage example:
+     * <pre>
+     * <code>
+     * trello.createLabel(new Label()
+     *                 .setName("Visited")
+     *                 .setColor("green")
+     *                 .setIdBoard("idBoard")
+     *         );
+     *
+     * // Or using fluent API
+     *
+     * Label label = new Label()
+     *                 .setInternalTrello(trello)
+     *                 .setName("Visited")
+     *                 .setColor("green")
+     *                 .setIdBoard("idBoard")
+     *                 .create();
+     * </code>
+     * @param label The label itself.
+     *
+     * @return The newly created label.
+     */
+    Label createLabel(Label label);
+
+    /**
+     * Create a new label on a board.
+     *
+     * @param label The label itself.
+     *
+     * @return The newly created label.
+     */
+    Label updateLabel(Label label);
+
+    /**
+     * Delete a label by id.
+     *
+     * @param labelId The label id.
+     */
+    void deleteLabel(String labelId);
+
     /////////////////
 
     Card createCard(String listId, Card card);
@@ -164,8 +221,7 @@ public interface Trello {
     void addUrlAttachmentToCard(String idCard, String url);
 
     /**
-     *
-     * @param idCard The id of the card.
+     * @param idCard       The id of the card.
      * @param attachmentId The id of the attachment to delete.
      */
     void deleteAttachment(String idCard, String attachmentId);

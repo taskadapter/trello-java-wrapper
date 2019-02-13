@@ -9,7 +9,9 @@ import static com.julienvey.trello.impl.TrelloUrl.ADD_MEMBER_TO_BOARD_BY_ID;
 import static com.julienvey.trello.impl.TrelloUrl.ADD_MEMBER_TO_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.CREATE_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.CREATE_CHECKLIST;
+import static com.julienvey.trello.impl.TrelloUrl.CREATE_LABEL;
 import static com.julienvey.trello.impl.TrelloUrl.DELETE_ATTACHMENT;
+import static com.julienvey.trello.impl.TrelloUrl.DELETE_LABEL;
 import static com.julienvey.trello.impl.TrelloUrl.GET_ACTION;
 import static com.julienvey.trello.impl.TrelloUrl.GET_ACTION_BOARD;
 import static com.julienvey.trello.impl.TrelloUrl.GET_ACTION_CARD;
@@ -38,6 +40,7 @@ import static com.julienvey.trello.impl.TrelloUrl.GET_CARD_BOARD;
 import static com.julienvey.trello.impl.TrelloUrl.GET_CARD_CHECKLIST;
 import static com.julienvey.trello.impl.TrelloUrl.GET_CARD_MEMBERS;
 import static com.julienvey.trello.impl.TrelloUrl.GET_CHECK_LIST;
+import static com.julienvey.trello.impl.TrelloUrl.GET_LABEL;
 import static com.julienvey.trello.impl.TrelloUrl.GET_LIST;
 import static com.julienvey.trello.impl.TrelloUrl.GET_LIST_CARDS;
 import static com.julienvey.trello.impl.TrelloUrl.GET_MEMBER;
@@ -49,11 +52,11 @@ import static com.julienvey.trello.impl.TrelloUrl.GET_ORGANIZATION_MEMBER;
 import static com.julienvey.trello.impl.TrelloUrl.REMOVE_MEMBER_FROM_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.REMOVE_MEMBER_FROM_BOARD;
 import static com.julienvey.trello.impl.TrelloUrl.UPDATE_CARD;
+import static com.julienvey.trello.impl.TrelloUrl.UPDATE_LABEL;
 import static com.julienvey.trello.impl.TrelloUrl.UPDATE_CARD_COMMENT;
 import static com.julienvey.trello.impl.TrelloUrl.createUrl;
 import static com.julienvey.trello.impl.TrelloUrl.createUrlWithNoArgs;
 
-import com.julienvey.trello.NotAuthorizedException;
 import com.julienvey.trello.domain.AddMemberToBoardResult;
 import com.julienvey.trello.domain.Label;
 
@@ -371,6 +374,29 @@ public class TrelloImpl implements Trello {
     @Override
     public List<Member> getOrganizationMembers(String organizationId, Argument... args) {
         return asList(() -> get(createUrl(GET_ORGANIZATION_MEMBER).params(args).asString(), Member[].class, organizationId));
+    }
+
+    @Override
+    public Label getLabel(String labelId, Argument... args) {
+        Label label = get(createUrl(GET_LABEL).params(args).asString(), Label.class, labelId);
+        return label.setInternalTrello(this);
+    }
+
+    @Override
+    public Label createLabel(Label label) {
+        Label createdLabel = postForObject(createUrlWithNoArgs(CREATE_LABEL), label, Label.class);
+        return createdLabel.setInternalTrello(this);
+    }
+
+    @Override
+    public Label updateLabel(Label label) {
+        Label updatedLabel = put(createUrlWithNoArgs(UPDATE_LABEL), label, Label.class, label.getId());
+        return updatedLabel.setInternalTrello(this);
+    }
+
+    @Override
+    public void deleteLabel(String labelId) {
+        delete(createUrlWithNoArgs(DELETE_LABEL), Map.class, labelId);
     }
 
     /* CheckLists */

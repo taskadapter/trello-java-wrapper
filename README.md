@@ -226,6 +226,12 @@ The new test code is implemented using Scala. The prod code is only Java - to av
 | POST /1/checklists/[idChecklist]/checkItems
 | DELETE /1/checklists/[idChecklist]
 | DELETE /1/checklists/[idChecklist]/checkItems/[idCheckItem]
+| GET /1/labels/[idLabel] | Yes | No | Yes
+| PUT /1/labels/[idLabel] | Yes | No | Yes
+| PUT /1/labels/[idLabel]/color
+| PUT /1/labels/[idLabel]/name
+| POST /1/labels/[idLabel] | Yes | No | Yes
+| DELETE /1/labels/[idLabel] | Yes | No | Yes
 | GET /1/lists/[idList] | Yes | Yes | Yes
 | GET /1/lists/[idList]/[field]
 | GET /1/lists/[idList]/actions

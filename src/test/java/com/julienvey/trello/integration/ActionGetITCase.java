@@ -1,17 +1,24 @@
 package com.julienvey.trello.integration;
 
-import com.julienvey.trello.Trello;
-import com.julienvey.trello.TrelloHttpClient;
-import com.julienvey.trello.domain.*;
-import com.julienvey.trello.impl.TrelloImpl;
+import static org.fest.assertions.Assertions.assertThat;
+
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import java.util.List;
-
-import static org.fest.assertions.Assertions.assertThat;
+import com.julienvey.trello.Trello;
+import com.julienvey.trello.TrelloHttpClient;
+import com.julienvey.trello.domain.Action;
+import com.julienvey.trello.domain.Board;
+import com.julienvey.trello.domain.Card;
+import com.julienvey.trello.domain.Entity;
+import com.julienvey.trello.domain.Label;
+import com.julienvey.trello.domain.Member;
+import com.julienvey.trello.domain.TList;
+import com.julienvey.trello.impl.TrelloImpl;
 
 @RunWith(Parameterized.class)
 public class ActionGetITCase {

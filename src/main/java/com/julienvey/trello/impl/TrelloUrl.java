@@ -48,6 +48,11 @@ public class TrelloUrl {
     public static final String GET_ORGANIZATION_BOARD = "/organizations/{organizationId}/boards?";
     public static final String GET_ORGANIZATION_MEMBER = "/organizations/{organizationId}/members?";
 
+    public static final String CREATE_LABEL = "/labels?";
+    public static final String GET_LABEL = "/labels/{labelId}?";
+    public static final String UPDATE_LABEL = "/labels/{labelId}?";
+    public static final String DELETE_LABEL = "/labels/{labelId}?";
+
     public static final String GET_CHECK_LIST = "/checklists/{checkListId}?";
     public static final String CREATE_CHECKLIST = "/checklists?";
     public static final String ADD_CHECKITEMS_TO_CHECKLIST = "/checklists/{checkListId}/checkitems?";
