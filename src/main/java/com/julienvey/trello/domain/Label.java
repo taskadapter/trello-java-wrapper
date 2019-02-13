@@ -6,7 +6,7 @@ import com.julienvey.trello.Trello;
 /**
  * Represents the Trello's Label resource.
  * <p>
- * More information about labels can be found at <a href="https://developers.trello.com/v1.0/reference#labels">here</>.
+ * More information about labels can be found at <a href="https://developers.trello.com/v1.0/reference#labels">here</a>.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Label extends TrelloEntity {
