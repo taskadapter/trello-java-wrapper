@@ -13,9 +13,11 @@ public class AddMemberToBoardResult extends TrelloEntity {
     private List<Membership> memberships = new ArrayList<>();
 
     @Override
-    public void setInternalTrello(Trello trelloService) {
+    @SuppressWarnings("unchecked")
+    public AddMemberToBoardResult setInternalTrello(Trello trelloService) {
         this.trelloService = trelloService;
         members.forEach(member -> member.setInternalTrello(trelloService));
+        return this;
     }
 
     public String getId() {

@@ -4,7 +4,7 @@ apply plugin: 'maven-publish'
 apply plugin: 'signing'
 
 group = 'com.taskadapter'
-version = '0.10'
+version = '0.11'
 
 description = """Trello Java Wrapper"""
 
@@ -30,7 +30,7 @@ repositories {
 ext {
     scalaBinaryVersion = '2.12'
     scalaFullVersion = '2.12.2'
-    httpClientVersion = '4.2.5'
+    httpClientVersion = '4.5.7'
     okhttpVersion = '3.12.1'
     springWebVersion = '3.2.2.RELEASE'
     jacksonVersion = '2.9.8'

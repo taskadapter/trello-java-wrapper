@@ -175,7 +175,7 @@ The new test code is implemented using Scala. The prod code is only Java - to av
 | GET /1/cards/[card id or shortlink]/members
 | GET /1/cards/[card id or shortlink]/membersVoted
 | PUT /1/cards/[card id or shortlink] | Yes
-| PUT /1/cards/[card id or shortlink]/actions/[idAction]/comments
+| PUT /1/cards/[card id or shortlink]/actions/[idAction]/comments | Yes | No | Yes
 | PUT /1/cards/[card id or shortlink]/checklist/[idChecklist]/checkItem/[idCheckItem]/name
 | PUT /1/cards/[card id or shortlink]/checklist/[idChecklist]/checkItem/[idCheckItem]/pos
 | PUT /1/cards/[card id or shortlink]/checklist/[idChecklist]/checkItem/[idCheckItem]/state
@@ -193,7 +193,7 @@ The new test code is implemented using Scala. The prod code is only Java - to av
 | PUT /1/cards/[card id or shortlink]/subscribed
 | PUT /1/cards/[card id or shortlink]/warnWhenUpcoming
 | POST /1/cards | Yes
-| POST /1/cards/[card id or shortlink]/actions/comments | Yes
+| POST /1/cards/[card id or shortlink]/actions/comments | Yes | No | Yes
 | POST /1/cards/[card id or shortlink]/attachments | Yes <br> (Only Apache HTTP and OkHttp)
 | POST /1/cards/[card id or shortlink]/checklist/[idChecklist]/checkItem
 | POST /1/cards/[card id or shortlink]/checklist/[idChecklist]/checkItem/[idCheckItem]/convertToCard
@@ -226,6 +226,12 @@ The new test code is implemented using Scala. The prod code is only Java - to av
 | POST /1/checklists/[idChecklist]/checkItems
 | DELETE /1/checklists/[idChecklist]
 | DELETE /1/checklists/[idChecklist]/checkItems/[idCheckItem]
+| GET /1/labels/[idLabel] | Yes | No | Yes
+| PUT /1/labels/[idLabel] | Yes | No | Yes
+| PUT /1/labels/[idLabel]/color
+| PUT /1/labels/[idLabel]/name
+| POST /1/labels/[idLabel] | Yes | No | Yes
+| DELETE /1/labels/[idLabel] | Yes | No | Yes
 | GET /1/lists/[idList] | Yes | Yes | Yes
 | GET /1/lists/[idList]/[field]
 | GET /1/lists/[idList]/actions

@@ -8,4 +8,5 @@ object TrelloConfig {
 
   val boardId = "5b15c8a233e68e7cc44ca235"
   val toDoListId = "5b15c8a233e68e7cc44ca236"
+  val doingListId = "5b15c8a233e68e7cc44ca237"
 }
