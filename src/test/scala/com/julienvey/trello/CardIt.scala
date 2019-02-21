@@ -156,4 +156,20 @@ class CardIt extends FunSpec with Matchers {
       the [NotAuthorizedException] thrownBy trello.updateComment(cardId, actionId, "does't matter")
     }
   }
+
+  describe("Delete API") {
+    it("Delete successfully") {
+      var card = new Card
+      card.setName("Card to delete")
+
+      card = trello.createCard(TrelloConfig.doingListId, card)
+
+      trello.deleteCard(card.getId)
+      the [NotFoundException] thrownBy trello.getCard(card.getId)
+    }
+
+    it("Delete not existing card") {
+      the [NotFoundException] thrownBy trello.deleteCard("5c5ecdc6f642c77012bb41c1")
+    }
+  }
 }

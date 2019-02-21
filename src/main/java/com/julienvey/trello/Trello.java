@@ -19,7 +19,6 @@ import com.julienvey.trello.domain.MemberType;
 import com.julienvey.trello.domain.MyPrefs;
 import com.julienvey.trello.domain.Organization;
 import com.julienvey.trello.domain.TList;
-import com.julienvey.trello.impl.domaininternal.Comment;
 
 public interface Trello {
 
@@ -117,6 +116,15 @@ public interface Trello {
     Attachment getCardAttachment(String cardId, String attachmentId, Argument... args);
 
     Board getCardBoard(String cardId, Argument... args);
+
+    /**
+     * Deletes a card.
+     * <b>Warning</b>
+     * Deleting a card cannot be undone. Its safer to mark the card as closed (archived).
+     *
+     * @param cardId The ID of the card.
+     */
+    void deleteCard(String cardId);
 
     /* Lists */
 
