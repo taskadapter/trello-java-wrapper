@@ -1,5 +1,8 @@
 package com.julienvey.trello.domain;
 
+import java.util.List;
+import java.util.Objects;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.julienvey.trello.Trello;
 
@@ -36,6 +39,30 @@ public class Label extends TrelloEntity {
         idBoard = updateLabel.idBoard;
         color = updateLabel.color;
         name = updateLabel.name;
+
+        return this;
+    }
+
+    /**
+     * @see Trello#addLabelToCard(String, String)
+     */
+    public Label addToCard(String cardId) {
+        getTrelloService().addLabelToCard(cardId, id);
+        return this;
+    }
+
+    /**
+     * @see Trello#addLabelToCard(String, String)
+     */
+    public Label addToCard(Card card) {
+        Objects.requireNonNull(card);
+
+        getTrelloService().addLabelToCard(card.getId(), id);
+
+        List<Label> labels = card.getLabels();
+        if (!labels.contains(this)) {
+            labels.add(this);
+        }
 
         return this;
     }
@@ -88,5 +115,30 @@ public class Label extends TrelloEntity {
     public Label setIdBoard(String idBoard) {
         this.idBoard = idBoard;
         return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Label)) return false;
+        Label label = (Label) o;
+        return Objects.equals(id, label.id) &&
+                Objects.equals(idBoard, label.idBoard) &&
+                Objects.equals(color, label.color) &&
+                Objects.equals(name, label.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, idBoard, color, name);
+    }
+
+    @Override
+    public String toString() {
+        return "Label{" + "id='" + id + '\'' +
+                ", idBoard='" + idBoard + '\'' +
+                ", color='" + color + '\'' +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

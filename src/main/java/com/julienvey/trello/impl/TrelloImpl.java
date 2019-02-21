@@ -1,9 +1,10 @@
 package com.julienvey.trello.impl;
 
+import static com.julienvey.trello.impl.TrelloUrl.ADD_ATTACHMENT_TO_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.ADD_CHECKITEMS_TO_CHECKLIST;
 import static com.julienvey.trello.impl.TrelloUrl.ADD_COMMENT_TO_CARD;
+import static com.julienvey.trello.impl.TrelloUrl.ADD_EXISTING_LABEL_TO_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.ADD_LABEL_TO_CARD;
-import static com.julienvey.trello.impl.TrelloUrl.ADD_ATTACHMENT_TO_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.ADD_MEMBER_TO_BOARD;
 import static com.julienvey.trello.impl.TrelloUrl.ADD_MEMBER_TO_BOARD_BY_ID;
 import static com.julienvey.trello.impl.TrelloUrl.ADD_MEMBER_TO_CARD;
@@ -49,31 +50,36 @@ import static com.julienvey.trello.impl.TrelloUrl.GET_MEMBER_BOARDS;
 import static com.julienvey.trello.impl.TrelloUrl.GET_MEMBER_CARDS;
 import static com.julienvey.trello.impl.TrelloUrl.GET_ORGANIZATION_BOARD;
 import static com.julienvey.trello.impl.TrelloUrl.GET_ORGANIZATION_MEMBER;
-import static com.julienvey.trello.impl.TrelloUrl.REMOVE_MEMBER_FROM_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.REMOVE_MEMBER_FROM_BOARD;
+import static com.julienvey.trello.impl.TrelloUrl.REMOVE_MEMBER_FROM_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.UPDATE_CARD;
-import static com.julienvey.trello.impl.TrelloUrl.UPDATE_LABEL;
 import static com.julienvey.trello.impl.TrelloUrl.UPDATE_CARD_COMMENT;
+import static com.julienvey.trello.impl.TrelloUrl.UPDATE_LABEL;
 import static com.julienvey.trello.impl.TrelloUrl.createUrl;
 import static com.julienvey.trello.impl.TrelloUrl.createUrlWithNoArgs;
 
-import com.julienvey.trello.domain.AddMemberToBoardResult;
-import com.julienvey.trello.domain.Label;
-
-import java.util.*;
-
-import com.julienvey.trello.ListNotFoundException;
-import com.julienvey.trello.NotFoundException;
-import com.julienvey.trello.TrelloBadRequestException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.julienvey.trello.ListNotFoundException;
+import com.julienvey.trello.NotFoundException;
 import com.julienvey.trello.Trello;
+import com.julienvey.trello.TrelloBadRequestException;
 import com.julienvey.trello.TrelloHttpClient;
 import com.julienvey.trello.domain.Action;
+import com.julienvey.trello.domain.AddMemberToBoardResult;
 import com.julienvey.trello.domain.Argument;
 import com.julienvey.trello.domain.Attachment;
 import com.julienvey.trello.domain.Board;
@@ -82,6 +88,7 @@ import com.julienvey.trello.domain.CardWithActions;
 import com.julienvey.trello.domain.CheckItem;
 import com.julienvey.trello.domain.CheckList;
 import com.julienvey.trello.domain.Entity;
+import com.julienvey.trello.domain.Label;
 import com.julienvey.trello.domain.Member;
 import com.julienvey.trello.domain.MemberType;
 import com.julienvey.trello.domain.MyPrefs;
@@ -497,6 +504,15 @@ public class TrelloImpl implements Trello {
     }
 
     @Override
+    public List<String> addLabelToCard(String cardId, String labelId) {
+        Objects.requireNonNull(cardId);
+        Objects.requireNonNull(labelId);
+
+        return Arrays.asList(postForObject(createUrlWithNoArgs(ADD_EXISTING_LABEL_TO_CARD),
+                Collections.singletonMap("value", labelId), String[].class, cardId));
+    }
+
+    @Override
     public void addCommentToCard(String idCard, String comment) {
         postForObject(createUrl(ADD_COMMENT_TO_CARD).asString(), new Comment(comment), Comment.class, idCard);
     }
@@ -523,9 +539,8 @@ public class TrelloImpl implements Trello {
 
     @Override
     public List<Member> addMemberToCard(String idCard, String userId) {
-        Map<String, String> body = new HashMap<>();
-        body.put("value", userId);
-        return asList(() -> postForObject(createUrl(ADD_MEMBER_TO_CARD).asString(), body, Member[].class, idCard));
+        return asList(() -> postForObject(createUrl(ADD_MEMBER_TO_CARD).asString(), Collections.singletonMap("value", userId),
+                Member[].class, idCard));
     }
 
     @Override
