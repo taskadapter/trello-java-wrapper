@@ -83,9 +83,7 @@ public class RestTemplateHttpClient implements TrelloHttpClient {
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>(1);
         body.add("file", file);
 
-        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
-
-        return execute(() -> restTemplate.postForObject(url, requestEntity, responseType, (Object[]) params));
+        return execute(() -> restTemplate.postForObject(url, new HttpEntity<>(body, headers), responseType, (Object[]) params));
     }
 
     private <T> T execute(Supplier<T> httpResult) {
