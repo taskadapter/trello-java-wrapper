@@ -12,6 +12,7 @@ import static com.julienvey.trello.impl.TrelloUrl.CREATE_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.CREATE_CHECKLIST;
 import static com.julienvey.trello.impl.TrelloUrl.CREATE_LABEL;
 import static com.julienvey.trello.impl.TrelloUrl.DELETE_ATTACHMENT;
+import static com.julienvey.trello.impl.TrelloUrl.DELETE_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.DELETE_LABEL;
 import static com.julienvey.trello.impl.TrelloUrl.GET_ACTION;
 import static com.julienvey.trello.impl.TrelloUrl.GET_ACTION_BOARD;
@@ -351,6 +352,12 @@ public class TrelloImpl implements Trello {
         Board board = get(createUrl(GET_CARD_BOARD).params(args).asString(), Board.class, cardId);
         board.setInternalTrello(this);
         return board;
+    }
+
+    @Override
+    public void deleteCard(String cardId) {
+        Objects.requireNonNull(cardId);
+        delete(createUrlWithNoArgs(DELETE_CARD), Map.class, cardId);
     }
 
     @Override

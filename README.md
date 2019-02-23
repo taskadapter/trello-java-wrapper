@@ -203,7 +203,7 @@ The new test code is implemented using Scala. The prod code is only Java - to av
 | POST /1/cards/[card id or shortlink]/idLabels | Yes | No | Yes
 | POST /1/cards/[card id or shortlink]/markAssociatedNotificationsRead
 | POST /1/cards/[card id or shortlink]/membersVoted
-| DELETE /1/cards/[card id or shortlink]
+| DELETE /1/cards/[card id or shortlink] | Yes | No | Yes
 | DELETE /1/cards/[card id or shortlink]/actions/[idAction]/comments
 | DELETE /1/cards/[card id or shortlink]/attachments/[idAttachment] | Yes | No | Yes
 | DELETE /1/cards/[card id or shortlink]/checklist/[idChecklist]/checkItem/[idCheckItem]

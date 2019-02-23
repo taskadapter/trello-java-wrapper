@@ -1,9 +1,9 @@
 package com.julienvey.trello.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import java.util.Date;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Card extends TrelloEntity {
@@ -50,6 +50,10 @@ public class Card extends TrelloEntity {
 
     public void deleteAttachment(String attachmentId) {
         trelloService.deleteAttachment(id, attachmentId);
+    }
+
+    public void delete() {
+        getTrelloService().deleteCard(id);
     }
 
     /* Accessors */
