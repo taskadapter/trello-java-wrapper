@@ -1,6 +1,6 @@
 package com.julienvey.trello
 
-import com.julienvey.trello.domain.Label
+import com.julienvey.trello.domain.{Card, Label}
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.{FunSpec, Matchers}
@@ -85,5 +85,45 @@ class LabelIt extends FunSpec with Matchers {
 
     label.delete()
     the[NotFoundException] thrownBy trello.getLabel(label.getId)
+  }
+
+  it("Create label and add to card") {
+    val label = new Label()
+      .setInternalTrello(trello)
+      .setColor("blue")
+      .setIdBoard(TrelloConfig.boardId)
+      .setName("New Label")
+      .create()
+
+    val card = new Card()
+    card.setName("Card to assign a label")
+
+    val createdCard = trello.createCard(TrelloConfig.doingListId, card)
+
+    trello.addLabelToCard(createdCard.getId, label.getId) should contain only label.getId
+    trello.getCard(createdCard.getId).getLabels should contain(label)
+
+    createdCard.setClosed(true)
+    trello.updateCard(createdCard)
+  }
+
+  it("Create Label and add to card using fluent API") {
+    var card = new Card()
+    card.setName("Card to assign a label")
+
+    card = trello.createCard(TrelloConfig.doingListId, card)
+
+    val label = new Label()
+      .setInternalTrello(trello)
+      .setColor("blue")
+      .setIdBoard(TrelloConfig.boardId)
+      .setName("New Label")
+      .create()
+      .addToCard(card)
+
+    card.getLabels should contain only label
+
+    card.setClosed(true)
+    trello.updateCard(card)
   }
 }

@@ -199,7 +199,8 @@ The new test code is implemented using Scala. The prod code is only Java - to av
 | POST /1/cards/[card id or shortlink]/checklist/[idChecklist]/checkItem/[idCheckItem]/convertToCard
 | POST /1/cards/[card id or shortlink]/checklists
 | POST /1/cards/[card id or shortlink]/idMembers | Yes | No | Yes
-| POST /1/cards/[card id or shortlink]/labels  | Yes | No | Yes
+| POST /1/cards/[card id or shortlink]/labels | Yes | No | Yes
+| POST /1/cards/[card id or shortlink]/idLabels | Yes | No | Yes
 | POST /1/cards/[card id or shortlink]/markAssociatedNotificationsRead
 | POST /1/cards/[card id or shortlink]/membersVoted
 | DELETE /1/cards/[card id or shortlink]

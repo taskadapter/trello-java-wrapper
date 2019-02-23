@@ -19,7 +19,6 @@ import com.julienvey.trello.domain.MemberType;
 import com.julienvey.trello.domain.MyPrefs;
 import com.julienvey.trello.domain.Organization;
 import com.julienvey.trello.domain.TList;
-import com.julienvey.trello.impl.domaininternal.Comment;
 
 public interface Trello {
 
@@ -202,6 +201,16 @@ public interface Trello {
     Card createCard(String listId, Card card);
 
     void addLabelsToCard(String idCard, String[] labels);
+
+    /**
+     * Adds label to the card.
+     *
+     * @param cardId  The card id.
+     * @param labelId The existing label id.
+     *
+     * @return The labels ids present on the card.
+     */
+    List<String> addLabelToCard(String cardId, String labelId);
 
     void addCommentToCard(String idCard, String comment);
 
