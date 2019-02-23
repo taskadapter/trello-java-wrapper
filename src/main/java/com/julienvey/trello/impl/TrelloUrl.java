@@ -41,6 +41,7 @@ public class TrelloUrl {
     public static final String GET_CARD_MEMBERS = "/cards/{cardId}/members?";
     public static final String ADD_MEMBER_TO_CARD = "/cards/{cardId}/idMembers?";
     public static final String REMOVE_MEMBER_FROM_CARD = "/cards/{cardId}/idMembers/{idMember}?";
+    public static final String DELETE_CARD = "/cards/{cardId}?";
 
     public static final String GET_LIST = "/lists/{listId}?";
     public static final String GET_LIST_CARDS = "/lists/{listId}/cards?";

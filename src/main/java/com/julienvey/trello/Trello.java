@@ -117,6 +117,15 @@ public interface Trello {
 
     Board getCardBoard(String cardId, Argument... args);
 
+    /**
+     * Deletes a card.
+     * <b>Warning</b>
+     * Deleting a card cannot be undone. Its safer to mark the card as closed (archived).
+     *
+     * @param cardId The ID of the card.
+     */
+    void deleteCard(String cardId);
+
     /* Lists */
 
     TList getList(String listId, Argument... args);
