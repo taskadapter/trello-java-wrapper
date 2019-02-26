@@ -78,7 +78,7 @@ import com.julienvey.trello.ListNotFoundException;
 import com.julienvey.trello.NotFoundException;
 import com.julienvey.trello.Trello;
 import com.julienvey.trello.TrelloBadRequestException;
-import com.julienvey.trello.TrelloCredentialsProvider
+import com.julienvey.trello.TrelloCredentialsProvider;
 import com.julienvey.trello.TrelloHttpClient;
 import com.julienvey.trello.domain.Action;
 import com.julienvey.trello.domain.AddMemberToBoardResult;
