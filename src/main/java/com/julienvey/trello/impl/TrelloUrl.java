@@ -39,9 +39,12 @@ public class TrelloUrl {
     public static final String GET_CARD_BOARD = "/cards/{cardId}/board?";
     public static final String GET_CARD_CHECKLIST = "/cards/{cardId}/checklists?";
     public static final String GET_CARD_MEMBERS = "/cards/{cardId}/members?";
+    public static final String GET_CUSTOM_FIELDS = "/cards/{cardId}/customFieldItems?";
     public static final String ADD_MEMBER_TO_CARD = "/cards/{cardId}/idMembers?";
     public static final String REMOVE_MEMBER_FROM_CARD = "/cards/{cardId}/idMembers/{idMember}?";
     public static final String DELETE_CARD = "/cards/{cardId}?";
+
+    public static final String UPDATE_CUSTOM_FIELD_ITEM = "/card/{idCard}/customField/{idCustomField}/item?";
 
     public static final String GET_LIST = "/lists/{listId}?";
     public static final String GET_LIST_CARDS = "/lists/{listId}/cards?";
@@ -53,6 +56,8 @@ public class TrelloUrl {
     public static final String GET_LABEL = "/labels/{labelId}?";
     public static final String UPDATE_LABEL = "/labels/{labelId}?";
     public static final String DELETE_LABEL = "/labels/{labelId}?";
+
+    public static final String GET_CUSTOM_FIELD = "/customFields/{id}?";
 
     public static final String GET_CHECK_LIST = "/checklists/{checkListId}?";
     public static final String CREATE_CHECKLIST = "/checklists?";

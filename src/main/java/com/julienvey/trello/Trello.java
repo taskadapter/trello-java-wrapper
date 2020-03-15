@@ -3,22 +3,7 @@ package com.julienvey.trello;
 import java.io.File;
 import java.util.List;
 
-import com.julienvey.trello.domain.Action;
-import com.julienvey.trello.domain.AddMemberToBoardResult;
-import com.julienvey.trello.domain.Argument;
-import com.julienvey.trello.domain.Attachment;
-import com.julienvey.trello.domain.Board;
-import com.julienvey.trello.domain.Card;
-import com.julienvey.trello.domain.CardWithActions;
-import com.julienvey.trello.domain.CheckItem;
-import com.julienvey.trello.domain.CheckList;
-import com.julienvey.trello.domain.Entity;
-import com.julienvey.trello.domain.Label;
-import com.julienvey.trello.domain.Member;
-import com.julienvey.trello.domain.MemberType;
-import com.julienvey.trello.domain.MyPrefs;
-import com.julienvey.trello.domain.Organization;
-import com.julienvey.trello.domain.TList;
+import com.julienvey.trello.domain.*;
 
 public interface Trello {
 
@@ -113,6 +98,8 @@ public interface Trello {
 
     List<Member> getCardMembers(String cardId, Argument... args);
 
+    List<CustomFieldItem> getCardCustomFields(String cardId, Argument... args);
+
     Attachment getCardAttachment(String cardId, String attachmentId, Argument... args);
 
     Board getCardBoard(String cardId, Argument... args);
@@ -147,6 +134,10 @@ public interface Trello {
     List<Board> getOrganizationBoards(String organizationId, Argument... args);
 
     List<Member> getOrganizationMembers(String string, Argument... args);
+
+    /* Custom Fields */
+
+    CustomField getCustomField(String fieldId, Argument... args);
 
     /* Labels */
 
@@ -211,6 +202,8 @@ public interface Trello {
 
     void addLabelsToCard(String idCard, String[] labels);
 
+    CustomFieldItem updateCustomFieldItem(String idCard, CustomFieldItem customFieldItem);
+
     /**
      * Adds label to the card.
      *
@@ -261,4 +254,5 @@ public interface Trello {
     List<Card> getMemberCards(String userId, Argument... args);
 
     List<Action> getMemberActions(String userId, Argument... args);
+
 }

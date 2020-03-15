@@ -36,6 +36,19 @@ public class Card extends TrelloEntity {
         trelloService.addLabelsToCard(id, labels);
     }
 
+    public CustomFieldItem getCustomFieldItem(String id) {
+        return getCustomFields().stream().filter(c -> c.getId().equals(id)).findFirst().orElse(null);
+    }
+
+    public CustomFieldItem getCustomFieldItem(CustomField customField) {
+        return getCustomFields().stream().filter(c -> c.getIdCustomField().equals(customField.getId()))
+                .findFirst().orElse(null);
+    }
+
+    public List<CustomFieldItem> getCustomFields() {
+        return trelloService.getCardCustomFields(id);
+    }
+
     public void addComment(String comment) {
         trelloService.addCommentToCard(id, comment);
     }
