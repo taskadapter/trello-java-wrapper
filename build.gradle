@@ -4,7 +4,7 @@ apply plugin: 'maven-publish'
 apply plugin: 'signing'
 
 group = 'com.taskadapter'
-version = '0.13'
+version = '0.14-SNAPSHOT'
 
 description = """Trello Java Wrapper"""
 
@@ -14,8 +14,8 @@ description = """Trello Java Wrapper"""
 sourceSets.test.scala.srcDir "src/test/java"
 sourceSets.test.java.srcDirs = []
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+sourceCompatibility = 11
+targetCompatibility = 11
 tasks.withType(JavaCompile) {
 	options.encoding = 'UTF-8'
 }
