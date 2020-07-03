@@ -2,6 +2,7 @@
 *.iml
 /bin
 /build
+/out
 target
 .classpath
 .project
