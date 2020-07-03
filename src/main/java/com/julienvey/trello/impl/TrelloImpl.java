@@ -197,9 +197,9 @@ public class TrelloImpl implements Trello {
         Objects.requireNonNull(boardId);
         Objects.requireNonNull(memberId);
 
-        Map<String, String> body = Collections.singletonMap("type", Optional.ofNullable(type).orElse(MemberType.NORMAL).value());
+        var body = Collections.singletonMap("type", Optional.ofNullable(type).orElse(MemberType.NORMAL).value());
 
-        AddMemberToBoardResult result = put(createUrl(ADD_MEMBER_TO_BOARD_BY_ID).asString(), body,
+        var result = put(createUrl(ADD_MEMBER_TO_BOARD_BY_ID).asString(), body,
                 AddMemberToBoardResult.class, boardId, memberId);
         result.setInternalTrello(this);
 
@@ -590,7 +590,7 @@ public class TrelloImpl implements Trello {
     }
 
     private String[] enrichParams(String[] params) {
-        List<String> paramList = new ArrayList<>(Arrays.asList(params));
+        var paramList = new ArrayList<>(Arrays.asList(params));
         paramList.add(applicationKey);
         paramList.add(accessToken);
         return paramList.toArray(new String[paramList.size()]);
