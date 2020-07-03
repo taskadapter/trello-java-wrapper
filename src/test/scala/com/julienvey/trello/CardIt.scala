@@ -74,6 +74,14 @@ class CardIt extends FunSpec with Matchers {
       val cardId = "5c4d89b5bd5a2640f5fcb32c"
       val idExtractor: Member => String = member => member.getId
 
+      // cleanup step just in case the member is already on the card because some tests failed in the past.
+      // this call can fail or be a no-op - it does not matter.
+      try {
+        trello.removeMemberFromCard(cardId, TrelloConfig.memberId)
+      } catch {
+        case _ : Exception => println("Some exception while cleaning up test data. This can be safely ignored.")
+      }
+
       trello.addMemberToCard(cardId, TrelloConfig.memberId).asScala
         .map(idExtractor) should contain(TrelloConfig.memberId)
 
