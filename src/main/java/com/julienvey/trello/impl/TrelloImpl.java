@@ -221,7 +221,7 @@ public class TrelloImpl implements Trello {
             if ("membership not found".equalsIgnoreCase(e.getMessage())) {
                 throw new NotFoundException(String.format("User with member id %s is not member of %s board.",
                         memberId, boardId));
-            } else if ("Invalid id or name".equalsIgnoreCase(e.getMessage())) {
+            } else if (e.getMessage().contains("\"message\":\"Invalid id or name\"")) {
                 throw new NotFoundException(String.format("User with memberId or username %s is not found.", memberId));
             }
             throw e;
