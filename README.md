@@ -6,7 +6,7 @@ This project is a Java Wrapper for the [Trello REST API](https://trello.com/docs
 
 ## Usage
 
-### Gradle dependency
+The library can be used with Java 11 or newer. 
 
 Available in [Maven Central](https://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.taskadapter%22%20AND%20a%3A%22trello-java-wrapper%22).
 Gradle dependency declaration:
