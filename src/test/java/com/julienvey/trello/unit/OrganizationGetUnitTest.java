@@ -19,6 +19,7 @@ import com.julienvey.trello.Trello;
 import com.julienvey.trello.TrelloHttpClient;
 import com.julienvey.trello.domain.Board;
 import com.julienvey.trello.domain.Member;
+import com.julienvey.trello.domain.Organization;
 import com.julienvey.trello.impl.TrelloImpl;
 
 public class OrganizationGetUnitTest {
@@ -31,6 +32,26 @@ public class OrganizationGetUnitTest {
     public void setUp() {
         httpClient = Mockito.mock(TrelloHttpClient.class);
         trello = new TrelloImpl("", "", httpClient);
+    }
+
+    @Test
+    public void testGetOrganization() {
+        //Given
+    	Organization mockOrganization = new Organization();
+    	mockOrganization.setId("idOrganization");
+
+        when(httpClient.get(anyString(), any(Class.class), (String[]) anyVararg())).thenReturn(mockOrganization);
+
+        //When
+        Organization organization = trello.getOrganization("idOrganization");
+
+        //Then
+        assertThat(organization).isNotNull();
+        assertThat(organization.getId()).isEqualTo("idOrganization");
+
+        verify(httpClient).get(eq("https://api.trello.com/1/organizations/{organizationId}?key={applicationKey}&token={userToken}"),
+                eq(Organization.class), eq("idOrganization"), eq(""), eq(""));
+        verifyNoMoreInteractions(httpClient);
     }
 
     @Test
