@@ -49,6 +49,10 @@ public class Board extends TrelloEntity {
         return trelloService.getBoardChecklists(id, args);
     }
 
+    public List<Label> fetchLabels(Argument... args) {
+    	return trelloService.getBoardLabels(id, args);
+    }
+
     public List<TList> fetchLists(Argument... args) {
         return trelloService.getBoardLists(id, args);
     }
