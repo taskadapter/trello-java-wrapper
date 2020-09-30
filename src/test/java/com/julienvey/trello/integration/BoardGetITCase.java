@@ -114,6 +114,14 @@ public class BoardGetITCase {
     }
 
     @Test
+    public void testGetBoardFetchLabels() {
+        Board board = trello.getBoard(BOARD_ID);
+        List<Label> labels = board.fetchLabels();
+
+        assertThat(labels).hasSize(6);
+    }
+
+    @Test
     public void testGetBoardFetchListsCardsOpen() {
         Board board = trello.getBoard(BOARD_ID);
         List<TList> lists = board.fetchLists(arg("cards", "open"));
@@ -158,7 +166,7 @@ public class BoardGetITCase {
     }
 
     @Test
-    public void testGetBoardFetchLabels() {
+    public void testGetBoardLabels() {
         List<Label> labels = trello.getBoardLabels(BOARD_ID);
 
         assertThat(labels).hasSize(6);

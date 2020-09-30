@@ -14,6 +14,7 @@ public class Card extends TrelloEntity {
     private String desc;
     private String url;
     private Date due;
+    private boolean dueComplete;
     private List<String> idMembers;
     private List<Label> labels;
     private Badges badges;
@@ -97,7 +98,15 @@ public class Card extends TrelloEntity {
         this.due = due;
     }
 
-    public List<String> getIdMembers() {
+    public boolean isDueComplete() {
+		return dueComplete;
+	}
+
+	public void setDueComplete(boolean dueComplete) {
+		this.dueComplete = dueComplete;
+	}
+
+	public List<String> getIdMembers() {
         return idMembers;
     }
 

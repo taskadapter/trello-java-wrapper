@@ -144,6 +144,8 @@ public interface Trello {
 
     /* Organizations */
 
+    Organization getOrganization(String organizationId, Argument... args);
+
     List<Board> getOrganizationBoards(String organizationId, Argument... args);
 
     List<Member> getOrganizationMembers(String string, Argument... args);

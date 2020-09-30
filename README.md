@@ -295,7 +295,7 @@ The new test code is implemented using Scala. The prod code is only Java - to av
 | PUT /1/notifications/[idNotification]
 | PUT /1/notifications/[idNotification]/unread
 | POST /1/notifications/all/read
-| GET /1/organizations/[idOrg or name]
+| GET /1/organizations/[idOrg or name] | Yes | Yes| Yes
 | GET /1/organizations/[idOrg or name]/[field]
 | GET /1/organizations/[idOrg or name]/actions
 | GET /1/organizations/[idOrg or name]/boards | Yes | Yes | Yes

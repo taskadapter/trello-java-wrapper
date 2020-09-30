@@ -16,13 +16,14 @@ import com.julienvey.trello.Trello;
 import com.julienvey.trello.TrelloHttpClient;
 import com.julienvey.trello.domain.Board;
 import com.julienvey.trello.domain.Member;
+import com.julienvey.trello.domain.Organization;
 import com.julienvey.trello.impl.TrelloImpl;
 
 @RunWith(Parameterized.class)
 public class OrganizationGetITCase {
 
     private static final String TEST_APPLICATION_KEY = "db555c528ce160c33305d2ea51ae1197";
-    public static final String ORGANIZATION_ID = "testorganization99";
+    public static final String ORGANIZATION_ID = "518baaaa815af84031004375";
 
     private Trello trello;
 
@@ -40,6 +41,14 @@ public class OrganizationGetITCase {
     @Before
     public void setUp() {
         trello = new TrelloImpl(TEST_APPLICATION_KEY, "", httpClient);
+    }
+
+    @Test
+    public void testGetOrganization() {
+        Organization organization = trello.getOrganization(ORGANIZATION_ID);
+
+        assertThat(organization).isNotNull();
+        assertThat(organization.getId()).isEqualTo(ORGANIZATION_ID);
     }
 
     @Test
