@@ -23,6 +23,15 @@ import com.julienvey.trello.domain.TList;
 public interface Trello {
 
     /* Board */
+
+    /**
+     *
+     * @param name
+     * @param args
+     * @return
+     */
+    Board createBoard(String name, Argument... args);
+
     Board getBoard(String boardId, Argument... args);
 
     List<Action> getBoardActions(String boardId, Argument... args);
@@ -127,6 +136,15 @@ public interface Trello {
     void deleteCard(String cardId);
 
     /* Lists */
+
+    /**
+     *
+     * @param listName
+     * @param boardId
+     * @param args
+     * @return
+     */
+    TList createList(String listName, String boardId, Argument... args);
 
     TList getList(String listId, Argument... args);
 

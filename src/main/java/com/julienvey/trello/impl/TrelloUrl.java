@@ -7,6 +7,7 @@ public class TrelloUrl {
     public static final String API_URL = "https://api.trello.com/1";
     public static final String API_KEY_TOKEN_PARAM = "key={applicationKey}&token={userToken}";
 
+    public static final String CREATE_BOARD = "/boards/?name={boardName}&";
     public static final String GET_BOARD = "/boards/{boardId}?";
     public static final String GET_BOARD_ACTIONS = "/boards/{boardId}/actions?";
     public static final String GET_BOARD_CARDS = "/boards/{boardId}/cards?";
@@ -43,6 +44,7 @@ public class TrelloUrl {
     public static final String REMOVE_MEMBER_FROM_CARD = "/cards/{cardId}/idMembers/{idMember}?";
     public static final String DELETE_CARD = "/cards/{cardId}?";
 
+    public static final String CREATE_LIST = "/lists?name={listName}&idBoard={boardId}&";
     public static final String GET_LIST = "/lists/{listId}?";
     public static final String GET_LIST_CARDS = "/lists/{listId}/cards?";
 
