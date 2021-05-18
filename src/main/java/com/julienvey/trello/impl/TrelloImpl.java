@@ -495,6 +495,13 @@ public class TrelloImpl implements Trello {
     }
 
     @Override
+    public Member getMemberInformation() {
+        Member member = get(createUrl(GET_MEMBER).asString(), Member.class, "me");
+        member.setInternalTrello(this);
+        return member;
+    }
+
+    @Override
     public List<Board> getMemberBoards(String userId, Argument... args) {
         return asList(() -> get(createUrl(GET_MEMBER_BOARDS).params(args).asString(), Board[].class, userId));
     }

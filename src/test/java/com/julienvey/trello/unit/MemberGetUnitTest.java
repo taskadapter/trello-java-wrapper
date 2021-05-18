@@ -4,6 +4,7 @@ import com.julienvey.trello.Trello;
 import com.julienvey.trello.TrelloHttpClient;
 import com.julienvey.trello.domain.Action;
 import com.julienvey.trello.domain.Board;
+import com.julienvey.trello.domain.Member;
 import com.julienvey.trello.impl.TrelloImpl;
 import org.junit.Before;
 import org.junit.Test;
@@ -79,6 +80,26 @@ public class MemberGetUnitTest {
 
         verify(httpClient).get(eq("https://api.trello.com/1/members/{userId}/actions?key={applicationKey}&token={userToken}"),
                 eq(Action[].class), eq("idMember"), eq(""), eq(""));
+        verifyNoMoreInteractions(httpClient);
+    }
+
+    @Test
+    public void testGetMemberInformation() {
+        // Given
+        Member expected = new Member();
+
+        when(httpClient.get(anyString(), any(Class.class), (String[]) anyVararg())).thenReturn(expected);
+
+        // When
+        Member member = trello.getMemberInformation();
+
+        // Then
+        assertThat(member)
+                .isNotNull()
+                .isEqualTo(expected);
+
+        verify(httpClient).get(eq("https://api.trello.com/1/members/{username}?key={applicationKey}&token={userToken}"),
+                eq(Member.class), eq("me"), eq(""), eq(""));
         verifyNoMoreInteractions(httpClient);
     }
 }

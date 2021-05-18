@@ -258,6 +258,8 @@ public interface Trello {
 
     Member getMemberInformation(String username);
 
+    Member getMemberInformation();
+
     List<Board> getMemberBoards(String userId, Argument... args);
 
     List<Card> getMemberCards(String userId, Argument... args);
