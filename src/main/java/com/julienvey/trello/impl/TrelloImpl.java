@@ -11,9 +11,11 @@ import static com.julienvey.trello.impl.TrelloUrl.ADD_MEMBER_TO_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.CREATE_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.CREATE_CHECKLIST;
 import static com.julienvey.trello.impl.TrelloUrl.CREATE_LABEL;
+import static com.julienvey.trello.impl.TrelloUrl.CREATE_WEBHOOK;
 import static com.julienvey.trello.impl.TrelloUrl.DELETE_ATTACHMENT;
 import static com.julienvey.trello.impl.TrelloUrl.DELETE_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.DELETE_LABEL;
+import static com.julienvey.trello.impl.TrelloUrl.DELETE_WEBHOOK;
 import static com.julienvey.trello.impl.TrelloUrl.GET_ACTION;
 import static com.julienvey.trello.impl.TrelloUrl.GET_ACTION_BOARD;
 import static com.julienvey.trello.impl.TrelloUrl.GET_ACTION_CARD;
@@ -52,11 +54,13 @@ import static com.julienvey.trello.impl.TrelloUrl.GET_MEMBER_CARDS;
 import static com.julienvey.trello.impl.TrelloUrl.GET_ORGANIZATION;
 import static com.julienvey.trello.impl.TrelloUrl.GET_ORGANIZATION_BOARD;
 import static com.julienvey.trello.impl.TrelloUrl.GET_ORGANIZATION_MEMBER;
+import static com.julienvey.trello.impl.TrelloUrl.GET_WEBHOOK;
 import static com.julienvey.trello.impl.TrelloUrl.REMOVE_MEMBER_FROM_BOARD;
 import static com.julienvey.trello.impl.TrelloUrl.REMOVE_MEMBER_FROM_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.UPDATE_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.UPDATE_CARD_COMMENT;
 import static com.julienvey.trello.impl.TrelloUrl.UPDATE_LABEL;
+import static com.julienvey.trello.impl.TrelloUrl.UPDATE_WEBHOOK;
 import static com.julienvey.trello.impl.TrelloUrl.createUrl;
 import static com.julienvey.trello.impl.TrelloUrl.createUrlWithNoArgs;
 
@@ -97,6 +101,7 @@ import com.julienvey.trello.domain.MyPrefs;
 import com.julienvey.trello.domain.Organization;
 import com.julienvey.trello.domain.TList;
 import com.julienvey.trello.domain.TrelloEntity;
+import com.julienvey.trello.domain.Webhook;
 import com.julienvey.trello.impl.domaininternal.Comment;
 import com.julienvey.trello.impl.http.JDKTrelloHttpClient;
 
@@ -561,6 +566,28 @@ public class TrelloImpl implements Trello {
     @Override
     public List<Member> removeMemberFromCard(String idCard, String userId) {
         return asList(() -> delete(createUrl(REMOVE_MEMBER_FROM_CARD).asString(), Member[].class, idCard, userId));
+    }
+
+    @Override
+    public Webhook createWebhook(Webhook webhook) {
+        Webhook createdWebhook = postForObject(createUrlWithNoArgs(CREATE_WEBHOOK), webhook, Webhook.class);
+        return createdWebhook.setInternalTrello(this);
+    }
+
+    @Override
+    public Webhook getWebhook(String webhookId) {
+        return get(createUrl(GET_WEBHOOK).asString(), Webhook.class, webhookId);
+    }
+
+    @Override
+    public Webhook updateWebhook(Webhook webhook) {
+        Webhook createdWebhook = put(createUrlWithNoArgs(UPDATE_WEBHOOK), webhook, Webhook.class, webhook.getId());
+        return createdWebhook.setInternalTrello(this);
+    }
+
+    @Override
+    public Webhook deleteWebhook(String webhookId) {
+        return delete(createUrl(DELETE_WEBHOOK).asString(), Webhook.class, webhookId);
     }
 
     /* internal methods */
