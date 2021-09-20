@@ -61,6 +61,7 @@ import static com.julienvey.trello.impl.TrelloUrl.UPDATE_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.UPDATE_CARD_COMMENT;
 import static com.julienvey.trello.impl.TrelloUrl.UPDATE_LABEL;
 import static com.julienvey.trello.impl.TrelloUrl.UPDATE_WEBHOOK;
+import static com.julienvey.trello.impl.TrelloUrl.ME;
 import static com.julienvey.trello.impl.TrelloUrl.createUrl;
 import static com.julienvey.trello.impl.TrelloUrl.createUrlWithNoArgs;
 
@@ -588,6 +589,11 @@ public class TrelloImpl implements Trello {
     @Override
     public Webhook deleteWebhook(String webhookId) {
         return delete(createUrl(DELETE_WEBHOOK).asString(), Webhook.class, webhookId);
+    }
+
+    @Override
+    public Member me() {
+        return get(createUrlWithNoArgs(ME), Member.class);
     }
 
     /* internal methods */

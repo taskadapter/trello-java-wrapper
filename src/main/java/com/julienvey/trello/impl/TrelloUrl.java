@@ -77,6 +77,8 @@ public class TrelloUrl {
     public static final String DELETE_ATTACHMENT = "/cards/{cardId}/attachments/{attachmentId}?";
     public static final String UPDATE_CARD = "/cards/{cardId}?";
 
+    public static final String ME = "/members/me?";
+
     private String baseUrl;
     private Argument[] args = {};
 
