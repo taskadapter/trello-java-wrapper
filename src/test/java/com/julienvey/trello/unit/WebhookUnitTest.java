@@ -2,10 +2,13 @@ package com.julienvey.trello.unit;
 
 import com.julienvey.trello.Trello;
 import com.julienvey.trello.TrelloHttpClient;
+import com.julienvey.trello.domain.Board;
 import com.julienvey.trello.domain.Webhook;
 import com.julienvey.trello.impl.TrelloImpl;
+import com.julienvey.trello.impl.http.ApacheHttpClient;
 import org.junit.Before;
 import org.junit.Test;
+import java.util.List;
 
 import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Matchers.*;
@@ -114,6 +117,24 @@ public class WebhookUnitTest {
 
         verify(httpClient).delete(eq("https://api.trello.com/1/webhooks/{webhookId}?key={applicationKey}&token={userToken}"),
                 eq(Webhook.class), eq("webhookId"), eq(""), eq(""));
+        verifyNoMoreInteractions(httpClient);
+    }
+
+    @Test
+    public void testListAllWebhooksAssociatedWithAccessToken() {
+        //Given
+        when(httpClient.get(anyString(), any(Class.class), (String[]) anyVararg()))
+                .thenReturn(new Webhook[] { new Webhook().setId("1"), new Webhook().setId("2") });
+
+        //When
+        List<Webhook> foundWebhooks = trello.getWebhooks();
+
+        //Then
+        assertThat(foundWebhooks).isNotNull();
+        assertThat(foundWebhooks.size()).isEqualTo(2);
+
+        verify(httpClient).get(eq("https://api.trello.com/1/tokens/{userToken}/webhooks?key={applicationKey}&token={userToken}"),
+                eq(Webhook[].class), eq(""), eq(""), eq(""));
         verifyNoMoreInteractions(httpClient);
     }
 }

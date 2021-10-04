@@ -274,4 +274,6 @@ public interface Trello {
     Webhook deleteWebhook(String webhookId);
 
     Member me();
+
+    List<Webhook> getWebhooks();
 }

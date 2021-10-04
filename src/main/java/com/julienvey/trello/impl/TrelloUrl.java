@@ -78,6 +78,7 @@ public class TrelloUrl {
     public static final String UPDATE_CARD = "/cards/{cardId}?";
 
     public static final String ME = "/members/me?";
+    public static final String TOKEN_WEBHOOKS = "/tokens/{userToken}/webhooks?";
 
     private String baseUrl;
     private Argument[] args = {};
