@@ -33,7 +33,7 @@ ext {
     httpClientVersion = '4.5.7'
     okhttpVersion = '3.12.1'
     springWebVersion = '3.2.2.RELEASE'
-    jacksonVersion = '2.9.8'
+    jacksonVersion = '2.12.3'
     slf4jVersion = '1.7.25'
 }
 
