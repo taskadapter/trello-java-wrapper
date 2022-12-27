@@ -13,6 +13,7 @@ public class Card extends TrelloEntity {
     private String idList;
     private String desc;
     private String url;
+    private Date start;
     private Date due;
     private boolean dueComplete;
     private List<String> idMembers;
@@ -88,6 +89,14 @@ public class Card extends TrelloEntity {
 
     public void setDesc(String desc) {
         this.desc = desc;
+    }
+
+    public Date getStart() {
+        return start;
+    }
+
+    public void setStart(Date start) {
+        this.start = start;
     }
 
     public Date getDue() {

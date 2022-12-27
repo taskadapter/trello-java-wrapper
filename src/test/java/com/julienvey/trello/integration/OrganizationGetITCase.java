@@ -56,7 +56,7 @@ public class OrganizationGetITCase {
         List<Board> boards = trello.getOrganizationBoards(ORGANIZATION_ID);
 
         assertThat(boards).isNotNull();
-        assertThat(boards).hasSize(1);
+        assertThat(boards).hasSize(2);
 
     }
 
