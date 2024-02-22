@@ -1,11 +1,12 @@
 package com.julienvey.trello.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.julienvey.trello.impl.domaininternal.CheckItemState;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CheckItem {
 
-    private String state;
+    private CheckItemState state = CheckItemState.INCOMPLETE;
     private String id;
     private String name;
     private int pos;
@@ -34,11 +35,11 @@ public class CheckItem {
         this.pos = pos;
     }
 
-    public String getState() {
+    public CheckItemState getState() {
         return state;
     }
 
-    public void setState(String state) {
+    public void setState(CheckItemState state) {
         this.state = state;
     }
 }

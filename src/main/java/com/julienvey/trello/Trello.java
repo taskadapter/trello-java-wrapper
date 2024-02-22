@@ -140,6 +140,10 @@ public interface Trello {
 
     void createCheckItem(String checkListId, CheckItem checkItem);
 
+    CheckItem completeCheckItem(String cardId, String checkItemId);
+
+    CheckItem incompleteCheckItem(String cardId, String checkItemId);
+
     List<CheckList> getCardChecklists(String cardId, Argument... args);
 
     /* Organizations */
