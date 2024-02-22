@@ -56,6 +56,7 @@ import static com.julienvey.trello.impl.TrelloUrl.REMOVE_MEMBER_FROM_BOARD;
 import static com.julienvey.trello.impl.TrelloUrl.REMOVE_MEMBER_FROM_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.UPDATE_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.UPDATE_CARD_COMMENT;
+import static com.julienvey.trello.impl.TrelloUrl.UPDATE_CHECKITEM_IN_CARD;
 import static com.julienvey.trello.impl.TrelloUrl.UPDATE_LABEL;
 import static com.julienvey.trello.impl.TrelloUrl.createUrl;
 import static com.julienvey.trello.impl.TrelloUrl.createUrlWithNoArgs;
@@ -72,6 +73,7 @@ import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+import com.julienvey.trello.impl.domaininternal.CheckItemState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -441,6 +443,16 @@ public class TrelloImpl implements Trello {
     @Override
     public void createCheckItem(String checkListId, CheckItem checkItem) {
         postForLocation(createUrl(ADD_CHECKITEMS_TO_CHECKLIST).asString(), checkItem, checkListId);
+    }
+
+    public CheckItem completeCheckItem(String cardId, String checkItemId) {
+        Map<String, String> body = Map.of("state", CheckItemState.COMPLETE.getState());
+        return put(createUrl(UPDATE_CHECKITEM_IN_CARD).asString(), body, CheckItem.class, cardId, checkItemId);
+    }
+
+    public CheckItem incompleteCheckItem(String cardId, String checkItemId) {
+        Map<String, String> body = Map.of("state", CheckItemState.INCOMPLETE.getState());
+        return put(createUrl(UPDATE_CHECKITEM_IN_CARD).asString(), body, CheckItem.class, cardId, checkItemId);
     }
 
     /* Others */
