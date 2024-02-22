@@ -54,23 +54,45 @@ public class CheckListUnitTest {
     }
 
     @Test
-    public void testUpdateCheckItemInCheckList() {
+    public void testCompleteCheckItemInCheckList() {
         //Given
-        CheckItem mockCheckItem = new CheckItem();
-        mockCheckItem.setId("idCheckItem");
-        mockCheckItem.setState(CheckItemState.COMPLETE);
-        when(httpClient.putForObject(anyString(), any(Class.class), any(), (String[]) anyVararg())).thenReturn(mockCheckItem);
+        CheckItem mockCheckItem = mockCheckItem(CheckItemState.COMPLETE);
+        when(httpClient.putForObject(anyString(), any(Class.class), any(), anyVararg())).thenReturn(mockCheckItem);
 
         //When
         CheckItem checkItem = trello.completeCheckItem("idCheckList", "idCheckItem");
 
         //Then
+        verifyCheckItemAndRequest(checkItem, CheckItemState.COMPLETE);
+    }
+
+    @Test
+    public void testIncompleteCheckItemInCheckList() {
+        //Given
+        CheckItem mockCheckItem = mockCheckItem(CheckItemState.INCOMPLETE);
+        when(httpClient.putForObject(anyString(), any(Class.class), any(), anyVararg())).thenReturn(mockCheckItem);
+
+        //When
+        CheckItem checkItem = trello.incompleteCheckItem("idCheckList", "idCheckItem");
+
+        //Then
+        verifyCheckItemAndRequest(checkItem, CheckItemState.INCOMPLETE);
+    }
+
+    private void verifyCheckItemAndRequest(CheckItem checkItem, CheckItemState state) {
         assertThat(checkItem).isNotNull();
         assertThat(checkItem.getId()).isEqualTo("idCheckItem");
-        assertThat(checkItem.getState()).isEqualTo(CheckItemState.COMPLETE);
+        assertThat(checkItem.getState()).isEqualTo(state);
 
         verify(httpClient).putForObject(eq("https://api.trello.com/1/cards/{cardId}/checkitem/{checkItemId}?key={applicationKey}&token={userToken}"),
-                eq(Map.of("state", CheckItemState.COMPLETE.getState())), eq(CheckItem.class), eq("idCheckList"), eq("idCheckItem"), eq(""), eq(""));
+                eq(Map.of("state", state.getState())), eq(CheckItem.class), eq("idCheckList"), eq("idCheckItem"), eq(""), eq(""));
         verifyNoMoreInteractions(httpClient);
+    }
+
+    private CheckItem mockCheckItem(CheckItemState state) {
+        CheckItem mockCheckItem = new CheckItem();
+        mockCheckItem.setId("idCheckItem");
+        mockCheckItem.setState(state);
+        return mockCheckItem;
     }
 }
