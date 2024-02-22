@@ -192,6 +192,7 @@ The new test code is implemented using Scala. The prod code is only Java - to av
 | PUT /1/cards/[card id or shortlink]/pos
 | PUT /1/cards/[card id or shortlink]/subscribed
 | PUT /1/cards/[card id or shortlink]/warnWhenUpcoming
+| PUT /1/cards/[card id or shortlink]/checkItem/[idCheckItem]  | Yes | Yes | No
 | POST /1/cards | Yes
 | POST /1/cards/[card id or shortlink]/actions/comments | Yes | No | Yes
 | POST /1/cards/[card id or shortlink]/attachments | Yes <br> (Except AsyncTrelloHttpClient) | No | Yes
